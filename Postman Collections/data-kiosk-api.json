@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "7a02028c-d8ec-413d-993e-7dd02b741256",
+		"name": "Amazon Data Kiosk - Business Analytics API",
+		"description": "# Overview\nThis collection enables sellers to retrieve business analytics data through GraphQL queries using Amazon's Data Kiosk API.\n\n# Prerequisites\n## Environment Variables\n- `base_url`: Amazon Selling Partner API endpoint\n- `client_id`: Application client ID\n- `client_secret`: Application client secret\n- `refresh_token`: OAuth refresh token\n- `oauth_url`: OAuth token endpoint\n- `access_token`: Current access token (auto-managed)\n\n# How to Use This Collection\n\n## Retrieving Business Analytics Data\n1. Create a query using the 'Create Query' request with your GraphQL query\n2. Check query status using 'Get Query by ID' until processing is complete\n3. Get document details using 'Get Document' to obtain the download URL\n4. Download the data using the 'Download Document' request\n\n## Authentication\nThe collection automatically handles OAuth 2.0 authentication through pre-request scripts using the refresh token flow.\n\n# Important Notes\n- Queries are limited to 8,000 characters (excluding whitespace)\n- Download URLs expire after 5 minutes\n- Appropriate role access is required (e.g., Brand Analytics role for sales data)\n- Data is returned in JSONL format for successful queries",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38945322"
+	},
+	"item": [
+		{
+			"name": "Queries",
+			"item": [
+				{
+					"name": "List All Queries",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.get(\"oauth_url\"),",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/x-www-form-urlencoded',",
+									"        'Accept': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+									"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+									"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+									"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"access_token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries?processingStatuses={{processing_status}}&pageSize={{page_size}}&createdSince={{created_since}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dataKiosk",
+								"2023-11-15",
+								"queries"
+							],
+							"query": [
+								{
+									"key": "processingStatuses",
+									"value": "{{processing_status}}",
+									"description": "Filter queries by processing status"
+								},
+								{
+									"key": "pageSize",
+									"value": "{{page_size}}",
+									"description": "Number of results per page"
+								},
+								{
+									"key": "createdSince",
+									"value": "{{created_since}}",
+									"description": "Filter queries created since this date"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Query",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.get(\"oauth_url\"),",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/x-www-form-urlencoded',",
+									"        'Accept': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+									"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+									"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+									"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"access_token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\n  analytics_vendorAnalytics_2024_09_30 {\n    sourcingView(\n      startDate: \"2025-03-01\"\n      endDate: \"2025-03-31\"\n      aggregateBy: WEEK\n      currencyCode: \"USD\"\n    ) {\n      startDate\n      endDate\n      marketplaceId\n      totals {\n        shippedOrders {\n          shippedUnitsWithRevenue {\n            units\n            value {\n              amount\n              currencyCode\n            }\n          }\n          averageSellingPrice {\n            amount\n            currencyCode\n          }\n        }\n      }\n      metrics {\n        groupByKey {\n          asin\n          brandCode\n        }\n        metrics {\n          customerSatisfaction {\n            customerReturns\n          }\n          shippedOrders {\n            shippedUnitsWithRevenue {\n              units\n              value {\n                amount\n                currencyCode\n              }\n            }\n            averageSellingPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dataKiosk",
+								"2023-11-15",
+								"queries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Query Status",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.get(\"oauth_url\"),",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/x-www-form-urlencoded',",
+									"        'Accept': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'urlencoded',",
+									"        urlencoded: [",
+									"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+									"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+									"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+									"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+									"        ]",
+									"    }",
+									"}, function (err, res) {",
+									"    pm.environment.set(\"access_token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries/{{queryId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dataKiosk",
+								"2023-11-15",
+								"queries",
+								"{{queryId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Query",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries/{{query_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dataKiosk",
+								"2023-11-15",
+								"queries",
+								"{{query_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Manage GraphQL queries for retrieving business analytics data. This section contains endpoints for creating, monitoring, and canceling queries."
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Get Document Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/documents/{{document_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"dataKiosk",
+								"2023-11-15",
+								"documents",
+								"{{document_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Document Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{document_url}}",
+							"host": [
+								"{{document_url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Handle query result documents. Use these endpoints to retrieve document metadata and download the actual data content."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://sellingpartnerapi-na.amazon.com",
+			"type": "string"
+		},
+		{
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "client_secret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "oauth_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
