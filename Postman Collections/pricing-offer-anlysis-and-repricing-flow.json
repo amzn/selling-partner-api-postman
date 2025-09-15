@@ -1,0 +1,1080 @@
+{
+	"info": {
+		"_postman_id": "6346717d-5a0d-4f55-af6c-debb2a69707e",
+		"name": "[Pricing Flow] Offer Analysis & Repricing with the Competitive Summary",
+		"description": "## 👋 Introduction\n\nWelcome to Amazon's Collection for Pricing with Selling Partner APIs. This collection provides an easy setup to retrieve offers using the **getCompetitiveSummary** of the Product Pricing API v2022-05-01 and send price updates using the Listings API **patchListingsItem** operation.\n\n### 💡 Flows x Collection\n\nA flow comes with this collection: [[Pricing] Dashboard Prototype + Repricing](https://amazon-selling-partner-api.postman.co/workspace/SP-API~31be1efb-d4eb-4706-8b4c-7588e426cdb6/flow/672dfe7075516a22fad02fa1)\n\nWith the Pricing Flow you will be able to test the getCompetitiveSummary API, with the response create a simple dashboard, and finally we submit a price update for a SKU using the competitive price threshold. Collections contain all the requests and documentation associated with that API.\n\n### How to use the Pricing flow:\n\n1. Fork the [Flow](https://amazon-selling-partner-api.postman.co/workspace/SP-API~31be1efb-d4eb-4706-8b4c-7588e426cdb6/flow/672dfe7075516a22fad02fa1).\n    \n2. Make sure you set the environment for all REQUEST blocks (getCompetitiveSummary and patchListingsItem).\n    \n\n<img src=\"https://content.pstmn.io/e4bcbfd1-a42c-46e6-a1d1-fc37db2da72d/U2NyZWVuc2hvdCAyMDI0LTEwLTI5IGF0IDA4LjU4LjEyLnBuZw==\" width=\"295\" height=\"292\">\n\n3\\. In the getCompetitiveSummary block you should include the ASIN information and marketplace id (e.g. ATVPDKIKX0DER)\n\n<img src=\"https://content.pstmn.io/26e4d4cc-2832-4fc0-959f-89c3b5cc1f59/U2NyZWVuc2hvdCAyMDI0LTEwLTI5IGF0IDA5LjAwLjMyLnBuZw==\" width=\"242\" height=\"300\">\n\n4\\. Include the marketplace id (e.g. ATVPDKIKX0DER) and sellerId in Listings API as well:\n\n<img src=\"https://content.pstmn.io/d0ba4780-e270-4c50-92ea-06b7199135ff/U2NyZWVuc2hvdCAyMDI0LTEwLTI5IGF0IDE2LjQ2LjU5LnBuZw==\" width=\"238\" height=\"299\">\n\n5\\. Hit the **Run button** to test the flow.\n\n### **Reference** collections\n\nThese collections contain all the requests and documentation associated with the Pricing and Listings APIs. Please share this with customers to provide a comprehensive overview of our APIs and how to use them.\n\n## **🛟 Help and support**\n\nIf you are blocked or have any questions when using this workspace, please check out the following channels:\n\n- [SP-API Documentation.](https://developer-docs.amazon.com/sp-api)\n    \n- [SP-API Developer Community](https://github.com/amzn/selling-partner-api-samples/discussions).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listings/2021-08-01/items/{seller Id}/{sku}",
+			"item": [
+				{
+					"name": "patch Listings Item",
+					"id": "481562e0-85c4-447d-b237-58648b6899a4",
+					"protocolProfileBehavior": {
+						"disableUrlEncoding": false,
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"currency\": \"USD\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 10\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]    \n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId",
+								":sku"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}"
+								},
+								{
+									"key": "issueLocale",
+									"value": "en_US",
+									"disabled": true
+								},
+								{
+									"key": "includedData",
+									"value": "summaries,issues,offers,fulfillmentAvailability,attributes",
+									"disabled": true
+								},
+								{
+									"key": "mode",
+									"value": "VALIDATION_PREVIEW",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"id": "c3bc18ed-9f7c-45de-a57c-797366097df4",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								},
+								{
+									"id": "3a3a48c0-f75d-4d71-894d-3bc845fcecf3",
+									"key": "sku",
+									"value": "GM-ZDPI-9B4E",
+									"description": "(Required) A selling partner provided identifier for an Amazon listing."
+								}
+							]
+						},
+						"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md)."
+					},
+					"response": [
+						{
+							"id": "1aeb2622-a5bb-4059-a306-70738e47753e",
+							"name": "Successfully understood the listings item patch request. See the response to determine if the submission was accepted.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=A2Q3Y263D00KWC&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "A2Q3Y263D00KWC"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId",
+											"value": "AMY6FKRUBY7XV"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "pariatur proident",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"sku\": \"GM-ZDPI-9B4E\",\n \"status\": \"ACCEPTED\",\n \"submissionId\": \"f1dc2914-75dd-11ea-bc55-0242ac130003\",\n \"issues\": []\n}"
+						},
+						{
+							"id": "2061c4f3-35e0-4df4-87da-002c0573f481",
+							"name": "Request has missing or invalid parameters and cannot be parsed.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "pariatur proident",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "10c33379-21dd-4d6a-b2b9-7055fbb84d28",
+							"name": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "219744ea-2a95-4cff-ad87-132a83c22439",
+							"name": "The request size exceeded the maximum accepted size.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Request Entity Too Large",
+							"code": 413,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "744d08f1-0da0-40d2-b0d9-3c04a2dd3210",
+							"name": "The request payload is in an unsupported format.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "5d26945e-acbc-4788-9837-24d7d42ab3f5",
+							"name": "The frequency of requests was greater than allowed.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "64adff54-dfab-442c-9e46-63d31c2967e1",
+							"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						},
+						{
+							"id": "a909de2b-fd6c-4c8f-a7f1-27d3d7430807",
+							"name": "Temporary overloading or maintenance of the server.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"consequat commodo esse anim\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"ullamco Lorem\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=officia sit labore consectetur pariatur,laboris do deserunt&issueLocale=en_US",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "officia sit labore consectetur pariatur,laboris do deserunt"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "x-amzn-RequestId",
+									"value": "pariatur proident",
+									"description": "Unique request reference identifier."
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n \"errors\": [\n  {\n   \"code\": \"aute sint velit nulla ut\",\n   \"message\": \"Ut\",\n   \"details\": \"ut fugiat sit do sunt\"\n  },\n  {\n   \"code\": \"dolore\",\n   \"message\": \"elit dolor non\",\n   \"details\": \"quis ut non Excepteur s\"\n  }\n ]\n}"
+						}
+					]
+				}
+			],
+			"id": "cf007d84-0b23-4cac-8a2b-ac0e03d506e0"
+		},
+		{
+			"name": "pricing/v1",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "pricing",
+							"item": [
+								{
+									"name": "2022-05-01",
+									"item": [
+										{
+											"name": "items",
+											"item": [
+												{
+													"name": "competitiveSummary",
+													"item": [
+														{
+															"name": "get Competitive Summary",
+															"id": "3742b44f-83ff-4908-9c42-5779f663171d",
+															"protocolProfileBehavior": {
+																"disableBodyPruning": true
+															},
+															"request": {
+																"method": "POST",
+																"header": [
+																	{
+																		"key": "Content-Type",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "Accept",
+																		"value": "application/json"
+																	},
+																	{
+																		"key": "x-amz-access-token",
+																		"value": "{{access_token}}",
+																		"type": "text"
+																	}
+																],
+																"body": {
+																	"mode": "raw",
+																	"raw": "//The getCompetitiveSummary operation allows you to retrieve the current featured offers for a batch of items by ASIN. This operation allows up to 20 ASIN requests in a single batch. Call the getCompetitiveSummary operation, passing the following parameters:\n\n\n{\n  \"requests\": [\n    {\n      \"asin\": \"{{ASIN}}\",\n      \"marketplaceId\": \"{{marketplace}}\",\n      \"includedData\": [\n        \"featuredBuyingOptions\",\n        \"referencePrices\",\n        \"lowestPricedOffers\"\n      ],\n      \"method\": \"GET\",\n      \"uri\": \"/products/pricing/2022-05-01/items/competitiveSummary\"\n    }\n  ]\n}",
+																	"options": {
+																		"raw": {
+																			"headerFamily": "json",
+																			"language": "json"
+																		}
+																	}
+																},
+																"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary",
+																"description": "Returns the competitive summary response including featured buying options for the ASIN and `marketplaceId` combination.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.033 | 1 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+															},
+															"response": [
+																{
+																	"id": "3dbae26f-311e-41b5-941b-284d6f2d2f55",
+																	"name": "Success.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "OK",
+																	"code": 200,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RateLimit-Limit",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Your rate limit (requests per second) for this operation.",
+																				"type": "text/plain"
+																			}
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"responses\": [\n    {\n      \"status\": {\n        \"statusCode\": \"<integer>\",\n        \"reasonPhrase\": \"<string>\"\n      },\n      \"body\": {\n        \"asin\": \"<string>\",\n        \"marketplaceId\": \"<string>\",\n        \"featuredBuyingOptions\": [\n          {\n            \"buyingOptionType\": \"New\",\n            \"segmentedFeaturedOffers\": [\n              {\n                \"condition\": \"Collectible\",\n                \"featuredOfferSegments\": [\n                  {\n                    \"customerMembership\": \"NON_PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"customerMembership\": \"PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  }\n                ],\n                \"fulfillmentType\": \"AFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"sellerId\": \"<string>\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            ]\n          },\n          {\n            \"buyingOptionType\": \"New\",\n            \"segmentedFeaturedOffers\": [\n              {\n                \"condition\": \"Club\",\n                \"featuredOfferSegments\": [\n                  {\n                    \"customerMembership\": \"NON_PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"customerMembership\": \"NON_PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  }\n                ],\n                \"fulfillmentType\": \"MFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"sellerId\": \"<string>\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            ]\n          }\n        ],\n        \"errors\": {\n          \"errors\": [\n            {\n              \"code\": \"<string>\",\n              \"message\": \"<string>\",\n              \"details\": \"<string>\"\n            },\n            {\n              \"code\": \"<string>\",\n              \"message\": \"<string>\",\n              \"details\": \"<string>\"\n            }\n          ]\n        }\n      }\n    }\n  ]\n}"
+																},
+																{
+																	"id": "3d130eaa-398b-4cf0-ae72-c815f9795d81",
+																	"name": "Request has missing or invalid parameters and cannot be parsed.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Bad Request",
+																	"code": 400,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RateLimit-Limit",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Your rate limit (requests per second) for this operation.",
+																				"type": "text/plain"
+																			}
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																},
+																{
+																	"id": "19fa9533-87e5-40fd-95b9-dde05f20aa48",
+																	"name": "Indicates access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Forbidden",
+																	"code": 403,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																},
+																{
+																	"id": "24b2805b-13f5-43fc-9d38-0dc13a767a1b",
+																	"name": "The specified resource does not exist.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Not Found",
+																	"code": 404,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RateLimit-Limit",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Your rate limit (requests per second) for this operation.",
+																				"type": "text/plain"
+																			}
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																},
+																{
+																	"id": "982d9c54-f5f7-496b-af8c-ff1b23578b47",
+																	"name": "The frequency of requests was greater than allowed.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Too Many Requests",
+																	"code": 429,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																},
+																{
+																	"id": "1bcf0182-cd54-4c64-94a2-83db4506d879",
+																	"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Internal Server Error",
+																	"code": 500,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																},
+																{
+																	"id": "f74e3fbf-08e6-4589-a1f1-9118b54521ad",
+																	"name": "Temporary overloading or maintenance of the server.",
+																	"originalRequest": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "application/json"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"featuredBuyingOptions\"\n      ],\n      \"method\": \"PUT\",\n      \"uri\": \"<string>\"\n    }\n  ]\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+																	},
+																	"status": "Service Unavailable",
+																	"code": 503,
+																	"_postman_previewlanguage": "json",
+																	"header": [
+																		{
+																			"key": "Content-Type",
+																			"value": "application/json"
+																		},
+																		{
+																			"key": "x-amzn-RequestId",
+																			"value": "<string>",
+																			"description": {
+																				"content": "Unique request reference identifier.",
+																				"type": "text/plain"
+																			}
+																		}
+																	],
+																	"cookie": [],
+																	"responseTime": null,
+																	"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+																}
+															]
+														}
+													],
+													"id": "21bd3e2b-b483-4744-aacd-58f666a02878"
+												}
+											],
+											"id": "89d5c5bb-26b9-4525-ad8c-3f52e56d23fd"
+										}
+									],
+									"id": "8c36bb5e-81bf-4f1c-a20d-17b28d8a02b7"
+								}
+							],
+							"id": "adacad80-9d35-4014-8349-ade18dc91a6a"
+						}
+					],
+					"id": "710939cf-1beb-42d3-beba-d9de9eae0a23"
+				}
+			],
+			"id": "e727da82-83ca-46d6-b00f-0f90b11690d6"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				],
+				"id": "a9d04c42-8ab1-4621-98da-fca2c51ac2f5"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				],
+				"id": "c877dcdb-3bf1-4d80-a17a-4ca5eebc4606"
+			}
+		}
+	]
+}
