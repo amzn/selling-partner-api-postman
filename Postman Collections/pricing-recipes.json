@@ -1,0 +1,3403 @@
+{
+	"info": {
+		"_postman_id": "6194d02f-2201-4884-890b-b1cc1eeb086b",
+		"name": "[Pricing API] Recipes",
+		"description": "The Product Pricing API is designed to help you develop automated solutions that sellers can use to update and manage their prices. Building in automation for your sellers allows them to react faster to keep their prices competitive and attractive to customers.\n\n---\n\nMultiple tasks can be achieved using the Pricing APIs. This collection is a cheatsheet-like resource that guides you into how the API is used to execute changes such as:\n\n- Update price using sample location\n    \n- Get Amazon Featured Offer Expected Price for a batch of SKUs\n    \n\n**Authorization**\n\nThe APIs in this collection require the _**x-amz-access-token**_ header in order for SP-API to authorize requests. The collection comes with a pre-script which calls the OAuth API to retrieve the access token and then stores it in the _{{access_token}}_ variable.  \nThe `Environments` tab in this workspace comes with environments for each API region and can be used with this collection. Make sure to select or fork the environment and fill in the values.\n\n<img src=\"https://content.pstmn.io/3746c588-782a-42c6-ae31-b7eae6c23348/U2NyZWVuc2hvdCAyMDI1LTAxLTE0IGF0IDE2LjQyLjQzLnBuZw==\" width=\"155\" height=\"173\">\n\n**Variables**\n\nVariables configured for this collection are:\n\n- Authorization\n    \n    - client_id\n        \n    - client_secret\n        \n    - refresh_token\n        \n    - access_token\n        \n- Pricing recipes\n    \n    - sellerId\n        \n    - marketplace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Manage Amazon Automate Pricing Rules for an offer",
+			"item": [
+				{
+					"name": "Step 1: Retrieve seller Automated Pricing Rules",
+					"id": "628c19e5-d78c-4291-baa1-48e11cac1bb0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}&sellerId={{sellerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"definitions",
+								"2020-09-01",
+								"productTypes",
+								":productType"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}"
+								},
+								{
+									"key": "sellerId",
+									"value": "{{sellerId}}"
+								}
+							],
+							"variable": [
+								{
+									"id": "3304e4f1-5414-47ea-9b9a-b327be1b789c",
+									"key": "productType",
+									"value": "PRODUCT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 2: Assign Automated Pricing Rules",
+					"id": "d6e8d025-d2eb-445d-8b18-efccb656d4fb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"minimum_seller_allowed_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 70\n                                }\n                            ]\n                        }\n                    ],\n                    \"maximum_seller_allowed_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 130\n                                }\n                            ]\n                        }\n                    ],\n                    \"automated_pricing_merchandising_rule_plan\": [\n                        {\n                            \"merchandising_rule\": {\n                                \"rule_id\": \"YOUR-RULE-ID\"\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId",
+								":sku"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}",
+									"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+								},
+								{
+									"key": "issueLocale",
+									"value": "en_US",
+									"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+								}
+							],
+							"variable": [
+								{
+									"id": "c5d2a857-1327-4bb4-beff-9ca5717a41b0",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								},
+								{
+									"id": "d88328ed-caae-46ea-a243-27cf1dcba6f3",
+									"key": "sku",
+									"value": "THE-SKU",
+									"description": "(Required) A selling partner provided identifier for an Amazon listing."
+								}
+							]
+						},
+						"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+					},
+					"response": []
+				},
+				{
+					"name": "Step 3: Change Automated Pricing rules",
+					"id": "f02715a2-0a7f-4c65-9286-7fd2f9bd6952",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"currency\": \"USD\",\n                    \"automated_pricing_merchandising_rule_plan\": [\n                        {\n                            \"merchandising_rule\": {\n                                \"rule_id\": \"OTHER-RULE-ID\"\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId",
+								":sku"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}",
+									"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+								},
+								{
+									"key": "issueLocale",
+									"value": "en_US",
+									"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+								}
+							],
+							"variable": [
+								{
+									"id": "2c4e57fe-d08e-41bb-aba9-444d3e323e98",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								},
+								{
+									"id": "f30ab8f3-d1df-4789-8e94-865a19bb0417",
+									"key": "sku",
+									"value": "THE-SKU",
+									"description": "(Required) A selling partner provided identifier for an Amazon listing."
+								}
+							]
+						},
+						"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+					},
+					"response": []
+				},
+				{
+					"name": "Step 4: Remove Automated Pricing rules",
+					"id": "83e69b9c-2a1c-4759-a74f-99b77fbf931d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"currency\": \"USD\",\n                    \"automated_pricing_merchandising_rule_plan\": []\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId",
+								":sku"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}",
+									"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+								},
+								{
+									"key": "issueLocale",
+									"value": "en_US",
+									"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+								}
+							],
+							"variable": [
+								{
+									"id": "92d97541-71b5-4ed7-b935-fdd6d66418e3",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								},
+								{
+									"id": "08c1a694-4172-4700-8afd-23f7c10d5d04",
+									"key": "sku",
+									"value": "THE-SKU",
+									"description": "(Required) A selling partner provided identifier for an Amazon listing."
+								}
+							]
+						},
+						"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+					},
+					"response": []
+				}
+			],
+			"id": "809644f4-72b2-4085-b26c-967f6ace0d5c",
+			"description": "## Overview\n\nWith Definitions and Listings APIs you now can enroll sellers SKU into Amazon Automate Pricing rules tool. This gives the ability to leverage on Amazon repricing system.\n\n### Basic Workflow\n\n1. Call getDefinitionsProductType API to retrieve the sellers rules and fetch automated_pricing_merchandising_rule_plan from the product schema.\n    \n2. Extract the enum rules e.g. `328182282407-COMPETITIVE_BUYBOX` = `Competitive Price Rule by Amazon`\n    \n3. Assign the rule by using patchListingsItem, setting also Min and Max prices guardrails.\n    \n\nDocumentation details: [Manage automated pricing rules with SP-API](https://developer-docs.amazon.com/sp-api/docs/manage-automated-pricing-rules)"
+		},
+		{
+			"name": "Update Price Using Sample Location",
+			"item": [
+				{
+					"name": "Step 1: Identify highest GVWP location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"// Get all segments from the first featuredBuyingOptions",
+									"let allSegments = response.responses[0].body.featuredBuyingOptions[0].segmentedFeaturedOffers[0].featuredOfferSegments;",
+									"",
+									"// Filter and find max for PRIME segments",
+									"let primeSegments = allSegments.filter(segment => segment.customerMembership === \"PRIME\");",
+									"let primeMaxGlanceViewWeightPercentage = primeSegments.length > 0 ? Math.max(...primeSegments.map(segment => segment.segmentDetails.glanceViewWeightPercentage)) : 0;",
+									"",
+									"// Filter and find max for NON_PRIME segments",
+									"let nonPrimeSegments = allSegments.filter(segment => segment.customerMembership === \"NON_PRIME\");",
+									"let nonPrimeMaxGlanceViewWeightPercentage = nonPrimeSegments.length > 0 ? Math.max(...nonPrimeSegments.map(segment => segment.segmentDetails.glanceViewWeightPercentage)) : 0;",
+									"",
+									"// Find the postal code info for highest PRIME percentage",
+									"let primeSampleLocation = primeSegments.length > 0 ? primeSegments.find(segment => ",
+									"    segment.segmentDetails.glanceViewWeightPercentage === primeMaxGlanceViewWeightPercentage",
+									").segmentDetails.sampleLocation.postalCode : { countryCode: \"\", value: \"\" };",
+									"",
+									"// Find the postal code info for highest NON_PRIME percentage",
+									"let nonPrimeSampleLocation = nonPrimeSegments.length > 0 ? nonPrimeSegments.find(segment => ",
+									"    segment.segmentDetails.glanceViewWeightPercentage === nonPrimeMaxGlanceViewWeightPercentage",
+									").segmentDetails.sampleLocation.postalCode : { countryCode: \"\", value: \"\" };",
+									"",
+									"// Set environment variables",
+									"pm.environment.set(\"primeMaxGlanceViewWeightPostalCode\", primeSampleLocation.value);",
+									"pm.environment.set(\"primeMaxGlanceViewWeightCountryCode\", primeSampleLocation.countryCode);",
+									"pm.environment.set(\"nonPrimeMaxGlanceViewWeightPostalCode\", nonPrimeSampleLocation.value);",
+									"pm.environment.set(\"nonPrimeMaxGlanceViewWeightCountryCode\", nonPrimeSampleLocation.countryCode);",
+									"pm.environment.set(\"asin\", response.responses[0].body.asin);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"id": "b7d24d00-3813-441b-b5af-e1825890a5fa"
+							}
+						}
+					],
+					"id": "63838861-24fe-4f85-975e-e6b7ea7abe4d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"B099JVC9HL\",\n      \"marketplaceId\": \"{{marketplace}}\",\n      \"includedData\": [\n        \"featuredBuyingOptions\",\n        \"referencePrices\",\n        \"lowestPricedOffers\"\n      ],\n      \"method\": \"GET\",\n      \"uri\": \"/products/pricing/2022-05-01/items/competitiveSummary\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary",
+						"description": "Returns the competitive summary response, including featured buying options for the ASIN and `marketplaceId` combination.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.033 | 1 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API."
+					},
+					"response": [
+						{
+							"id": "253f1b09-268e-4d01-83ad-4ec6836e4e07",
+							"name": "Success.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"responses\": [\n    {\n      \"status\": {\n        \"statusCode\": \"<integer>\",\n        \"reasonPhrase\": \"<string>\"\n      },\n      \"body\": {\n        \"asin\": \"<string>\",\n        \"marketplaceId\": \"<string>\",\n        \"featuredBuyingOptions\": [\n          {\n            \"buyingOptionType\": \"New\",\n            \"segmentedFeaturedOffers\": [\n              {\n                \"condition\": \"Used\",\n                \"featuredOfferSegments\": [\n                  {\n                    \"customerMembership\": \"PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"customerMembership\": \"NON_PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  }\n                ],\n                \"fulfillmentType\": \"MFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"sellerId\": \"<string>\",\n                \"subCondition\": \"OpenBox\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                },\n                \"primeDetails\": {\n                  \"eligibility\": \"NONE\"\n                }\n              }\n            ]\n          },\n          {\n            \"buyingOptionType\": \"New\",\n            \"segmentedFeaturedOffers\": [\n              {\n                \"condition\": \"Collectible\",\n                \"featuredOfferSegments\": [\n                  {\n                    \"customerMembership\": \"NON_PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"customerMembership\": \"PRIME\",\n                    \"segmentDetails\": {\n                      \"glanceViewWeightPercentage\": \"<number>\"\n                    }\n                  }\n                ],\n                \"fulfillmentType\": \"MFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"sellerId\": \"<string>\",\n                \"subCondition\": \"Acceptable\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                },\n                \"primeDetails\": {\n                  \"eligibility\": \"NONE\"\n                }\n              }\n            ]\n          }\n        ],\n        \"lowestPricedOffers\": [\n          {\n            \"lowestPricedOffersInput\": {\n              \"itemCondition\": \"New\",\n              \"offerType\": \"CONSUMER\"\n            },\n            \"offers\": [\n              {\n                \"sellerId\": \"<string>\",\n                \"condition\": \"Refurbished\",\n                \"fulfillmentType\": \"AFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"subCondition\": \"Good\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                },\n                \"primeDetails\": {\n                  \"eligibility\": \"REGIONAL\"\n                }\n              }\n            ]\n          },\n          {\n            \"lowestPricedOffersInput\": {\n              \"itemCondition\": \"Used\",\n              \"offerType\": \"CONSUMER\"\n            },\n            \"offers\": [\n              {\n                \"sellerId\": \"<string>\",\n                \"condition\": \"Used\",\n                \"fulfillmentType\": \"AFN\",\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"subCondition\": \"VeryGood\",\n                \"shippingOptions\": [\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  },\n                  {\n                    \"shippingOptionType\": \"DEFAULT\",\n                    \"price\": {\n                      \"currencyCode\": \"<string>\",\n                      \"amount\": \"<number>\"\n                    }\n                  }\n                ],\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                },\n                \"primeDetails\": {\n                  \"eligibility\": \"NATIONAL\"\n                }\n              }\n            ]\n          }\n        ],\n        \"referencePrices\": [\n          {\n            \"name\": \"<string>\",\n            \"price\": {\n              \"currencyCode\": \"<string>\",\n              \"amount\": \"<number>\"\n            }\n          },\n          {\n            \"name\": \"<string>\",\n            \"price\": {\n              \"currencyCode\": \"<string>\",\n              \"amount\": \"<number>\"\n            }\n          }\n        ],\n        \"errors\": [\n          {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n          },\n          {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ]\n}"
+						},
+						{
+							"id": "d28cda91-916d-4433-baa2-3ed02fc984bd",
+							"name": "Request has missing or invalid parameters and cannot be parsed.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "211c4162-0415-47e5-8134-d63c2b5aafed",
+							"name": "Indicates access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "d65d3e56-db3e-4b3f-acfe-ada47ec13faf",
+							"name": "The specified resource does not exist.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "6e2f3d1e-03d6-480e-a005-f3a545bf91ff",
+							"name": "The frequency of requests was greater than allowed.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "51bd55e6-c491-4cec-b736-fac4dc611291",
+							"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "404e0fa9-d1ef-4453-9be1-2da3bdc77609",
+							"name": "Temporary overloading or maintenance of the server.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"asin\": \"<string>\",\n      \"marketplaceId\": \"<string>\",\n      \"includedData\": [\n        \"referencePrices\"\n      ],\n      \"method\": \"DELETE\",\n      \"uri\": \"<string>\",\n      \"lowestPricedOffersInputs\": [\n        {\n          \"itemCondition\": \"Collectible\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Club\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Used\",\n          \"offerType\": \"CONSUMER\"\n        },\n        {\n          \"itemCondition\": \"Refurbished\",\n          \"offerType\": \"CONSUMER\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/items/competitiveSummary"
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Step 2: Find SKU for ASIN from step 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"",
+									"// Save SKU as environment variable",
+									"pm.environment.set(\"sku\", response.items[0].sku);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"id": "e34b7a48-7265-45bc-be4c-7b69d2297517"
+							}
+						}
+					],
+					"id": "964ff7bb-f464-4338-9f8d-fa9d004370bd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}&includedData=summaries&identifiersType=ASIN&identifiers=B099JVC9HL",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}",
+									"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+								},
+								{
+									"key": "issueLocale",
+									"value": "<string>",
+									"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\".",
+									"disabled": true
+								},
+								{
+									"key": "includedData",
+									"value": "summaries",
+									"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+								},
+								{
+									"key": "identifiersType",
+									"value": "ASIN",
+									"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+								},
+								{
+									"key": "variationParentSku",
+									"value": "<string>",
+									"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request.",
+									"disabled": true
+								},
+								{
+									"key": "packageHierarchySku",
+									"value": "<string>",
+									"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request.",
+									"disabled": true
+								},
+								{
+									"key": "createdAfter",
+									"value": "<dateTime>",
+									"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+									"disabled": true
+								},
+								{
+									"key": "createdBefore",
+									"value": "<dateTime>",
+									"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+									"disabled": true
+								},
+								{
+									"key": "lastUpdatedAfter",
+									"value": "<dateTime>",
+									"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+									"disabled": true
+								},
+								{
+									"key": "lastUpdatedBefore",
+									"value": "<dateTime>",
+									"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.",
+									"disabled": true
+								},
+								{
+									"key": "withIssueSeverity",
+									"value": "ERROR,ERROR",
+									"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels.",
+									"disabled": true
+								},
+								{
+									"key": "withStatus",
+									"value": "BUYABLE,BUYABLE",
+									"description": "Filter results to include only listing items that have the specified status.",
+									"disabled": true
+								},
+								{
+									"key": "withoutStatus",
+									"value": "BUYABLE,BUYABLE",
+									"description": "Filter results to include only listing items that don't contain the specified statuses.",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "lastUpdatedDate",
+									"description": "An attribute by which to sort the returned listing items.",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC",
+									"description": "The order in which to sort the result items.",
+									"disabled": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"description": "The number of results that you want to include on each page.",
+									"disabled": true
+								},
+								{
+									"key": "pageToken",
+									"value": "<string>",
+									"description": "A token that you can use to fetch a specific page when there are multiple pages of results.",
+									"disabled": true
+								},
+								{
+									"key": "identifiers",
+									"value": "B099JVC9HL"
+								}
+							],
+							"variable": [
+								{
+									"id": "80b6ecaa-e510-43d1-8ff7-2cf42cdd5b09",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								}
+							]
+						},
+						"description": "Search for and return a list of selling partner listings items and their respective details.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 5 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput might have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+					},
+					"response": [
+						{
+							"id": "d5cb14ca-f39e-4caf-ba96-5271e505aab6",
+							"name": "Success.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"numberOfResults\": \"<integer>\",\n  \"items\": [\n    {\n      \"sku\": \"<string>\",\n      \"summaries\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\",\n          \"status\": [\n            \"BUYABLE\",\n            \"BUYABLE\"\n          ],\n          \"createdDate\": \"<dateTime>\",\n          \"lastUpdatedDate\": \"<dateTime>\",\n          \"asin\": \"<string>\",\n          \"conditionType\": \"used_acceptable\",\n          \"fnSku\": \"<string>\",\n          \"itemName\": \"<string>\",\n          \"mainImage\": {\n            \"link\": \"<string>\",\n            \"height\": \"<integer>\",\n            \"width\": \"<integer>\"\n          }\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\",\n          \"status\": [\n            \"BUYABLE\",\n            \"DISCOVERABLE\"\n          ],\n          \"createdDate\": \"<dateTime>\",\n          \"lastUpdatedDate\": \"<dateTime>\",\n          \"asin\": \"<string>\",\n          \"conditionType\": \"used_good\",\n          \"fnSku\": \"<string>\",\n          \"itemName\": \"<string>\",\n          \"mainImage\": {\n            \"link\": \"<string>\",\n            \"height\": \"<integer>\",\n            \"width\": \"<integer>\"\n          }\n        }\n      ],\n      \"attributes\": {\n        \"proident67f\": \"consectetur in laboris est et\",\n        \"veniam_41d\": 43973550.16921589,\n        \"do__\": -75455684.33694349\n      },\n      \"issues\": [\n        {\n          \"code\": \"<string>\",\n          \"message\": \"<string>\",\n          \"severity\": \"WARNING\",\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"attributeNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"enforcements\": {\n            \"actions\": [\n              {\n                \"action\": \"<string>\"\n              },\n              {\n                \"action\": \"<string>\"\n              }\n            ],\n            \"exemption\": {\n              \"status\": \"EXEMPT\",\n              \"expiryDate\": \"<dateTime>\"\n            }\n          }\n        },\n        {\n          \"code\": \"<string>\",\n          \"message\": \"<string>\",\n          \"severity\": \"ERROR\",\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"attributeNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"enforcements\": {\n            \"actions\": [\n              {\n                \"action\": \"<string>\"\n              },\n              {\n                \"action\": \"<string>\"\n              }\n            ],\n            \"exemption\": {\n              \"status\": \"NOT_EXEMPT\",\n              \"expiryDate\": \"<dateTime>\"\n            }\n          }\n        }\n      ],\n      \"offers\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"offerType\": \"B2C\",\n          \"price\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          },\n          \"points\": {\n            \"pointsNumber\": \"<integer>\"\n          },\n          \"audience\": {\n            \"value\": \"<string>\",\n            \"displayName\": \"<string>\"\n          }\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"offerType\": \"B2C\",\n          \"price\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          },\n          \"points\": {\n            \"pointsNumber\": \"<integer>\"\n          },\n          \"audience\": {\n            \"value\": \"<string>\",\n            \"displayName\": \"<string>\"\n          }\n        }\n      ],\n      \"fulfillmentAvailability\": [\n        {\n          \"fulfillmentChannelCode\": \"<string>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"fulfillmentChannelCode\": \"<string>\",\n          \"quantity\": \"<integer>\"\n        }\n      ],\n      \"procurement\": [\n        {\n          \"costPrice\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          }\n        },\n        {\n          \"costPrice\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          }\n        }\n      ],\n      \"relationships\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"relationships\": [\n            {\n              \"type\": \"PACKAGE_HIERARCHY\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            },\n            {\n              \"type\": \"PACKAGE_HIERARCHY\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            }\n          ]\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"relationships\": [\n            {\n              \"type\": \"PACKAGE_HIERARCHY\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            },\n            {\n              \"type\": \"PACKAGE_HIERARCHY\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"productTypes\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\"\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"sku\": \"<string>\",\n      \"summaries\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\",\n          \"status\": [\n            \"DISCOVERABLE\",\n            \"BUYABLE\"\n          ],\n          \"createdDate\": \"<dateTime>\",\n          \"lastUpdatedDate\": \"<dateTime>\",\n          \"asin\": \"<string>\",\n          \"conditionType\": \"new_new\",\n          \"fnSku\": \"<string>\",\n          \"itemName\": \"<string>\",\n          \"mainImage\": {\n            \"link\": \"<string>\",\n            \"height\": \"<integer>\",\n            \"width\": \"<integer>\"\n          }\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\",\n          \"status\": [\n            \"DISCOVERABLE\",\n            \"BUYABLE\"\n          ],\n          \"createdDate\": \"<dateTime>\",\n          \"lastUpdatedDate\": \"<dateTime>\",\n          \"asin\": \"<string>\",\n          \"conditionType\": \"club_club\",\n          \"fnSku\": \"<string>\",\n          \"itemName\": \"<string>\",\n          \"mainImage\": {\n            \"link\": \"<string>\",\n            \"height\": \"<integer>\",\n            \"width\": \"<integer>\"\n          }\n        }\n      ],\n      \"attributes\": {\n        \"qui02a\": 46091119.70928869,\n        \"Excepteur_f5\": 82620546\n      },\n      \"issues\": [\n        {\n          \"code\": \"<string>\",\n          \"message\": \"<string>\",\n          \"severity\": \"INFO\",\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"attributeNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"enforcements\": {\n            \"actions\": [\n              {\n                \"action\": \"<string>\"\n              },\n              {\n                \"action\": \"<string>\"\n              }\n            ],\n            \"exemption\": {\n              \"status\": \"NOT_EXEMPT\",\n              \"expiryDate\": \"<dateTime>\"\n            }\n          }\n        },\n        {\n          \"code\": \"<string>\",\n          \"message\": \"<string>\",\n          \"severity\": \"WARNING\",\n          \"categories\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"attributeNames\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"enforcements\": {\n            \"actions\": [\n              {\n                \"action\": \"<string>\"\n              },\n              {\n                \"action\": \"<string>\"\n              }\n            ],\n            \"exemption\": {\n              \"status\": \"EXEMPT\",\n              \"expiryDate\": \"<dateTime>\"\n            }\n          }\n        }\n      ],\n      \"offers\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"offerType\": \"B2C\",\n          \"price\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          },\n          \"points\": {\n            \"pointsNumber\": \"<integer>\"\n          },\n          \"audience\": {\n            \"value\": \"<string>\",\n            \"displayName\": \"<string>\"\n          }\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"offerType\": \"B2C\",\n          \"price\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          },\n          \"points\": {\n            \"pointsNumber\": \"<integer>\"\n          },\n          \"audience\": {\n            \"value\": \"<string>\",\n            \"displayName\": \"<string>\"\n          }\n        }\n      ],\n      \"fulfillmentAvailability\": [\n        {\n          \"fulfillmentChannelCode\": \"<string>\",\n          \"quantity\": \"<integer>\"\n        },\n        {\n          \"fulfillmentChannelCode\": \"<string>\",\n          \"quantity\": \"<integer>\"\n        }\n      ],\n      \"procurement\": [\n        {\n          \"costPrice\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          }\n        },\n        {\n          \"costPrice\": {\n            \"amount\": \"<string>\",\n            \"currencyCode\": \"<string>\"\n          }\n        }\n      ],\n      \"relationships\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"relationships\": [\n            {\n              \"type\": \"VARIATION\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            },\n            {\n              \"type\": \"VARIATION\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            }\n          ]\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"relationships\": [\n            {\n              \"type\": \"VARIATION\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            },\n            {\n              \"type\": \"PACKAGE_HIERARCHY\",\n              \"childSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"parentSkus\": [\n                \"<string>\",\n                \"<string>\"\n              ],\n              \"variationTheme\": {\n                \"attributes\": [\n                  \"<string>\",\n                  \"<string>\"\n                ],\n                \"theme\": \"<string>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"productTypes\": [\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\"\n        },\n        {\n          \"marketplaceId\": \"<string>\",\n          \"productType\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"nextToken\": \"<string>\",\n    \"previousToken\": \"<string>\"\n  }\n}"
+						},
+						{
+							"id": "8eef3322-f8c4-4fb7-9c11-0184e0691d58",
+							"name": "Request has missing or invalid parameters and cannot be parsed.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "41a3a61f-784a-478f-8297-3afdb8122051",
+							"name": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "b83f8708-46dc-4999-bb4e-80edc3a1ed45",
+							"name": "The resource specified does not exist.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "3eb9a06c-77ce-4892-8d9d-5cf71eaccd2b",
+							"name": "The request size exceeded the maximum accepted size.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Request Entity Too Large",
+							"code": 413,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "219d26db-8b64-4134-95a3-f179e04b2d47",
+							"name": "The request payload is in an unsupported format.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "6c727f0f-c9f4-4f07-8b25-6de6dcd82e9e",
+							"name": "The frequency of requests was greater than allowed.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "cd0ab0ae-896d-42b0-aa17-32435a320f74",
+							"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "81681331-abb4-4b6b-becf-099f912e661c",
+							"name": "Temporary overloading or maintenance of the server.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds=<string>&issueLocale=<string>&includedData=summaries&identifiers=<string>,<string>&identifiersType=UPC&variationParentSku=<string>&packageHierarchySku=<string>&createdAfter=<dateTime>&createdBefore=<dateTime>&lastUpdatedAfter=<dateTime>&lastUpdatedBefore=<dateTime>&withIssueSeverity=ERROR,ERROR&withStatus=BUYABLE,BUYABLE&withoutStatus=BUYABLE,BUYABLE&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10&pageToken=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". When a localization is not available in the specified locale, localized messages default to \"en_US\"."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of datasets that you want to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiers",
+											"value": "<string>,<string>",
+											"description": "A comma-delimited list of product identifiers that you can use to search for listings items. \n\n**Note**: \n1. This is required when you specify `identifiersType`.\n2. You cannot use 'identifiers' if you specify `variationParentSku` or `packageHierarchySku`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "UPC",
+											"description": "A type of product identifiers that you can use to search for listings items. \n\n**Note**: \nThis is required when `identifiers` is provided."
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<string>",
+											"description": "Filters results to include listing items that are variation children of the specified SKU. \n\n**Note**: You cannot use `variationParentSku` if you include `identifiers` or `packageHierarchySku` in your request."
+										},
+										{
+											"key": "packageHierarchySku",
+											"value": "<string>",
+											"description": "Filter results to include listing items that contain or are contained by the specified SKU. \n\n**Note**: You cannot use `packageHierarchySku` if you include `identifiers` or `variationParentSku` in your request."
+										},
+										{
+											"key": "createdAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "createdBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were created at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedAfter",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or after this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "<dateTime>",
+											"description": "A date-time that is used to filter listing items. The response includes listings items that were last updated at or before this time. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format."
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR,ERROR",
+											"description": "Filter results to include only listing items that have issues that match one or more of the specified severity levels."
+										},
+										{
+											"key": "withStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that have the specified status."
+										},
+										{
+											"key": "withoutStatus",
+											"value": "BUYABLE,BUYABLE",
+											"description": "Filter results to include only listing items that don't contain the specified statuses."
+										},
+										{
+											"key": "sortBy",
+											"value": "lastUpdatedDate",
+											"description": "An attribute by which to sort the returned listing items."
+										},
+										{
+											"key": "sortOrder",
+											"value": "DESC",
+											"description": "The order in which to sort the result items."
+										},
+										{
+											"key": "pageSize",
+											"value": "10",
+											"description": "The number of results that you want to include on each page."
+										},
+										{
+											"key": "pageToken",
+											"value": "<string>",
+											"description": "A token that you can use to fetch a specific page when there are multiple pages of results."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										}
+									]
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Step 3: Check Featured Offer Expected Price from highest GVWP location",
+					"id": "b57f2950-9549-4069-8435-bdbdc235eaa6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"{{marketplace}}\",\n      \"sku\": \"{{sku}}\",\n      \"segment\": {\n        \"segmentDetails\": {\n          \"sampleLocation\": {\n            \"postalCode\": {\n              \"countryCode\": \"{{primeMaxGlanceViewWeightCountryCode}}\",\n              \"value\": \"{{primeMaxGlanceViewWeightPostalCode}}\"\n            }\n          }\n        }\n      },\n          \"method\": \"GET\",\n      \"uri\": \"/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice\"\n    }  \n  ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice",
+						"description": "Returns the set of responses that correspond to the batched list of up to 40 requests defined in the request body. The response for each successful (HTTP status code 200) request in the set includes the computed listing price at or below which a seller can expect to become the featured offer (before applicable promotions). This is called the featured offer expected price (FOEP). Featured offer is not guaranteed because competing offers might change. Other offers might be featured based on factors such as fulfillment capabilities to a specific customer. The response to an unsuccessful request includes the available error text.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.033 | 1 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API."
+					},
+					"response": [
+						{
+							"id": "046c9f21-eb3f-4ec6-b879-dd181b187870",
+							"name": "Success.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"responses\": [\n    {\n      \"headers\": {\n        \"adipisicing__39\": \"<string>\",\n        \"cupidatat47\": \"<string>\",\n        \"amet5\": \"<string>\"\n      },\n      \"request\": {\n        \"marketplaceId\": \"<string>\",\n        \"sku\": \"<string>\"\n      },\n      \"status\": {\n        \"statusCode\": \"<integer>\",\n        \"reasonPhrase\": \"<string>\"\n      },\n      \"body\": {\n        \"offerIdentifier\": {\n          \"marketplaceId\": \"<string>\",\n          \"asin\": \"<string>\",\n          \"sellerId\": \"<string>\",\n          \"sku\": \"<string>\",\n          \"fulfillmentType\": \"MFN\"\n        },\n        \"featuredOfferExpectedPriceResults\": [\n          {\n            \"resultStatus\": \"<string>\",\n            \"featuredOfferExpectedPrice\": {\n              \"listingPrice\": {\n                \"currencyCode\": \"<string>\",\n                \"amount\": \"<number>\"\n              },\n              \"points\": {\n                \"pointsNumber\": \"<integer>\",\n                \"pointsMonetaryValue\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                }\n              }\n            },\n            \"competingFeaturedOffer\": {\n              \"offerIdentifier\": {\n                \"marketplaceId\": \"<string>\",\n                \"asin\": \"<string>\",\n                \"sellerId\": \"<string>\",\n                \"sku\": \"<string>\",\n                \"fulfillmentType\": \"MFN\"\n              },\n              \"condition\": \"Collectible\",\n              \"price\": {\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"shippingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            },\n            \"currentFeaturedOffer\": {\n              \"offerIdentifier\": {\n                \"marketplaceId\": \"<string>\",\n                \"asin\": \"<string>\",\n                \"sellerId\": \"<string>\",\n                \"sku\": \"<string>\",\n                \"fulfillmentType\": \"AFN\"\n              },\n              \"condition\": \"Refurbished\",\n              \"price\": {\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"shippingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            }\n          },\n          {\n            \"resultStatus\": \"<string>\",\n            \"featuredOfferExpectedPrice\": {\n              \"listingPrice\": {\n                \"currencyCode\": \"<string>\",\n                \"amount\": \"<number>\"\n              },\n              \"points\": {\n                \"pointsNumber\": \"<integer>\",\n                \"pointsMonetaryValue\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                }\n              }\n            },\n            \"competingFeaturedOffer\": {\n              \"offerIdentifier\": {\n                \"marketplaceId\": \"<string>\",\n                \"asin\": \"<string>\",\n                \"sellerId\": \"<string>\",\n                \"sku\": \"<string>\",\n                \"fulfillmentType\": \"MFN\"\n              },\n              \"condition\": \"Collectible\",\n              \"price\": {\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"shippingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            },\n            \"currentFeaturedOffer\": {\n              \"offerIdentifier\": {\n                \"marketplaceId\": \"<string>\",\n                \"asin\": \"<string>\",\n                \"sellerId\": \"<string>\",\n                \"sku\": \"<string>\",\n                \"fulfillmentType\": \"AFN\"\n              },\n              \"condition\": \"Used\",\n              \"price\": {\n                \"listingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"shippingPrice\": {\n                  \"currencyCode\": \"<string>\",\n                  \"amount\": \"<number>\"\n                },\n                \"points\": {\n                  \"pointsNumber\": \"<integer>\",\n                  \"pointsMonetaryValue\": {\n                    \"currencyCode\": \"<string>\",\n                    \"amount\": \"<number>\"\n                  }\n                }\n              }\n            }\n          }\n        ],\n        \"errors\": [\n          {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n          },\n          {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ]\n}"
+						},
+						{
+							"id": "bfe8124e-1d55-4d6f-891d-77414fe993be",
+							"name": "Request has missing or invalid parameters and cannot be parsed.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "f24e7cda-17fb-4517-908b-0e5911986708",
+							"name": "The request's Authorization header is not formatted correctly or does not contain a valid token.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "b9a297d2-19d1-487e-a7a4-009912aa030a",
+							"name": "Indicates access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "f0c77db6-2415-438a-b720-a70837037921",
+							"name": "The specified resource does not exist.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "2d173476-1195-4f85-a7f0-7511666d2eed",
+							"name": "The frequency of requests was greater than allowed.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "83bee977-2dfd-417d-b537-9ed041de3b64",
+							"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "68d3060e-4353-4109-9c74-953099fd3965",
+							"name": "Temporary overloading or maintenance of the server.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"requests\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"method\": \"PATCH\",\n      \"sku\": \"<string>\",\n      \"uri\": \"<string>\",\n      \"body\": {},\n      \"headers\": {\n        \"reprehenderit_c2\": \"<string>\",\n        \"ad2e0\": \"<string>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Step 4: Update Price",
+					"id": "5fa699d2-0e3b-4cab-888d-27c0ede1f2b4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 9.99\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&includedData=&mode=&issueLocale=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"listings",
+								"2021-08-01",
+								"items",
+								":sellerId",
+								":sku"
+							],
+							"query": [
+								{
+									"key": "marketplaceIds",
+									"value": "{{marketplace}}",
+									"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+								},
+								{
+									"key": "includedData",
+									"value": "",
+									"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+								},
+								{
+									"key": "mode",
+									"value": "",
+									"description": "The mode of operation for the request."
+								},
+								{
+									"key": "issueLocale",
+									"value": "",
+									"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+								}
+							],
+							"variable": [
+								{
+									"id": "37450f45-2732-4dee-9bc0-4cf6ff9f4723",
+									"key": "sellerId",
+									"value": "{{sellerId}}",
+									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+								},
+								{
+									"id": "54ee05f6-4c9a-4175-afcd-5e365d888330",
+									"key": "sku",
+									"value": "",
+									"description": "(Required) A selling partner provided identifier for an Amazon listing."
+								}
+							]
+						},
+						"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** This operation has a throttling rate of one request per second when `mode` is `VALIDATION_PREVIEW`.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+					},
+					"response": [
+						{
+							"id": "37e9f9e1-601d-4cab-b122-7bb58c2cf549",
+							"name": "Successfully understood the listings item patch request. See the response to determine if the submission was accepted.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"sku\": \"<string>\",\n  \"status\": \"INVALID\",\n  \"submissionId\": \"<string>\",\n  \"issues\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"severity\": \"INFO\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributeNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"enforcements\": {\n        \"actions\": [\n          {\n            \"action\": \"<string>\"\n          },\n          {\n            \"action\": \"<string>\"\n          }\n        ],\n        \"exemption\": {\n          \"status\": \"EXEMPT_UNTIL_EXPIRY_DATE\",\n          \"expiryDate\": \"<dateTime>\"\n        }\n      }\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"severity\": \"WARNING\",\n      \"categories\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"attributeNames\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"enforcements\": {\n        \"actions\": [\n          {\n            \"action\": \"<string>\"\n          },\n          {\n            \"action\": \"<string>\"\n          }\n        ],\n        \"exemption\": {\n          \"status\": \"EXEMPT\",\n          \"expiryDate\": \"<dateTime>\"\n        }\n      }\n    }\n  ],\n  \"identifiers\": [\n    {\n      \"marketplaceId\": \"<string>\",\n      \"asin\": \"<string>\"\n    },\n    {\n      \"marketplaceId\": \"<string>\",\n      \"asin\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "fe6a0219-3df5-483b-96c7-3ea0a22cd9b3",
+							"name": "Request has missing or invalid parameters and cannot be parsed.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RateLimit-Limit",
+									"value": "<string>",
+									"description": "Your rate limit (requests per second) for this operation."
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "770b2cc4-ed0a-45ca-afab-211716b6cd64",
+							"name": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "08a5f9cd-fc76-4805-90a9-57fe3b7550ec",
+							"name": "The request size exceeded the maximum accepted size.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Request Entity Too Large",
+							"code": 413,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "cfaf5940-98ac-4cee-8e11-6887df4fe351",
+							"name": "The request payload is in an unsupported format.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "1641bef7-f80f-4252-a40f-9a3e31b02b84",
+							"name": "The frequency of requests was greater than allowed.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "6b8f4c2e-bc63-4817-b84c-935d1284469e",
+							"name": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						},
+						{
+							"id": "42b4eeec-ee71-4307-99aa-7382454ec857",
+							"name": "Temporary overloading or maintenance of the server.",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"productType\": \"<string>\",\n  \"patches\": [\n    {\n      \"op\": \"replace\",\n      \"path\": \"<string>\",\n      \"value\": [\n        {\n          \"doloref9f\": \"Duis voluptate\"\n        },\n        {\n          \"proidentf2\": false\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds=<string>,<string>&includedData=issues&mode=VALIDATION_PREVIEW&issueLocale=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "<string>,<string>",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `issues`."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW",
+											"description": "The mode of operation for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "<string>",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"key": "sellerId"
+										},
+										{
+											"key": "sku"
+										}
+									]
+								}
+							},
+							"status": "Service Unavailable",
+							"code": 503,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "x-amzn-RequestId",
+									"value": "<string>",
+									"description": "Unique request reference identifier."
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n  \"errors\": [\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"code\": \"<string>\",\n      \"message\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			],
+			"id": "a50eb0a7-f8e4-4f7b-adb8-ad1a63bea45c",
+			"description": "## Overview\n\nThe getCompetitiveSummary operation returns multiple postal codes with their associated Glance View Weight Percentage values which indicates the percentage of total glance views for an ASIN in that location, helping you identify where customer interest is highest.\n\nUsing this concept this use case will focus on how you can get featured offer expected price, based on a location where there are more glance view weight percentages.\n\n### Basic Workflow\n\n1. Call getCompetitiveSummary with an ASIN to analyze the Glance View Weight Percentage (GVWP) by location\n    \n2. Extract the postal code from the segment with the highest GVWP\n    \n3. Use that postal code to call getFeaturedOfferExpectedPriceBatch to get location-specific pricing.\n    \n4. Adjust prices using patchListingsItem based on the response from getFeaturedOfferExpectedPriceBatch"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"//retrieve and store access tokens using the authentication endpoint",
+					"//the access_token variable is then referenced in the x-amz-access-token header.",
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				],
+				"id": "b8ce9874-17e2-4522-b708-0b79a522f12b"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				],
+				"id": "0a55eea2-2d4f-45b8-874b-3a6cc49b9fb2"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "primeMaxGlanceViewWeightPostalCode",
+			"value": ""
+		},
+		{
+			"key": "primeMaxGlanceViewWeightCountryCode",
+			"value": ""
+		},
+		{
+			"key": "nonPrimeMaxGlanceViewWeightPostalCode",
+			"value": ""
+		},
+		{
+			"key": "nonPrimeMaxGlanceViewWeightCountryCode",
+			"value": ""
+		},
+		{
+			"key": "asin",
+			"value": ""
+		}
+	]
+}
