@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "8116148d-6488-45ca-bd48-dc3c81280f17",
+		"name": "[Data Kiosk Flow] Generate Analytics Report",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create New Query",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7e56ae7-9c89-4694-a0c5-7ee4cbb10848",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"oauth_url\"),",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/x-www-form-urlencoded',",
+							"        'Accept': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'urlencoded',",
+							"        urlencoded: [",
+							"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+							"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+							"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+							"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+							"        ]",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().access_token);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "45831afd-ef69-43fc-b7b7-17df2731ee4f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql"
+				},
+				"url": "{{baseUrl}}/dataKiosk/2023-11-15/queries"
+			},
+			"response": []
+		},
+		{
+			"name": "Check Query Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2534dc87-e831-417c-96d0-29a7fda52a05",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"oauth_url\"),",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/x-www-form-urlencoded',",
+							"        'Accept': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'urlencoded',",
+							"        urlencoded: [",
+							"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+							"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+							"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+							"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+							"        ]",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().access_token);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "2c6a0428-02e2-4f7a-b865-93fe163431d5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/dataKiosk/2023-11-15/queries/{{queryId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Document Details",
+			"id": "59a1ff0d-8a5d-46df-8c9e-2122c9271a3d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/dataKiosk/2023-11-15/documents/{{document_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Download Document Content",
+			"id": "e9dabfb3-3d0e-47ee-b194-21b047d77505",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{document_url}}"
+			},
+			"response": []
+		}
+	]
+}
