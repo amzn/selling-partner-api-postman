@@ -1,0 +1,491 @@
+{
+	"info": {
+		"_postman_id": "258343cd-5855-4bf6-a22c-b3a012a4bcb7",
+		"name": "[Inventory] Multi-Location Inventory Flow",
+		"description": "## 🚚 What is Multi-Location Inventory (MLI)?\n\nMulti-Location Inventory (MLI) is part of the FBM and allows sellers to provide **location-level inventory data** to Amazon. By sharing stock per location, sellers can:\n\n- Show **accurate delivery estimates** to customers.\n    \n- **Optimize fulfillment** by selecting the nearest inventory location.\n    \n- Maintain **precise stock visibility** across multiple sites.\n    \n- Supply Sources = Inventory Locations\n    \n\nMLI integrates with **Shipping Settings Automation (SSA)** and requires shipping templates to be created and assigned in Seller Central.\n\n> 🎥 Find more information on MLI [here](https://sell.amazon.com/programs/multi-location-inventory). \n  \n\n---\n\n## 🏬 How MLI Helps Sellers\n\nMLI ensures sellers:\n\n- **Improved delivery promises** → Customers see realistic timelines → Better **customer trust** through transparent inventory availability.\n    \n- **Optimized operations** → Orders can be routed to the most efficient supply source → Higher **on-time delivery rates** with accurate SSA-based shipping promises.\n    \n- **Accurate stock management** → Avoids overselling by syncing per-location inventory → **Reduced cancellations and returns** due to mismatched stock information.\n    \n\n---\n\n## 🔑 Key APIs in the MLI Flow\n\nTo set up and manage MLI, sellers must integrate:\n\n- [Supply Sources API](https://developer-docs.amazon.com/sp-api/docs/supply-sources-api) → Create and manage supply sources (inventory locations).\n    \n- [Listings Items API](https://developer-docs.amazon.com/sp-api/docs/listings-items-api) → Update inventory counts at each location.\n    \n- [Feeds API](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide#create-and-update-listings-items-in-bulk) → Perform bulk inventory and fulfillment updates.\n    \n\n---\n\n## 🧰 MLI Postman Collection\n\nThis Postman collection demonstrates the **end-to-end MLI workflow**, showcasing how to integrate multiple supply sources and update location-level inventory for FBM SKUs.\n\n> 🚨 If you want to test the Collection without the Postman Flow linked to it, make sure to go to the body requests and replace the variables that are marked between \"{{}}\" with the values that you need. \n  \n> **🚨 Note that in Step 5** - you will need to enable Shipping Template and assign it manually to the SKU that you want to enable MLI For \n  \n\n---\n\n## 🌊 MLI Postman Flow\n\nThis collection also includes a **visualized MLI flow** in Postman Flows, guiding you through:\n\n1. Setting up a new supply source.\n    \n2. Updating and verifying inventory across locations.\n    \n\n---\n\n### 🧪 How to Test This Flow\n\n✅ **Prerequisites**\n\n1. **Set Environment Variables**\n    \n    - `client_id` → Your SP-API App Client ID\n        \n    - `client_secret` → Your SP-API App Client Secret\n        \n    - `refresh_token` → Valid SP-API Refresh Token\n        \n    - `marketplace` → Marketplace ID\n        \n2. **Set Collection Variables**\n    \n    - `seller_id`→ Your SellerId\n        \n    - `sku`→ Your SKU that you want to update\n        \n\n---\n\n### 🏗️ **Running the Flow**\n\n1. Go to the **Flows tab**.\n    \n2. Select the **\\[MLI\\] Multi-Location Inventory Flow**.\n    \n3. Enter required details in the input:\n    \n    1. `supplySourcePhone`\n        \n    2. `supplySourceEmail`\n        \n    3. `supplySourceAddress`\n        \n    4. `supplySourceAlias`\n        \n    5. `supplySourceQuantity`\n        \n    6. `supplySourceCode`\n        \n4. Save and Run the flow.\n    \n\n> 🚨 There are a lot of other variables that you can update for your supply source, you can do that by heading to Step 2. Update Supply Source in the collection, then Body and update the variables you want. You can update here things like opening times and timezone operating. \n  \n\nYou’ll get:\n\n- A new Supply Source created with your settings.\n    \n- Assigning location level inventory to your SKU based on this new supply source\n    \n- Location-level inventory reflected in Amazon.\n    \n- As a final step, you will need validation of SSA shipping templates (via Seller Central).\n    \n\n---\n\n## 💡 Notes & Tips\n\n- Always **set DEFAULT channel inventory to 0** for SKUs managed under MLI.\n    \n- Shipping templates must be **SSA-enabled** and assigned to SKUs via **Seller Central**.\n    \n- Use **Feeds API** for bulk updates across multiple SKUs and supply sources.\n    \n- You can also Archive a supply source with the \\[Optional\\] request in the collection.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 1. Create Supply Source",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"id": "7980ab78-26c9-481d-b912-6091d4d8ba58"
+					}
+				}
+			],
+			"id": "4c24f771-66ec-4d99-b4c1-a72ce8b301ee",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": {{supplySourceAddress}},\n  \"supplySourceCode\": {{supplySourceCode}},\n  \"alias\": {{supplySourceAlias}}\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/supplySources/2020-07-01/supplySources",
+				"description": "Create a new supply source."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2. Update Supply Source",
+			"id": "02b1ca57-248e-4b8d-8c1e-37740af6ce07",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "// Note: you can update the below settings to match your supply source options\n{\n    \"alias\": {{supplySourceAlias}},\n    \"configuration\": {\n        \"operationalConfiguration\": {\n            \"contactDetails\": {\n                \"primary\": {\n                    \"email\": {{contactEmail}},\n                    \"phone\": {{contactPhone}}\n                }\n            },\n            \"throughputConfig\": {\n                \"throughputUnit\": \"Order\",\n                \"throughputCap\": {\n                    \"value\": 1,\n                    \"timeUnit\": \"Days\"\n                }\n            },\n            \"operatingHoursByDay\": {\n                \"monday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"tuesday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"wednesday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"thursday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"friday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"saturday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ],\n                \"sunday\": [\n                    {\n                        \"startTime\": \"00:59\",\n                        \"endTime\": \"06:01\"\n                    }\n                ]\n            },\n            \"handlingTime\": {\n                \"value\": 1,\n                \"timeUnit\": \"Hours\"\n            }\n        },\n        \"timezone\": \"America/New_York\"\n    }\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supplySources/2020-07-01/supplySources/:supplySourceId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supplySources",
+						"2020-07-01",
+						"supplySources",
+						":supplySourceId"
+					],
+					"variable": [
+						{
+							"id": "d20e14d3-fa7d-4e03-80e3-7280a5567c47",
+							"key": "supplySourceId",
+							"value": "{{ss_id_returned}}",
+							"description": "(Required) The unique identitier of a supply source."
+						}
+					]
+				},
+				"description": "Update the configuration and capabilities of a supply source."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3. Update Status",
+			"id": "0633dcb4-43f3-46a9-b6d3-f1384d3dcd80",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"Active\"\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supplySources/2020-07-01/supplySources/:supplySourceId/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supplySources",
+						"2020-07-01",
+						"supplySources",
+						":supplySourceId",
+						"status"
+					],
+					"variable": [
+						{
+							"id": "9d504b2a-a2fc-4ec9-b61f-1aaf6595306e",
+							"key": "supplySourceId",
+							"value": "{{ss_id_returned}}",
+							"description": "(Required) The unique identifier of a supply source."
+						}
+					]
+				},
+				"description": "Update the status of a supply source."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4. Get Supply Source",
+			"id": "c56c1ccb-407a-4690-85d6-418d72240e62",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/supplySources/2020-07-01/supplySources/:supplySourceId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supplySources",
+						"2020-07-01",
+						"supplySources",
+						":supplySourceId"
+					],
+					"variable": [
+						{
+							"id": "96170cd2-f5a3-4558-879f-ad80ba3163e8",
+							"key": "supplySourceId",
+							"value": "{{ss_id_returned}}",
+							"description": "(Required) The unique identifier of a supply source."
+						}
+					]
+				},
+				"description": "Retrieve a supply source."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5. Get Current Inventory Levels",
+			"id": "bdc2b6da-2ca3-4961-8c80-4ff953785d30",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace_id}}&includedData=fulfillmentAvailability&issueLocale={{locale}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"listings",
+						"2021-08-01",
+						"items",
+						":sellerId",
+						":sku"
+					],
+					"query": [
+						{
+							"key": "marketplaceIds",
+							"value": "{{marketplace_id}}",
+							"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+						},
+						{
+							"key": "includedData",
+							"value": "fulfillmentAvailability",
+							"description": "A comma-delimited list of data sets to include in the response. Default: `summaries`."
+						},
+						{
+							"key": "issueLocale",
+							"value": "{{locale}}",
+							"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+						}
+					],
+					"variable": [
+						{
+							"id": "e0aae8dd-c685-4887-9fb2-453c3d482e00",
+							"key": "sellerId",
+							"value": "{{seller_id}}",
+							"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+						},
+						{
+							"id": "fee58aa6-5aa4-47be-94ce-883848269e19",
+							"key": "sku",
+							"value": "{{sku}}",
+							"description": "(Required) A selling partner provided identifier for an Amazon listing."
+						}
+					]
+				},
+				"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput can receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 6. Update Inventory Locations",
+			"id": "f6ecd598-ff30-45cc-a623-34c4a18cb541",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": {{fulfillmentAvailability}}\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace_id}}&issueLocale={{locale}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"listings",
+						"2021-08-01",
+						"items",
+						":sellerId",
+						":sku"
+					],
+					"query": [
+						{
+							"key": "marketplaceIds",
+							"value": "{{marketplace_id}}",
+							"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+						},
+						{
+							"key": "issueLocale",
+							"value": "{{locale}}",
+							"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+						}
+					],
+					"variable": [
+						{
+							"key": "sellerId",
+							"value": "{{seller_id}}",
+							"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+						},
+						{
+							"key": "sku",
+							"value": "{{sku}}",
+							"description": "(Required) A selling partner provided identifier for an Amazon listing."
+						}
+					]
+				},
+				"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 7. Check Inventory Updates",
+			"id": "19791456-035b-46aa-a50a-e3794a985f46",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace_id}}&includedData=fulfillmentAvailability&issueLocale={{locale}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"listings",
+						"2021-08-01",
+						"items",
+						":sellerId",
+						":sku"
+					],
+					"query": [
+						{
+							"key": "marketplaceIds",
+							"value": "{{marketplace_id}}",
+							"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+						},
+						{
+							"key": "includedData",
+							"value": "fulfillmentAvailability",
+							"description": "A comma-delimited list of data sets to include in the response. Default: `summaries`."
+						},
+						{
+							"key": "issueLocale",
+							"value": "{{locale}}",
+							"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: `en_US`, `fr_CA`, `fr_FR`. Localized messages default to `en_US` when a localization is not available in the specified locale."
+						}
+					],
+					"variable": [
+						{
+							"id": "de78c905-f0ec-4a3c-b0b1-541f9aeeac69",
+							"key": "sellerId",
+							"value": "{{seller_id}}",
+							"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+						},
+						{
+							"id": "1c1e5195-5950-4bef-bae2-144999f60cf6",
+							"key": "sku",
+							"value": "{{sku}}",
+							"description": "(Required) A selling partner provided identifier for an Amazon listing."
+						}
+					]
+				},
+				"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput can receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "113c038d-3f6c-42d4-bdac-1be88926ff6f",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6c4d5951-41b9-4311-9381-72a412faf4c8",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "sku",
+			"value": "Dog_Halloween_lights"
+		},
+		{
+			"key": "seller_id",
+			"value": ""
+		},
+		{
+			"key": "locale",
+			"value": "en_US"
+		},
+		{
+			"key": "marketplace_id",
+			"value": "ATVPDKIKX0DER"
+		},
+		{
+			"key": "ss_id_returned",
+			"value": ""
+		}
+	]
+}
