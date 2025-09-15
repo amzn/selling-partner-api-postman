@@ -1,0 +1,2197 @@
+{
+	"info": {
+		"_postman_id": "41a0b7f2-fe55-4eeb-ba40-3d2b8babcb50",
+		"name": "[AWD v2024-05-09] - AWD Inbound Order Creation",
+		"description": "## **What is the Amazon Warehousing & Distribution API?**\n\nThe Selling Partner API for Amazon Warehousing and Distribution (AWD) API lets you develop applications that create and update inbound Orders to ship inventory to AWD distribution centers and track shipments going into AWD distribution centers. For details about API operations and associated data types and schemas, refer to the [Amazon Warehousing and Distribution API reference](https://developer-docs.amazon.com/sp-api/docs/awd_2024-05-09-reference).\n\n## **Key features**\n\n- **Create Inbound orders:** Verify AWD inbound eligibility and execute API POST for order creation, specifying region preference.\n    \n- **Update inbound Order:** Update one or more individual attributes for an existing inbound order, such as updating the packagesToInbound, originAddress, and preferences attributes.\n    \n- **Cancel inbound Order:** Cancel an existing inbound order.\n    \n- **Retrieve Inbound Shipment Labels:** Retrieve box labels for confirmed inbound shipments.\n    \n- **Update Transport Details:** Update transport information for an AWD Inbound shipment.\n    \n\n**Tip**\n\n- Use confirmInbound to confirm an inbound order and getInbound to retrieve the Inbound order details along with ShipmentId and status.\n    \n- Use checkInboundEligibility with packagesToInbound to obtain error details for Inbound Order creation\n    \n\n## **Terminology**\n\n- **Inbound Order:** Inbound orders instruct the movement of inventory from an arbitrary location to an AWD distribution center. An inbound order has one or more inbound shipments. Each inbound shipment represents a trackable movement provided by an underlying transportation carrier.\n    \n\n## Fork Collection & Auth\n\n1. To fork this collection, Click on \"Run in Postman\" Button or right-click the collection and click on Create a fork.\n    \n2. Fork the environment you need\n    \n3. Fill the environment variables. Make sure valid \"client_id\", \"client_secret\" and \"refresh_token\" are set.\n    \n4. Ensure environment variables {{variable}} are used as needed for your API calls parameters.\n    \n\n## **Use Case: AWD Inbound order creation workflow**\n\nThe following describes the steps to ship inventory to AWD distribution center. This is an illustrative example and does not include all of the optional operations.\n\n## Prerequisites\n\nTo complete this tutorial, you need:\n\n- Authorization from the selling partner for whom you are making calls. For more information, refer to [Authorizing Selling Partner API Applications](https://developer-docs.amazon.com/sp-api/docs/authorizing-selling-partner-api-applications).\n    \n- The [Amazon Warehousing and Distribution role](https://developer-docs.amazon.com/sp-api/docs/amazon-warehousing-distribution-role) assigned to your developer profile.\n    \n- The Amazon Warehousing and Distribution role selected in the app registration page for your application.\n    \n\n**Steps:**\n\nStep 0: [Authorization to get Access token](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-d1c067d7-c901-4fb4-a87c-b96970df8e36?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.1 [Check Inbound Eligibility(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-4a1829aa-c444-4631-88b0-7c626e7f96b2?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.2 [List Preperation Details(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-08a3359e-8750-4f40-b53e-58868ee3774b?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.3 [Create Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-a319164b-e1e3-47fc-924b-8461a9a2ad28?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.4 [Get Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-4ddf9580-daa6-423a-be69-2b43b1cf925a?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.5 [Update Inbound Order(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-d4fd6b89-96e9-4d4a-87e0-e72f3e95c05f?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.6 [Confirm Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-33680c62-b4fc-4448-8b28-21e33d3f75fc?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.7 [Cancel Inbound Order(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-cdbb05e1-7d2f-48d6-8f18-f0551ee6c20c?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.8 [Retreive Inbound Shipment Box labels](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-bffae34a-507e-4ad5-b8d1-537dc1f1ef9c?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\nStep 1.9 [Update Inbound Shipment Transportation details](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-a7c514ff-41d2-4c90-bd8e-f6c8a575445e?action=share&source=copy-link&creator=16681627&ctx=documentation)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 0: Authorization to get Access Token",
+			"item": [
+				{
+					"name": "Generate Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"id": "1d661593-364c-452e-8129-b1f0e5649e41"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"id": "dff2eb84-abe9-40cf-9468-5d419a9a6655"
+							}
+						}
+					],
+					"id": "9802485d-b4a0-4882-b843-47699f0c28ca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refresh_token}}",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "https://api.amazon.com/auth/o2/token",
+						"description": "Generate Access token to call other AWD API operations. The token is valid for 60 minutes."
+					},
+					"response": []
+				}
+			],
+			"id": "7648c109-bf20-4655-a0fc-ba0510d8b358",
+			"description": "Call this API to get the **access token** in exchange to the refresh token for authorizing SP API. A post-script is available and will store the returned access token to the environment variable access_token to then authenticate and authorize API requests.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						],
+						"id": "9c0cfe5f-cfb1-4610-86f8-fa3c900c7d37"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						],
+						"id": "1d72f5db-31c1-4e5a-87c0-57d0ded07912"
+					}
+				}
+			]
+		},
+		{
+			"name": "Step 1: Initiate/Create AWD Inbound Order",
+			"item": [
+				{
+					"name": "1.1: (Optional) Check Inbound Eligibility",
+					"id": "ade247b9-8efe-49ad-a1b3-9506e344fdbd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"SKU\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility",
+						"description": "Determine if the specified inventory is eligible for AWD inbound Order."
+					},
+					"response": [
+						{
+							"id": "5899ff84-30ea-4c61-bca0-d0a3d43aa907",
+							"name": "200:InboundEligibility",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"63-JRRT-VZ7U\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "df888280-638c-467b-87a1-c5a6833edbc6",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    1\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"<SKU>\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"InvalidInput\",\n            \"message\": \"Could not process payload\",\n            \"details\": \"\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "5f1297b8-8768-4b46-af90-2091e1029a00",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"63-JRRT-VZ7U\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility1"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "9dfc0f70-c00d-4a99-b192-52e0750a53ed",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "49af7984-e73a-4c43-a65d-422ba8991855",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundEligibility"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "1.2: (Optional) List Preperation Details",
+					"id": "1c5dffed-57c0-41d9-b83a-c9b5a025849d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/inbound/fba/2024-03-20/items/prepDetails?marketplaceId={{marketplace}}&mskus",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"inbound",
+								"fba",
+								"2024-03-20",
+								"items",
+								"prepDetails"
+							],
+							"query": [
+								{
+									"key": "marketplaceId",
+									"value": "{{marketplace}}",
+									"description": "https://developer-docs.amazon.com/sp-api/docs/marketplace-ids"
+								},
+								{
+									"key": "mskus",
+									"value": null,
+									"description": "Only MSKUs in your account can be checked"
+								}
+							]
+						},
+						"description": "Get preparation details for a list of MSKUs in a specified marketplace."
+					},
+					"response": [
+						{
+							"id": "aacb5214-88ac-4208-b04f-bbc52890a218",
+							"name": "201:PrepDetails",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						}
+					]
+				},
+				{
+					"name": "1.3: Create Inbound Order",
+					"id": "c10ec6d4-1b1b-4fac-8fce-0eb653b3ecc0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"externalReferenceId\": \"string\",\r\n\t\"originAddress\": {\r\n\t\t\"addressLine1\": \"string\",\r\n\t\t\"city\": \"string\",\r\n\t\t\"countryCode\": \"string\",\r\n\t\t\"name\": \"string\",\r\n\t\t\"postalCode\": \"string\",\r\n\t\t\"stateOrRegion\": \"string\"\r\n\t},\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"SKU1\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders",
+						"description": "Creates a draft AWD inbound order with given packages to inbound. Currently only a single shipment will be created per order.  \nBy calling the createInbound operation, a seller must specify the following:\n\n• The address from which the inbound shipments will be sent  \n• A summary of the packages containing items that they intend to inbound.\n\nThe packagesToInbound must contain List of packages to be inbounded. ProductQuantity must include MSKU, quantity, and an indication of who will prepare / label the item.\n\nMake sure each item you're shipping conforms to Amazon's product packaging requirements. For more information, refer to Packaging and Prep Requirements in Seller Central Help. For more information about Amazon's product packaging requirements for your marketplace, refer to Seller Central URLs. Note that sellers can specify the Prep Category for SKUs when creating an Inbound order. Limit Inbound Order to 150 unique SKUs per order creation."
+					},
+					"response": [
+						{
+							"id": "0af74fff-bb0d-4e80-9648-be2f7f95ed06",
+							"name": "200:InboundOrderReference",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders"
+							},
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "44dd7eee-547c-4ccd-babc-fad8ee4e2c0a",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "ddee2d61-f3cb-41e2-a49a-a5fe4ce5e922",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "9d4605e3-b80f-4145-8be4-0338ae575559",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "1.4: Get Inbound Order Details",
+					"id": "59bb32e4-9661-419a-9061-87cb4fb7b6e9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}",
+						"description": "Review Inbound order details and destination address by calling the getInbound operation"
+					},
+					"response": [
+						{
+							"id": "ed06318c-0bf4-4d10-8bbe-9654eb2cb92e",
+							"name": "200:InboundOrder",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "02027dac-0740-452a-b416-2c0bd056456e",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "ff06deb4-0356-4a33-a483-f5037d45ad7d",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "94c588e9-6d35-4854-ba8f-062fa1daf0de",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "254e1297-a285-412c-84df-526bf513eaf9",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "1.5: (Optional) Update Inbound Order",
+					"id": "1c68fc0c-4309-4cf5-8569-055269f3b780",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"destinationDetails\": {\r\n        \"destinationAddress\": {\r\n            \"countryCode\": \"US\",\r\n            \"city\": \"NORTH EAST\",\r\n            \"district\": \"\",\r\n            \"name\": \"IUSL\",\r\n            \"postalCode\": \"21901-2914\",\r\n            \"addressLine1\": \"600 PRINCIPIO PKWY W\",\r\n            \"addressLine2\": \"\",\r\n            \"addressLine3\": \"\",\r\n            \"stateOrRegion\": \"MD\"\r\n        },\r\n        \"destinationRegion\": \"us-east\"\r\n    },\r\n    \"createdAt\": \"2024-11-23T01:09:14.624Z\",\r\n    \"externalReferenceId\": \"string\",\r\n    \"orderId\": \"STAR-TYAHS6NMDXXX\",\r\n    \"orderStatus\": \"DRAFT\",\r\n    \"originAddress\": {\r\n        \"addressLine1\": \"string\",\r\n        \"addressLine2\": \"string\",\r\n        \"addressLine3\": \"string\",\r\n        \"city\": \"string\",\r\n        \"countryCode\": \"string\",\r\n        \"county\": \"string\",\r\n        \"district\": \"string\",\r\n        \"name\": \"string\",\r\n        \"phoneNumber\": \"string\",\r\n        \"postalCode\": \"string\",\r\n        \"stateOrRegion\": \"string\"\r\n    },\r\n    \"packagesToInbound\": [{\r\n        \"count\": 1,\r\n        \"distributionPackage\": {\r\n            \"contents\": {\r\n                \"products\": [{\r\n                    \"quantity\": 1,\r\n                    \"sku\": \"SKU1\",\r\n                    \"attributes\": [{\r\n                        \"name\": \"Color\",\r\n                        \"value\": \"Blue\"\r\n                    }, {\r\n                        \"name\": \"asin\",\r\n                        \"value\": \"B00OLPAXXX\"\r\n                    }, {\r\n                        \"name\": \"glProductGroupType\",\r\n                        \"value\": \"gl_beauty\"\r\n                    }],\r\n                    \"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n                    \"prepDetails\": {\r\n                        \"prepCategory\": \"PERFORATED\",\r\n                        \"prepOwner\": \"AMAZON\"\r\n                    }\r\n                }]\r\n            },\r\n            \"measurements\": {\r\n                \"dimensions\": {\r\n                    \"height\": 28,\r\n                    \"length\": 27,\r\n                    \"unitOfMeasurement\": \"CENTIMETERS\",\r\n                    \"width\": 47\r\n                },\r\n                \"weight\": {\r\n                    \"unitOfMeasurement\": \"KILOGRAMS\",\r\n                    \"weight\": 7\r\n                }\r\n            },\r\n            \"type\": \"CASE\"\r\n        }\r\n    }],\r\n    \"updatedAt\": \"2024-11-24T01:09:14.624Z\",\r\n    \"preferences\": {\r\n        \"destinationRegion\": \"us-west\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}",
+						"description": "Updates the draft AWD inbound order with given packages to inbound. By calling the updateInbound operation, a seller can update the following:  \n• packagesToInbound - List of packages to be inbounded.  \n• originAddress - Origin address from where the inbound order will be shipped.  \n• preferences attributes - Preferences such as Preferred region that can be passed in context of an inbound order."
+					},
+					"response": [
+						{
+							"id": "09cd5cfd-01af-4433-a8f9-c24005ebd41a",
+							"name": "204:No Content",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"packagesToInbound\": [\r\n\t\t{\r\n\t\t\t\"count\": 1,\r\n\t\t\t\"distributionPackage\": {\r\n\t\t\t\t\"contents\": {\r\n\t\t\t\t\t\"products\": [\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\"quantity\": 1,\r\n\t\t\t\t\t\t\t\"sku\": \"<SKU>\",\r\n\t\t\t\t\t\t\t\"attributes\": [\r\n\t\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t\t\"name\": \"Color\",\r\n\t\t\t\t\t\t\t\t\t\"value\": \"Blue\"\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t],\r\n\t\t\t\t\t\t\t\"expiration\": \"2025-06-07T12:12:09.061Z\",\r\n\t\t\t\t\t\t\t\"prepDetails\": {\r\n\t\t\t\t\t\t\t\t\"prepCategory\": \"PERFORATED\",\r\n\t\t\t\t\t\t\t\t\"prepOwner\": \"AMAZON\"\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t]\r\n\t\t\t\t},\r\n\t\t\t\t\"measurements\": {\r\n\t\t\t\t\t\"dimensions\": {\r\n\t\t\t\t\t\t\"height\": 28,\r\n\t\t\t\t\t\t\"length\": 27,\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"CENTIMETERS\",\r\n\t\t\t\t\t\t\"width\": 47\r\n\t\t\t\t\t},\r\n\t\t\t\t\t\"weight\": {\r\n\t\t\t\t\t\t\"unitOfMeasurement\": \"KILOGRAMS\",\r\n\t\t\t\t\t\t\"weight\": 7\r\n\t\t\t\t\t}\r\n\t\t\t\t},\r\n\t\t\t\t\"type\": \"CASE\"\r\n\t\t\t},\r\n\t\t\t\"preferences\": {\r\n\t\t\t\t\"destinationRegion\": \"us-east\"\r\n\t\t\t}\r\n\t\t}\r\n\t]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "0ccd753c-ac85-41ab-be74-4e2157f5a908",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "1fcb059c-bd72-451a-915b-c019c48b0a3e",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "3899a761-1c36-4436-97a2-e7c0bf533998",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "1d04ff56-1373-4a91-b4df-3ef4e344b18a",
+							"name": "409:ConflictException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "38f52126-c2b8-45be-be2b-354fa596d066",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "1.6: Confirm Inbound Order",
+					"id": "565ead47-85c5-4988-a44d-583a4bbc33aa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation?=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"awd",
+								"2024-05-09",
+								"inboundOrders",
+								"{orderId}",
+								"confirmation"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						},
+						"description": "The confirmInbound operation is an essential step in the AWD inbound process. It enables sellers to finalize their draft inbound orders, transitioning them from a DRAFT state to CONFIRMED status. This confirmation is required for all transportation types and indicates that the order details are now locked and ready for further processing. Once an order reaches CONFIRMED status, it advances in the Inbound workflow, allowing for subsequent steps in the inbound shipping process to begin."
+					},
+					"response": [
+						{
+							"id": "28a5a63f-f6bc-4404-9507-181e3403bf80",
+							"name": "204:No Content",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "6730cd77-d81e-49a4-a5f3-59b87a95919b",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "0c70c55f-d343-4121-9256-2c95d5c0a033",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "21152be2-fa86-45e6-8a79-01a363fd9778",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "7e6f5312-2a5d-4063-9165-8014dce8c7f6",
+							"name": "409:ConflictException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\r\n    \"errors\": [\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        },\r\n        {\r\n            \"code\": \"<string>\",\r\n            \"message\": \"<string>\",\r\n            \"details\": \"<string>\"\r\n        }\r\n    ]\r\n}"
+						},
+						{
+							"id": "a91f552f-1a57-4e75-ac45-81a47f1dc5e4",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/confirmation?=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundOrders",
+										"{orderId}",
+										"confirmation"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "1.7: (Optional) Cancel Inbound Order",
+					"id": "05ae2cac-ccfe-49fd-afa3-a11c64845195",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation",
+						"description": "Cancels an AWD Inbound order and its associated shipments."
+					},
+					"response": [
+						{
+							"id": "827a4cdb-262e-4f5d-99f3-bb9b5a718b04",
+							"name": "204:No Content",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "05a66767-087b-476a-a9db-bac34c32d960",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "678d97f6-77e1-41f6-8ee0-876bd05960c2",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "6909cbb4-4bf7-4f02-9311-1f6711355a1b",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "c7f926b5-6122-4e14-92a8-e980fdda260d",
+							"name": "409:ConflictException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "15a7b9fc-66b8-4889-b830-63e3a01797b9",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundOrders/{orderId}/cancellation"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "304ffb97-8e46-453d-a1c9-57c7db49a4d1",
+			"description": "[Create a AWD Inbound Order for shipment to AWD Distribution Center](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/folder/16681627-e2faafbf-3f60-433c-acff-31ff9f64e1e2?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.1 [Check Inbound Eligibility(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-4a1829aa-c444-4631-88b0-7c626e7f96b2?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.2 [List Preperation Details(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-08a3359e-8750-4f40-b53e-58868ee3774b?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.3 [Create Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-a319164b-e1e3-47fc-924b-8461a9a2ad28?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.4 [Get Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-4ddf9580-daa6-423a-be69-2b43b1cf925a?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.5 [Update Inbound Order(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-d4fd6b89-96e9-4d4a-87e0-e72f3e95c05f?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.6 [Confirm Inbound Order](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-33680c62-b4fc-4448-8b28-21e33d3f75fc?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n1.7 [Cancel Inbound Order(Optional)](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-cdbb05e1-7d2f-48d6-8f18-f0551ee6c20c?action=share&source=copy-link&creator=16681627&ctx=documentation)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						],
+						"id": "572478a4-6007-41ca-a686-4d65583bdc3c"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						],
+						"id": "8011b42f-7fa9-40f7-a0f8-3e65c42181b9"
+					}
+				}
+			]
+		},
+		{
+			"name": "Step 2: Manage Shipping",
+			"item": [
+				{
+					"name": "2.1: Get Inbound Shipment Box Labels",
+					"id": "a6428489-de79-470b-bdaf-8099ae4a04ea",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"awd",
+								"2024-05-09",
+								"inboundShipments",
+								"{shipmentId}",
+								"labels"
+							],
+							"query": [
+								{
+									"key": "pageType",
+									"value": "PLAIN_PAPER",
+									"description": "Page type for the generated labels. The default is PLAIN_PAPER."
+								},
+								{
+									"key": "formatType",
+									"value": "PDF",
+									"description": "The format type of the output file that contains your labels."
+								}
+							]
+						},
+						"description": "Call the getInboundShipmentLabels operation to request unique box labels for your inbound shipments. Each box label returned by the getInboundShipmentLabels operation should be affixed to the package in the shipment that it corresponds to, so the labels indicate the package contents. This helps to ensure that your shipment is processed at the AWD Distribution center quickly and accurately"
+					},
+					"response": [
+						{
+							"id": "c832e971-66c8-4f83-acd1-b0113cce5c68",
+							"name": "201:ShipmentLabels",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "4b16cb63-8973-4193-a33b-8b33c5275050",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "f2044f8a-ccbe-48b6-86c7-d9a73342506c",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "44b47cbe-9fd8-46b6-a26d-06a038503755",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "29e07587-1455-40fa-9a3c-6aeec7512e41",
+							"name": "415:UnsupportedFormatException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "9338caf6-e84e-44fc-a04d-860341a4f8bd",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/labels?pageType=PLAIN_PAPER&formatType=PDF",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"awd",
+										"2024-05-09",
+										"inboundShipments",
+										"{shipmentId}",
+										"labels"
+									],
+									"query": [
+										{
+											"key": "pageType",
+											"value": "PLAIN_PAPER"
+										},
+										{
+											"key": "formatType",
+											"value": "PDF"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "2.2: Update Shipment Transport Details",
+					"id": "f1e5101e-2194-4f46-8173-63fd96fe60e9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"trackingDetails\": [\r\n        {\r\n            \"carrierCode\": {\r\n                \"carrierCodeType\": \"SCAC\"\r\n            },\r\n            \"bookingId\": \"TRACK123456\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport",
+						"description": "Sellers must update tracking information after sending shipments to AWD distribution centers using non-partnered carriers. The updateInboundShipmentTransportDetails operation requires inputting the shipment ID and transportation information. For small parcel shipments, sellers provide an array of associated booking IDs, allowing Amazon to track and manage incoming inventory."
+					},
+					"response": [
+						{
+							"id": "dcb7caaf-99ab-43bd-a3d2-29f9d19c1e86",
+							"name": "204:No Content",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"ineligibilityReasons\": [],\n    \"packagesToInbound\": [\n        {\n            \"ineligibilityReasons\": [],\n            \"packageQuantity\": {\n                \"count\": 1,\n                \"distributionPackage\": {\n                    \"contents\": {\n                        \"packages\": [],\n                        \"products\": [\n                            {\n                                \"attributes\": [\n                                    {\n                                        \"name\": \"Color\",\n                                        \"value\": \"Blue\"\n                                    }\n                                ],\n                                \"expiration\": \"2025-06-07T12:12:09.061Z\",\n                                \"prepDetails\": {\n                                    \"prepCategory\": \"PERFORATED\",\n                                    \"prepInstructions\": [],\n                                    \"prepOwner\": \"AMAZON\"\n                                },\n                                \"quantity\": 1,\n                                \"sku\": \"<SKU>\"\n                            }\n                        ]\n                    },\n                    \"measurements\": {\n                        \"dimensions\": {\n                            \"height\": 28,\n                            \"length\": 27,\n                            \"unitOfMeasurement\": \"CENTIMETERS\",\n                            \"width\": 47\n                        },\n                        \"weight\": {\n                            \"unitOfMeasurement\": \"KILOGRAMS\",\n                            \"weight\": 7\n                        }\n                    },\n                    \"type\": \"CASE\"\n                }\n            },\n            \"status\": \"ELIGIBLE\"\n        }\n    ],\n    \"previewedAt\": \"2024-12-31T23:41:35.010Z\",\n    \"status\": \"ELIGIBLE\"\n}"
+						},
+						{
+							"id": "d3b2cc50-c3b6-4acc-8872-5e0dd5a32e0b",
+							"name": "400:BadRequestException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "6175100a-b066-4415-9ec0-2b04a4362e0e",
+							"name": "403:ForbiddenException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "039962f0-c663-49c5-acaa-78554d398d63",
+							"name": "404:NotFoundException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "6fd47630-4d0b-4551-aa48-c0938c7a7335",
+							"name": "409:ConflictException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						},
+						{
+							"id": "ea70aeb7-cd48-4f1b-89f7-2374ad42924b",
+							"name": "500:InternalServiceException",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": "{{baseUrl}}/awd/2024-05-09/inboundShipments/{shipmentId}/transport"
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date",
+									"domain": "",
+									"path": ""
+								}
+							],
+							"responseTime": null,
+							"body": "{\n    \"errors\": [\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        },\n        {\n            \"code\": \"<string>\",\n            \"message\": \"<string>\",\n            \"details\": \"<string>\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "d884de41-ea38-41a6-8fb9-c6ff82cf6e98",
+			"description": "Manage inbound shipment details by retrieving box labels and updating transportation information\n\n2.1 [Get Inbound Shipment Box labels](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-bffae34a-507e-4ad5-b8d1-537dc1f1ef9c?action=share&source=copy-link&creator=16681627&ctx=documentation)\n\n2.2 [Update Inbound Shipment Transportation details](https://awd-solutions-architect.postman.co/workspace/1d3321bf-a67c-4afb-9bb7-519a170e7791/request/16681627-a7c514ff-41d2-4c90-bd8e-f6c8a575445e?action=share&source=copy-link&creator=16681627&ctx=documentation)"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				],
+				"id": "bb37cf54-5138-4e10-94a1-5cfca34a9e9b"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				],
+				"id": "3a01ab70-cc32-43bc-9bf0-7c7f77431727"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		}
+	]
+}
