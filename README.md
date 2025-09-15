@@ -1,18 +1,7 @@
-## My Project
+## Selling Partner API Postman Collections
 
-TODO: Fill this README out!
-
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
-* Write in your license below and create a LICENSE file
+Repository of the official Selling Partner API Postman collections published on: https://www.postman.com/amazon-selling-partner-api
 
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-
-## License
-
-This library is licensed under the LICENSE NAME HERE License.
-
