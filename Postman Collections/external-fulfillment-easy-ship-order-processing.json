@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "376e7e80-1b82-445f-ae34-d3e8acd4e50b",
+		"name": "[External Fulfillment] Easy Ship Order Processing with External Fulfillment APIs",
+		"description": "This collection compiles the steps required in order to process and fulfill Amazon Easy Ship eligible shipments using the External Fulfillment API suite on the Selling Partner API.\n\n---\n\n##### What is Amazon Easy Ship?\n\nAmazon Easy Ship is a fast, affordable and easy delivery service for Amazon sellers.\n\nWhen you choose Amazon Easy Ship, you need to drop-off Amazon orders at nearest eligible drop-off point and the carrier will deliver it to your customer’s doorstep. Your customers will get reliable and trackable deliveries.  \nAmazon Easy Ship has a competitive rate card based on the package’s weight bands\n\n**What is External Fulfillment API?**\n\nThe External Fulfilment API (also known as SmartConnect API) allows programmatic handling of inventory, returns, and shipping across multiple external fulfillment channels, including Seller Flex, Easy Ship, Self Ship, and MFN Self Delivery. For more information, visit the [documentation](https://developer-docs.amazon.com/sp-api/docs/external-fulfillment-shipping).\n\n<img src=\"https://m.media-amazon.com/images/G/02/brother/prime._SL1280_FMpng_.png\" width=\"358\" height=\"154\">\n\n---\n\n**Authorization**\n\nThe APIs in this collection require the _**x-amz-access-token**_ header in order for SP-API to authorize requests. The collection comes with a pre-script which calls the OAuth API to retrieve the access token and then stores it in the _access_token_ variable.  \nThe `Environments` tab in this workspace comes with environments for each API region and can be used with this collection. Make sure to select or fork the environment and fill in the values.\n\n<img src=\"https://content.pstmn.io/3746c588-782a-42c6-ae31-b7eae6c23348/U2NyZWVuc2hvdCAyMDI1LTAxLTE0IGF0IDE2LjQyLjQzLnBuZw==\" width=\"155\" height=\"173\">\n\n**Variables**\n\nVariables required to run this collection are:\n\n- Authorization (environment level)\n    \n    - oauth_url\n        \n    - client_id\n        \n    - client_secret\n        \n    - refresh_token\n        \n    - access_token\n        \n    - grant_type\n        \n- Marketplace (environment level)\n    \n    - marketplace\n        \n- EasyShip logic (collection level)\n    \n    - shipmentStatus\n        \n    - shipmentId - _retrieved from shipments data (Step 1)_\n        \n    - packageId - _fill this data with an id you select or generate_\n        \n    - packageLineItemId - _retrieved from shipments data (Step1)_\n        \n    - shippingOptionId - _retrieved from shipping options data (Step 4)_\n        \n\n**Important note:**\n\nIf inventory was synced using the External Fulfillment Inventory API, make sure to set `shipmentStatus` to `ACCEPTED`. If inventory levels were pushed using other means such as the Listings Items API, the `shipmentStatus` must be set to `CREATED`.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 1. Fetch open Easy Ship orders",
+			"id": "74de8fcf-7c64-4f2c-9dc2-f1f558436e1c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/externalFulfillment/2024-09-11/shipments?status={{shipmentStatus}}&marketplaceId={{marketplace}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"externalFulfillment",
+						"2024-09-11",
+						"shipments"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "{{shipmentStatus}}",
+							"description": "(Required) Retrieves only those shipments which are in the specified status. The most common use-case would be to fetch all new shipments which would be in the ACCEPTED status. Valid values are ACCEPTED, CONFIRMED, PACKAGE_CREATED, PICKUP_SLOT_RETRIEVED, INVOICE_GENERATED, SHIPLABEL_GENERATED, SHIPPED, DELIVERED and CANCELLED."
+						},
+						{
+							"key": "marketplaceId",
+							"value": "{{marketplace}}",
+							"description": "The marketplace name associated with the location."
+						},
+						{
+							"key": "locationId",
+							"value": "<string>",
+							"description": "The Amazon location identifier for which shipments are to be retrieved",
+							"disabled": true
+						},
+						{
+							"key": "lastUpdatedAfter",
+							"value": "<dateTime>",
+							"description": "Shipments whose latest update is after the specified date/time are included in the response. This field should be in the ISO8601 date/time format.",
+							"disabled": true
+						},
+						{
+							"key": "lastUpdatedBefore",
+							"value": "<dateTime>",
+							"description": "Shipments whose latest update is before the specified date/time are included in the response. This field should be in the ISO8601 date/time format.",
+							"disabled": true
+						},
+						{
+							"key": "maxResults",
+							"value": "<integer>",
+							"description": "Specify the maximum number of shipments to be included in the response.",
+							"disabled": true
+						},
+						{
+							"key": "paginationToken",
+							"value": "<string>",
+							"description": "The nextToken value returned from a previous call to get shipments. Use this to retrieve the next page of shipments.",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get a list of shipments dropped for the seller in the specified status. Shipments can be further filtered based on the fulfillment node and/or shipments' last updated date and time."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2. Acknowledge order shipment",
+			"id": "b53c51d7-fd11-4623-9f7f-4c2b8896a96c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/externalFulfillment/2024-09-11/shipments/:shipmentId?operation=CONFIRM",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"externalFulfillment",
+						"2024-09-11",
+						"shipments",
+						":shipmentId"
+					],
+					"query": [
+						{
+							"key": "operation",
+							"value": "CONFIRM",
+							"description": "(Required) The status in which shipment should be moved. Operations supported: CONFRIM or REJECT."
+						}
+					],
+					"variable": [
+						{
+							"key": "shipmentId",
+							"value": "{{shipmentId}}",
+							"description": "(Required) The id of the shipment which is to be confirmed for fulfillment."
+						}
+					]
+				},
+				"description": "Confirms/Rejects that a seller will be fulfilling or cancelling the specified shipment."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3. Create shipment packages",
+			"id": "62876535-850d-4003-b471-27ec2660726f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"packages\": [\n\t\t{\n            \"id\": \"{{packageId}}\",\n\t\t\t\"dimensions\": {\n\t\t\t\t\"length\": {\n\t\t\t\t\t\"dimensionUnit\": \"CM\",\n\t\t\t\t\t\"value\": 25\n\t\t\t\t},\n\t\t\t\t\"width\": {\n\t\t\t\t\t\"dimensionUnit\": \"CM\",\n\t\t\t\t\t\"value\": 20\n\t\t\t\t},\n\t\t\t\t\"height\": {\n\t\t\t\t\t\"dimensionUnit\": \"CM\",\n\t\t\t\t\t\"value\": 10\n\t\t\t\t}\n\t\t\t},\n\t\t\t\"weight\": {\n\t\t\t\t\"value\": 1000,\n\t\t\t\t\"weightUnit\": \"grams\"\n\t\t\t},\n\t\t\t\"packageLineItems\": [\n\t\t\t\t{\n\t\t\t\t\t\"packageLineItemId\": \"{{packageLineItemId}}\",\n\t\t\t\t\t\"quantity\": 1\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}\n",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/externalFulfillment/2024-09-11/shipments/:shipmentId/packages",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"externalFulfillment",
+						"2024-09-11",
+						"shipments",
+						":shipmentId",
+						"packages"
+					],
+					"variable": [
+						{
+							"key": "shipmentId",
+							"value": "{{shipmentId}}",
+							"description": "(Required) The id of the shipment for which package information is being provided."
+						}
+					]
+				},
+				"description": "Provides details about the packages that will be used to fulfill the specified shipment."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4. Retrieve Shipping Options",
+			"id": "20ba4832-3997-4fbd-8509-b779d715df8a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/externalFulfillment/2024-09-11/shipments/:shipmentId/shippingOptions?packageId={{packageId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"externalFulfillment",
+						"2024-09-11",
+						"shipments",
+						":shipmentId",
+						"shippingOptions"
+					],
+					"query": [
+						{
+							"key": "packageId",
+							"value": "{{packageId}}",
+							"description": "(Required) The id of the package for which available shipping option needs to be fetched. Note: The id of the package sent during CreatePackages (Step 3)"
+						}
+					],
+					"variable": [
+						{
+							"key": "shipmentId",
+							"value": "{{shipmentId}}"
+						}
+					]
+				},
+				"description": "An API for a client to retrieve an optional list of shippingOptions that marketplace/channel provides for the pickup of the packages of an shipment. This API will return a list of shippingOptions if the marketplace/channel provides transportation and allows the seller to choose a shippingOption. If the marketplace/channel does not allow for a shippingOption to be selected, but has a pre-determined shippingOption, then this API will return an empty response."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5. Generate shipping labels",
+			"id": "12261c69-a0ee-48bf-a996-d098f68edb80",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "x-amz-access-token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"packageIds\": [\n    \"{{packageId}}\"\n  ]\n}",
+					"options": {
+						"raw": {
+							"headerFamily": "json",
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/externalFulfillment/2024-09-11/shipments/:shipmentId/shipLabels?shippingOptionId={{shippingOptionId}}&operation=GENERATE",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"externalFulfillment",
+						"2024-09-11",
+						"shipments",
+						":shipmentId",
+						"shipLabels"
+					],
+					"query": [
+						{
+							"key": "shippingOptionId",
+							"value": "{{shippingOptionId}}",
+							"description": "The URL encoded id of the shippingOption for which the ship-labels are to be generated and retrieved. Only required for EasyShip channel. This is retrieved in Step 4."
+						},
+						{
+							"key": "operation",
+							"value": "GENERATE",
+							"description": "(Required) Generation or regeneration of labels."
+						}
+					],
+					"variable": [
+						{
+							"key": "shipmentId",
+							"value": "{{shipmentId}}",
+							"description": "(Required) The id of the shipment whose shipping labels are to be generated and retrieved."
+						}
+					]
+				},
+				"description": "Generates and retrieves all ship-labels for one or more packages in the specified shipment."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b626ff7b-6c6c-4f00-aeb5-d0a7092519e3",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ec888d66-4df0-417d-81f7-ae267633c526",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "shipmentStatus",
+			"value": "",
+			"description": "If inventory was synced using the External Fulfillment Inventory API, make sure to set shipmentStatus to ACCEPTED. If inventory levels were pushed using other means such as the Listings Items API, the shipmentStatus must be set to CREATED."
+		},
+		{
+			"key": "shipmentId",
+			"value": "",
+			"description": "Id of the shipment.  Retrieved from shipments data (Step 1)"
+		},
+		{
+			"key": "packageId",
+			"value": "",
+			"description": "Fill this data with an id you select or generate"
+		},
+		{
+			"key": "packageLineItemId",
+			"value": "",
+			"description": "Retrieved from line items in shipments data (Step1)"
+		},
+		{
+			"key": "shippingOptionId",
+			"value": "",
+			"description": "The id of the shipping option selected in Step 4"
+		}
+	]
+}
