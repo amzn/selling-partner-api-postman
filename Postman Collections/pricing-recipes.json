@@ -224,7 +224,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"currency\": \"USD\",\n                    \"automated_pricing_merchandising_rule_plan\": []\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n  \"productType\": \"PRODUCT\",\n  \"patches\": [\n      {\n        \"op\": \"merge\",\n        \"path\": \"/attributes/purchasable_offer\",\n        \"value\": [\n            {\n                \"audience\": \"ALL\",\n                \"automated_pricing_merchandising_rule_plan\": null\n            }\n          ]\n      }\n  ]\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -258,13 +258,11 @@
 							],
 							"variable": [
 								{
-									"id": "92d97541-71b5-4ed7-b935-fdd6d66418e3",
 									"key": "sellerId",
 									"value": "{{sellerId}}",
 									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 								},
 								{
-									"id": "08c1a694-4172-4700-8afd-23f7c10d5d04",
 									"key": "sku",
 									"value": "THE-SKU",
 									"description": "(Required) A selling partner provided identifier for an Amazon listing."
@@ -3380,22 +3378,27 @@
 	],
 	"variable": [
 		{
+			"id": "584073d0-4042-4f4d-93e7-eaa4fe8c15f7",
 			"key": "primeMaxGlanceViewWeightPostalCode",
 			"value": ""
 		},
 		{
+			"id": "776bda1b-3831-4163-925b-551e8cc93e57",
 			"key": "primeMaxGlanceViewWeightCountryCode",
 			"value": ""
 		},
 		{
+			"id": "5782afce-4819-46c4-8c7f-ebead7d0bcd7",
 			"key": "nonPrimeMaxGlanceViewWeightPostalCode",
 			"value": ""
 		},
 		{
+			"id": "a289bc6e-a104-4012-a162-87aafe93583a",
 			"key": "nonPrimeMaxGlanceViewWeightCountryCode",
 			"value": ""
 		},
 		{
+			"id": "f610a2a2-8607-403d-bbae-13f3afec83ba",
 			"key": "asin",
 			"value": ""
 		}
