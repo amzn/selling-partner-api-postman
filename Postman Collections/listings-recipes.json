@@ -234,13 +234,11 @@
 							],
 							"variable": [
 								{
-									"id": "3e70a57b-6e05-4fa7-863d-f6c248008f79",
 									"key": "sellerId",
 									"value": "{{sellerId}}",
 									"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 								},
 								{
-									"id": "727128e7-bda7-49cb-8049-dc52089bd748",
 									"key": "sku",
 									"value": "THE-SKU",
 									"description": "(Required) A selling partner provided identifier for an Amazon listing."
