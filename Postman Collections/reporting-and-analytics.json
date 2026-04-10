@@ -1,0 +1,855 @@
+{
+	"info": {
+		"_postman_id": "cd37357c-c147-40ee-8c97-607433ce6188",
+		"name": "H. Reporting & Analytics 📊",
+		"description": "# Reporting & Analytics 📊\n\n## Description\n\nUnlock your business data with Amazon's reporting and analytics APIs. This collection provides workflows for generating analytics reports via Data Kiosk and retrieving vendor retail and brand analytics through the Reports API.\n\n## Overview\n\nAmazon provides two main paths for accessing reporting and analytics data through SP-API:\n\n- [<b>Data Kiosk API</b>](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-reference) — A GraphQL-based API for querying analytics data. Create queries, check their processing status, and retrieve the resulting documents.\n    \n- [<b>Reports API</b>](https://developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-reference) — Request and retrieve pre-defined report types covering sales, inventory, fulfillment, and more.\n    \n\n## SP-APIs Involved\n\n| API | Version | Documentation |\n| --- | --- | --- |\n| Data Kiosk API | v2023-11-15 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-reference) |\n| Reports API | v2021-06-30 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-reference) |\n\n## Use Cases\n\n| Folder | Description |\n| --- | --- |\n| \\[Data Kiosk Flow\\] Generate Analytics Report | Query and retrieve analytics data using the Data Kiosk API |\n| \\[Reports API\\] Retail and Brand Analytics | Retrieve retail and brand analytics reports |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A seller or vendor account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, `refresh_token`, `marketplace`, and `base_url` in the environment.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Start exploring** — The collection includes a pre-request script that automatically handles authentication.\n    \n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [Report Type Values](https://developer-docs.amazon.com/sp-api/docs/report-type-values)\n    \n- [Vendor Analytics Reports](https://developer-docs.amazon.com/sp-api/docs/report-type-values-analytics)\n    \n- [Data Kiosk Schema Explorer](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-use-case-guide)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Data Kiosk Flow] Generate Analytics Report",
+			"item": [
+				{
+					"name": "1. Create a new query",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"id": "ee327fde-26cb-4509-aaf1-de7a00d4bbb1"
+							}
+						}
+					],
+					"id": "6a789f04-1cf7-4863-aad8-fd91e7eefd41",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql"
+						},
+						"url": "{{base_url}}/dataKiosk/2023-11-15/queries"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Check query status",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"id": "5582184f-be63-46e6-9c05-ea37b0149b01"
+							}
+						}
+					],
+					"id": "515f6dc0-7445-46f2-b04c-1207c827fa8b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/dataKiosk/2023-11-15/queries/{{queryId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "3. Get document details",
+					"id": "3febabc1-c1ea-4983-b829-cf7ba5ad756b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/dataKiosk/2023-11-15/documents/{{document_id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Download document content",
+					"id": "6603ea8b-141d-49a5-89a3-0cf8a9e20d72",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{document_url}}"
+					},
+					"response": []
+				}
+			],
+			"id": "d110d55b-3fcc-46a0-97b3-da27cb6929ec",
+			"description": "## What is Data Kiosk?\n\n[Data Kiosk](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-reference) is a GraphQL-based API that lets you query analytics data from Amazon. Instead of requesting pre-defined report types, you write queries to pull exactly the data you need.\n\n## How This Flow Works\n\nThis folder walks you through the full lifecycle of a Data Kiosk query:\n\n1. **Create a new query** — Submit a GraphQL query to Data Kiosk.\n    \n2. **Check query status** — Poll until the query finishes processing.\n    \n3. **Get document details** — Retrieve the document URL for the completed query.\n    \n4. **Download document content** — Fetch the actual report data.\n    \n\n📘 Learn more: [Data Kiosk API Use Case Guide](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-use-case-guide)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"oauth_url\"),",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/x-www-form-urlencoded',",
+							"        'Accept': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'urlencoded',",
+							"        urlencoded: [",
+							"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+							"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+							"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+							"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+							"        ]",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().access_token);",
+							"});"
+						],
+						"id": "09e3f24e-1e25-47e5-a5e9-e8e3795b4815"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						],
+						"id": "e0d19da9-2964-44fc-b326-2472c541bfc3"
+					}
+				}
+			]
+		},
+		{
+			"name": "Retail and Brand Analytics",
+			"item": [
+				{
+					"name": "Authorization",
+					"item": [
+						{
+							"name": "GetAccessToken",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"access_token\", jsonData.access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "764268ab-4620-42e6-b8ce-6d704a37ffd6"
+									}
+								}
+							],
+							"id": "44060471-ac60-4319-a82e-b799827c32fa",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/O2/token",
+								"description": "\nThis API endpoint is used to make an HTTP POST request to retrieve an access token from Amazon's authentication server. The request should include the necessary credentials and parameters in the x-www-form-urlencoded format.\n\n### Request Body Parameters\n- No specific request body parameters were provided.\n\n### Response\nThe response of this request can be documented as a JSON schema. It will include the structure and data types of the response fields, providing a clear understanding of the expected response format.\n\n#### JSON Schema for Response\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"access_token\": {\n      \"type\": \"string\"\n    },\n    \"token_type\": {\n      \"type\": \"string\"\n    },\n    \"expires_in\": {\n      \"type\": \"integer\"\n    },\n    \"refresh_token\": {\n      \"type\": \"string\"\n    },\n    \"scope\": {\n      \"type\": \"string\"\n    }\n  }\n}\n```\n"
+							},
+							"response": []
+						}
+					],
+					"id": "0c3d50a4-6f28-4c30-956f-16dcae37cb27",
+					"description": "Call this API to get the **access token** in exchange to the refresh token for authorizing SP API.",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								],
+								"id": "3a9db50a-2311-40f1-9890-d2ee8b2ed432"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"x-amz-access-token\", jsonData.access_token);"
+								],
+								"id": "82b9011f-ffb2-43d1-9065-b4ec95a8f0ed"
+							}
+						}
+					]
+				},
+				{
+					"name": "Create Report Operations",
+					"item": [
+						{
+							"name": "createReport: ARA 2.0 - Sales",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "d77a05c3-0af4-4ad8-9245-7568c0ba0eb2"
+									}
+								}
+							],
+							"id": "cb9a53e5-887c-4357-9368-5b0cc9bcf6da",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_VENDOR_SALES_REPORT\",\r\n    \"marketplaceIds\": [\"{{marketplace}}\"],\r\n    \"dataStartTime\": \"2021-11-21\",\r\n    \"dataEndTime\": \"2021-11-21\",\r\n    \"reportOptions\": {\r\n        \"distributorView\": \"MANUFACTURING\",\r\n        \"reportPeriod\": \"DAY\",\r\n        \"sellingProgram\": \"RETAIL\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: ARA 2.0 - Inventory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "6fe59c08-f204-4088-9553-1301fb5dc8a1"
+									}
+								}
+							],
+							"id": "0a3df2b5-213f-45ac-a002-a26848c2baef",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_VENDOR_INVENTORY_REPORT\",\r\n    \"marketplaceIds\": [\"{{marketplace}}\"],\r\n    \"dataStartTime\": \"2022-05-08\",\r\n    \"dataEndTime\": \"2022-05-14\",\r\n    \"reportOptions\": {\r\n        \"distributorView\": \"MANUFACTURING\",\r\n        \"reportPeriod\": \"WEEK\",\r\n        \"sellingProgram\": \"RETAIL\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: ARA 2.0 - Traffic",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "1b38b57b-ef48-4436-8bab-e10cf2c478a1"
+									}
+								}
+							],
+							"id": "00ed6ca7-da32-40b4-8f2d-0d4620e2d2f4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_VENDOR_TRAFFIC_REPORT\",\r\n    \"marketplaceIds\": [\"{{marketplace}}\"],\r\n    \"dataStartTime\": \"2022-05-21\",\r\n    \"dataEndTime\": \"2022-05-21\",\r\n    \"reportOptions\": {\r\n        \"reportPeriod\": \"DAY\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: ARA 2.0 - Forecast",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "e6f751ce-14f1-4343-8cce-cd3d366c3223"
+									}
+								}
+							],
+							"id": "e17dc1c3-f6cb-4942-8973-b2519a2f7eb7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_VENDOR_FORECASTING_REPORT\",\r\n    \"marketplaceIds\": [\"{{marketplace}}\"],\r\n    \"reportOptions\": {\r\n        \"sellingProgram\": \"RETAIL\"\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: ARA 2.0 - NetPPM",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "76627832-e81a-498f-bdcf-c97efe464525"
+									}
+								}
+							],
+							"id": "cc3ec920-f330-464b-abf1-d6830e215e65",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_VENDOR_NET_PURE_PRODUCT_MARGIN_REPORT\",\r\n    \"reportOptions\": {\r\n        \"reportPeriod\": \"DAY\"\r\n    },\r\n    \"marketplaceIds\": [\"{{marketplace}}\"],\r\n    \"dataStartTime\": \"2021-08-01\",\r\n    \"dataEndTime\": \"2021-08-15\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: Search Terms",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "2782cad5-232d-476b-b4af-c0781dcc474a"
+									}
+								}
+							],
+							"id": "fc8cc51d-440e-431b-ad3c-fe6df3149b4b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_BRAND_ANALYTICS_SEARCH_TERMS_REPORT\",\r\n    \"reportOptions\": {\r\n        \"reportPeriod\": \"WEEK\"\r\n    },\r\n    \"dataStartTime\": \"2021-10-24\",\r\n    \"dataEndTime\": \"2021-10-30\",\r\n    \"marketplaceIds\": [\r\n        \"{{marketplace}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: Market Basket Analysis",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "9fbf9b5e-90c9-43f6-9669-6ebb351342eb"
+									}
+								}
+							],
+							"id": "517c8be1-ce37-418c-adde-7ddc2e728d05",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_BRAND_ANALYTICS_MARKET_BASKET_REPORT\",\r\n    \"reportOptions\": {\r\n        \"reportPeriod\": \"WEEK\"\r\n    },\r\n    \"dataStartTime\": \"2021-06-06\",\r\n    \"dataEndTime\": \"2021-06-12\",\r\n    \"marketplaceIds\": [\r\n        \"{{marketplace}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: Repeat Purchase",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "f92c684f-1eda-4e59-a552-31fcc4ba1f0b"
+									}
+								}
+							],
+							"id": "a7d3fef1-a84f-468c-ae9a-b42d042e7042",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_BRAND_ANALYTICS_REPEAT_PURCHASE_REPORT\",\r\n    \"reportOptions\": {\r\n        \"reportPeriod\": \"WEEK\"\r\n    },\r\n    \"dataStartTime\": \"2021-06-06\",\r\n    \"dataEndTime\": \"2021-06-12\",\r\n    \"marketplaceIds\": [\r\n        \"{{marketplace}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: Promotions Performance",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "c7d7a5f3-265b-4431-a0e4-e9903b413324"
+									}
+								}
+							],
+							"id": "7989a939-7bb6-40be-a520-c74f57cfe312",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_PROMOTION_PERFORMANCE_REPORT\",\r\n    \"reportOptions\": {\r\n        \"promotionStartDateFrom\": \"2021-11-16T00:00:00Z\",\r\n        \"promotionStartDateTo\": \"2021-11-18T00:00:00Z\"\r\n    },\r\n    \"marketplaceIds\": [\r\n        \"{{marketplace}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						},
+						{
+							"name": "createReport: Coupons Performance",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {},
+										"id": "c1d6efdd-4029-4293-bbac-50bdb27d1ca5"
+									}
+								}
+							],
+							"id": "9bd4e7d2-79bf-4c70-b03b-cdbeda8e9133",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"reportType\": \"GET_COUPON_PERFORMANCE_REPORT\",\r\n    \"reportOptions\": {\r\n        \"couponStartDateFrom\": \"2021-10-01T00:00-07:00\",\r\n        \"couponStartDateTo\": \"2021-10-31T23:59-07:00\"\r\n    },\r\n    \"marketplaceIds\": [\r\n        \"{{marketplace}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "https://{{base_url}}/reports/2021-06-30/reports",
+								"description": "Create Report"
+							},
+							"response": []
+						}
+					],
+					"id": "37a3638c-2c14-4766-9452-d289fe12d4c7",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								],
+								"id": "c11beef3-2690-403e-b8dc-24a8d902411b"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"reportId\", jsonData.reportId);"
+								],
+								"id": "1fd939a5-5983-402d-b320-2fe8df6bf5c2"
+							}
+						}
+					]
+				},
+				{
+					"name": "getReport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"reportDocumentId\", jsonData.reportDocumentId);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"id": "42dd3739-5378-416b-8b33-453fe726a754"
+							}
+						}
+					],
+					"id": "2ebb4ac9-581b-4aa2-8a56-93bf682d0a00",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{base_url}}/reports/2021-06-30/reports/:reportId",
+							"protocol": "https",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"2021-06-30",
+								"reports",
+								":reportId"
+							],
+							"variable": [
+								{
+									"id": "c22224ce-efa7-48ab-bd49-125584fd62e2",
+									"key": "reportId",
+									"value": "{{reportId}}"
+								}
+							]
+						},
+						"description": "Create Report"
+					},
+					"response": []
+				},
+				{
+					"name": "getReportDocument",
+					"id": "4482e28b-a5f8-4f13-bbd2-a398a34d8841",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-amz-access-token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{base_url}}/reports/2021-06-30/documents/:reportDocumentId",
+							"protocol": "https",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reports",
+								"2021-06-30",
+								"documents",
+								":reportDocumentId"
+							],
+							"variable": [
+								{
+									"id": "91a3011f-dbd8-4bee-a78f-1ec91e72b408",
+									"key": "reportDocumentId",
+									"value": "{{reportDocumentId}}"
+								}
+							]
+						},
+						"description": "Create Report"
+					},
+					"response": []
+				}
+			],
+			"id": "6a05ba36-a9b1-4c15-80b5-b531e4e51660",
+			"description": "This collection is intended to be used by SP-API developers who want to onboard to [Reports section](https://developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-reference) and/or retrieve **Vendor Retail Analytics and Brand Analytics report types** to analyze their business.\n\nFor detailed information on these reports refer [Vendor Analytics Reports](https://developer-docs.amazon.com/sp-api/docs/report-type-values-analytics) also refer to [Reports API v2021-06-30 Use Case Guide](https://developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-use-case-guide) to learn more on how Reports API work.\n\n## Steps to Follow\n\n- You need the [Brand Analytics role](https://developer-docs.amazon.com/sp-api/docs/roles-in-the-selling-partner-api#role-definitions) approved in your Developer Profile and applied it to your application.\n    \n- Collection Variables tab has all the required variables for the API operations. Modify them with your actual values.\n    \n\n1. Open **Authorization to get Access Token** folder and execute request **GetAccessToken** to get an **access token** in exchange to the refresh token. This access token is passed as a header to all the SP API calls. The access token is automatically stored in the collection's variables.\n    \n2. Open **Create Report Operations folder** where you will find createReport POST requests for the **Vendor Analytics reports**. Submit the request for the desired report types. The resulting `reportId` is automatically stored in the collection's variables.\n    \n3. Execute request **getReport** to check the report processing status, and wait until `Status = DONE`. The resulting `reportDocumentId` is automatically stored in the collection's variables.\n    \n4. Execute request **getReportDocument** to retrieve the report document url. Use the `url` value from the response to get the document data."
+		}
+	]
+}
