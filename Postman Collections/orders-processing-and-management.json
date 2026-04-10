@@ -1,0 +1,1820 @@
+{
+	"info": {
+		"_postman_id": "6b07e210-c7c8-4fbb-9910-896e2211a5fb",
+		"name": "C. Orders Processing and Management 🛒",
+		"description": "# Orders Processing and Management 🛒\n\n## Description\n\nYour toolkit for working with the Orders API. This collection provides hands-on workflows to retrieve, process, and manage orders on Amazon.\n\n## Overview\n\nOrder processing is at the core of every selling partner integration. The [Orders API](https://developer-docs.amazon.com/sp-api/docs/orders-api-v0-reference) lets you programmatically retrieve order details, buyer information, shipping addresses, and order items — everything you need to process and fulfill customer orders.\n\n## SP-APIs Involved\n\n| API | Version | Documentation |\n| --- | --- | --- |\n| Orders API | v0 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/orders-api-v0-reference) |\n| Orders API | v2026-01-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/orders-api-v2026-01-01-reference) |\n\n## Use Cases\n\n| Folder | Description |\n| --- | --- |\n| \\[Orders API v2026\\] Migration Recipes | Step-by-step recipes to explore and adopt the new Orders API version |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A seller account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, `refresh_token`, `marketplace`, and `base_url` in the environment.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Set collection variables** — Configure the variables below for your use case.\n    \n\n### Collection Variables\n\n| Variable | Description |\n| --- | --- |\n| `orderId` | An Amazon order ID to query (3-7-7 format) |\n| `lastUpdatedAfter` | Start date for order search (ISO 8601) |\n| `lastUpdatedBefore` | End date for order search (ISO 8601) |\n| `nextToken` | Pagination token returned from a previous response (optional) |\n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[Orders API v2026] Migration Recipes",
+			"item": [
+				{
+					"name": "Step 1: See the Consolidation",
+					"item": [
+						{
+							"name": "Before with v0",
+							"item": [
+								{
+									"name": "[v0] 1. getOrder",
+									"id": "81ca413b-2ce0-4b63-b474-90671b01b91a",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId"
+											],
+											"variable": [
+												{
+													"id": "9994b104-09e7-4eb6-ae40-21db9c8085fb",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 2. getOrderItems",
+									"id": "a6e2786a-066f-4ef9-98a9-5d15405252fd",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/orderItems",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"orderItems"
+											],
+											"query": [
+												{
+													"key": "NextToken",
+													"value": "{{nextToken}}",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"id": "0af7f617-e854-4e2a-8fa9-2bdfd6d3ba0e",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns detailed order item information for the order that you specify. If NextToken is provided, it's used to retrieve the next page of order items.\n\n__Note__: When an order is in the Pending state (the order has been placed but payment has not been authorized), the getOrderItems operation does not return information about pricing, taxes, shipping charges, gift status or promotions for the order items in the order. After an order leaves the Pending state (this occurs when payment has been authorized) and enters the Unshipped, Partially Shipped, or Shipped state, the getOrderItems operation returns information about pricing, taxes, shipping charges, gift status and promotions for the order items in the order.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 3. getOrderBuyerInfo",
+									"id": "df6b22ed-5b68-4bcb-9110-944c5f1bd24b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/buyerInfo",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"buyerInfo"
+											],
+											"variable": [
+												{
+													"id": "2f35ea39-d9ad-44c0-9611-f04657a55b75",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An orderId is an Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns buyer information for the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 4. getOrderAddress",
+									"id": "8973eeba-51bf-464c-849f-b4ee296ddacc",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/address",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"address"
+											],
+											"variable": [
+												{
+													"id": "bce8e4fa-5f7b-437d-80a8-35cb93188473",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An orderId is an Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns the shipping address for the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 5. getOrderItemsBuyerInfo",
+									"id": "216c2070-bcfd-4e1c-895a-360357f479d4",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/orderItems/buyerInfo",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"orderItems",
+												"buyerInfo"
+											],
+											"query": [
+												{
+													"key": "NextToken",
+													"value": "{{nextToken}}",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"id": "f23b28f2-feaf-40be-b7c0-0f79388492a7",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns buyer information for the order items in the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								}
+							],
+							"id": "c32dcde6-3006-459b-b08e-361a137bb798"
+						},
+						{
+							"name": "After with v2026-01-01",
+							"item": [
+								{
+									"name": "[v2026-01-01] ✨ getOrder with custom included data",
+									"id": "d6568b3c-832a-4ca6-9656-15da2c9861bd",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/2026-01-01/orders/:orderId?includedData=BUYER, RECIPIENT, FULFILLMENT, PROCEEDS, EXPENSE, PROMOTION, CANCELLATION, PACKAGES",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"2026-01-01",
+												"orders",
+												":orderId"
+											],
+											"query": [
+												{
+													"key": "includedData",
+													"value": "BUYER, RECIPIENT, FULFILLMENT, PROCEEDS, EXPENSE, PROMOTION, CANCELLATION, PACKAGES",
+													"description": "A list of data sets to include in the response.x"
+												}
+											],
+											"variable": [
+												{
+													"id": "53b8b553-13df-4e99-a442-30e0b6d8dc07",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "An Amazon-defined order identifier."
+												}
+											]
+										},
+										"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\n**Table of supported Included Data:**\n\n| **Supported Values** | **Description** | **Attributes in Schema** |\n| --- | --- | --- |\n| BUYER | The information of the buyer who purchased the order | Order.buyer |\n| RECIPIENT | The information of the recipient to whom the order is delivered. | Order.recipient |\n| FULFILLMENT | The information about how this order is being processed and shipped applied to the order and order items. | Order.fulfillment  <br>Order.orderItems.fulfillment |\n| PROCEEDS | The revenue and financial breakdown for the order and order items. | Order.proceeds  <br>Order.orderItems.proceeds |\n| EXPENSE | The cost information applied to the order and order items. | Order.orderItems.expense |\n| PROMOTION | The discount and promotional offer details applied to the order and order items. | Order.orderItems.promotion |\n| CANCELLATION | The cancellation information applied to the order and order items. | Order.orderItems.cancellation |\n| PACKAGES | The shipping packages and tracking information. | order.packages |"
+									},
+									"response": []
+								}
+							],
+							"id": "be6096c6-0b35-4aab-8a2f-fbd83c9bb5d5"
+						}
+					],
+					"id": "bf657236-363e-4ec8-bc60-d025267dcba7",
+					"description": "**See how 5 v0 calls become 1 v2026-01-01 call.**\n\n### Instructions\n\n1. Run requests 1-5 (v0 calls)\n    \n2. Run request 6 (v2026-01-01 call)\n    \n3. Compare: same data, 80% fewer calls"
+				},
+				{
+					"name": "Step 2: Explore Available Data",
+					"item": [
+						{
+							"name": "Get Order with Fullfillment Data",
+							"id": "eb27c6f8-aba9-4869-8a21-d6b097084677",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/2026-01-01/orders/:orderId?includedData=RECIPIENT,FULFILLMENT,PACKAGES, CANCELLATION",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"2026-01-01",
+										"orders",
+										":orderId"
+									],
+									"query": [
+										{
+											"key": "includedData",
+											"value": "RECIPIENT,FULFILLMENT,PACKAGES, CANCELLATION",
+											"description": "A list of data sets to include in the response.x"
+										}
+									],
+									"variable": [
+										{
+											"id": "c039a286-5ad5-493d-8ae4-1bdb5de8b54d",
+											"key": "orderId",
+											"value": "{{orderId}}",
+											"description": "An Amazon-defined order identifier."
+										}
+									]
+								},
+								"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\n**Table of supported Included Data:**\n\n| **Supported Values** | **Description** | **Attributes in Schema** |\n| --- | --- | --- |\n| BUYER | The information of the buyer who purchased the order | Order.buyer |\n| RECIPIENT | The information of the recipient to whom the order is delivered. | Order.recipient |\n| FULFILLMENT | The information about how this order is being processed and shipped applied to the order and order items. | Order.fulfillment  <br>Order.orderItems.fulfillment |\n| PROCEEDS | The revenue and financial breakdown for the order and order items. | Order.proceeds  <br>Order.orderItems.proceeds |\n| EXPENSE | The cost information applied to the order and order items. | Order.orderItems.expense |\n| PROMOTION | The discount and promotional offer details applied to the order and order items. | Order.orderItems.promotion |\n| CANCELLATION | The cancellation information applied to the order and order items. | Order.orderItems.cancellation |\n| PACKAGES | The shipping packages and tracking information. | order.packages |"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order with Accounting Data",
+							"id": "683f05d1-a35a-40ad-9054-8dee9932cb22",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/2026-01-01/orders/:orderId?includedData=PROCEEDS,EXPENSE,PROMOTION",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"2026-01-01",
+										"orders",
+										":orderId"
+									],
+									"query": [
+										{
+											"key": "includedData",
+											"value": "PROCEEDS,EXPENSE,PROMOTION",
+											"description": "A list of data sets to include in the response.x"
+										}
+									],
+									"variable": [
+										{
+											"id": "d16dda92-7bdc-47d5-9c2b-f395126855ed",
+											"key": "orderId",
+											"value": "{{orderId}}",
+											"description": "An Amazon-defined order identifier."
+										}
+									]
+								},
+								"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\n**Table of supported Included Data:**\n\n| **Supported Values** | **Description** | **Attributes in Schema** |\n| --- | --- | --- |\n| BUYER | The information of the buyer who purchased the order | Order.buyer |\n| RECIPIENT | The information of the recipient to whom the order is delivered. | Order.recipient |\n| FULFILLMENT | The information about how this order is being processed and shipped applied to the order and order items. | Order.fulfillment  <br>Order.orderItems.fulfillment |\n| PROCEEDS | The revenue and financial breakdown for the order and order items. | Order.proceeds  <br>Order.orderItems.proceeds |\n| EXPENSE | The cost information applied to the order and order items. | Order.orderItems.expense |\n| PROMOTION | The discount and promotional offer details applied to the order and order items. | Order.orderItems.promotion |\n| CANCELLATION | The cancellation information applied to the order and order items. | Order.orderItems.cancellation |\n| PACKAGES | The shipping packages and tracking information. | order.packages |"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Order with Support Data",
+							"id": "5c7af679-ea8b-47c3-ae9f-a13d816c0cf4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/2026-01-01/orders/:orderId?includedData=BUYER,RECIPIENT,FULFILLMENT,PACKAGES",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"2026-01-01",
+										"orders",
+										":orderId"
+									],
+									"query": [
+										{
+											"key": "includedData",
+											"value": "BUYER,RECIPIENT,FULFILLMENT,PACKAGES",
+											"description": "A list of data sets to include in the response.x"
+										}
+									],
+									"variable": [
+										{
+											"id": "0f37b92d-6587-48cf-92b7-bd61b6865486",
+											"key": "orderId",
+											"value": "{{orderId}}",
+											"description": "An Amazon-defined order identifier."
+										}
+									]
+								},
+								"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\n**Table of supported Included Data:**\n\n| **Supported Values** | **Description** | **Attributes in Schema** |\n| --- | --- | --- |\n| BUYER | The information of the buyer who purchased the order | Order.buyer |\n| RECIPIENT | The information of the recipient to whom the order is delivered. | Order.recipient |\n| FULFILLMENT | The information about how this order is being processed and shipped applied to the order and order items. | Order.fulfillment  <br>Order.orderItems.fulfillment |\n| PROCEEDS | The revenue and financial breakdown for the order and order items. | Order.proceeds  <br>Order.orderItems.proceeds |\n| EXPENSE | The cost information applied to the order and order items. | Order.orderItems.expense |\n| PROMOTION | The discount and promotional offer details applied to the order and order items. | Order.orderItems.promotion |\n| CANCELLATION | The cancellation information applied to the order and order items. | Order.orderItems.cancellation |\n| PACKAGES | The shipping packages and tracking information. | order.packages |"
+							},
+							"response": []
+						}
+					],
+					"id": "8621a34e-0b66-427c-9c66-fd935c11edbe",
+					"description": "**Test different includedData combinations for your use cases.**\n\n### Values\n\n- `BUYER` - Buyer info (PII)\n    \n- `RECIPIENT` - Shipping address (PII)\n    \n- `FULFILLMENT` - Status, dates\n    \n- `PROCEEDS` - Revenue\n    \n- `EXPENSE` - Costs\n    \n- `PROMOTION` - Discounts\n    \n- `CANCELLATION` - Cancel info\n    \n- `PACKAGES` - Tracking (FBM)"
+				},
+				{
+					"name": "Step 3: Migrate Orders Retrieval",
+					"item": [
+						{
+							"name": "[v0] getOrders - Basic",
+							"id": "ae24c217-b703-4717-b3da-ece3ff070c8f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/v0/orders?LastUpdatedAfter={{lastUpdatedAfter}}&LastUpdatedBefore={{lastUpdatedBefore}}&MarketplaceIds={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"v0",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "LastUpdatedAfter",
+											"value": "{{lastUpdatedAfter}}",
+											"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+										},
+										{
+											"key": "LastUpdatedBefore",
+											"value": "{{lastUpdatedBefore}}",
+											"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+										},
+										{
+											"key": "MarketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nSee the [Selling Partner API Developer Guide](doc:marketplace-ids) for a complete list of marketplaceId values."
+										},
+										{
+											"key": "CreatedAfter",
+											"value": "2024-05-10",
+											"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. Either the CreatedAfter parameter or the LastUpdatedAfter parameter is required. Both cannot be empty. The date must be in ISO 8601 format.",
+											"disabled": true
+										},
+										{
+											"key": "CreatedBefore",
+											"value": "<string>",
+											"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in ISO 8601 format.",
+											"disabled": true
+										},
+										{
+											"key": "OrderStatuses",
+											"value": "<string>,<string>",
+											"description": "A list of `OrderStatus` values used to filter the results.\n\n**Possible values:**\n- `PendingAvailability` (This status is available for pre-orders only. The order has been placed, payment has not been authorized, and the release date of the item is in the future.)\n- `Pending` (The order has been placed but payment has not been authorized.)\n- `Unshipped` (Payment has been authorized and the order is ready for shipment, but no items in the order have been shipped.)\n- `PartiallyShipped` (One or more, but not all, items in the order have been shipped.)\n- `Shipped` (All items in the order have been shipped.)\n- `InvoiceUnconfirmed` (All items in the order have been shipped. The seller has not yet given confirmation to Amazon that the invoice has been shipped to the buyer.)\n- `Canceled` (The order has been canceled.)\n- `Unfulfillable` (The order cannot be fulfilled. This state applies only to Multi-Channel Fulfillment orders.)",
+											"disabled": true
+										},
+										{
+											"key": "FulfillmentChannels",
+											"value": "<string>,<string>",
+											"description": "A list that indicates how an order was fulfilled. Filters the results by fulfillment channel. Possible values: AFN (Fulfillment by Amazon); MFN (Fulfilled by the seller).",
+											"disabled": true
+										},
+										{
+											"key": "PaymentMethods",
+											"value": "<string>,<string>",
+											"description": "A list of payment method values. Used to select orders paid using the specified payment methods. Possible values: COD (Cash on delivery); CVS (Convenience store payment); Other (Any payment method other than COD or CVS).",
+											"disabled": true
+										},
+										{
+											"key": "BuyerEmail",
+											"value": "<string>",
+											"description": "The email address of a buyer. Used to select orders that contain the specified email address.",
+											"disabled": true
+										},
+										{
+											"key": "SellerOrderId",
+											"value": "<string>",
+											"description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If SellerOrderId is specified, then FulfillmentChannels, OrderStatuses, PaymentMethod, LastUpdatedAfter, LastUpdatedBefore, and BuyerEmail cannot be specified.",
+											"disabled": true
+										},
+										{
+											"key": "MaxResultsPerPage",
+											"value": "<integer>",
+											"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+											"disabled": true
+										},
+										{
+											"key": "EasyShipShipmentStatuses",
+											"value": "<string>,<string>",
+											"description": "A list of `EasyShipShipmentStatus` values. Used to select Easy Ship orders with statuses that match the specified values. If `EasyShipShipmentStatus` is specified, only Amazon Easy Ship orders are returned.\n\n**Possible values:**\n- `PendingSchedule` (The package is awaiting the schedule for pick-up.)\n- `PendingPickUp` (Amazon has not yet picked up the package from the seller.)\n- `PendingDropOff` (The seller will deliver the package to the carrier.)\n- `LabelCanceled` (The seller canceled the pickup.)\n- `PickedUp` (Amazon has picked up the package from the seller.)\n- `DroppedOff` (The package is delivered to the carrier by the seller.)\n- `AtOriginFC` (The packaged is at the origin fulfillment center.)\n- `AtDestinationFC` (The package is at the destination fulfillment center.)\n- `Delivered` (The package has been delivered.)\n- `RejectedByBuyer` (The package has been rejected by the buyer.)\n- `Undeliverable` (The package cannot be delivered.)\n- `ReturningToSeller` (The package was not delivered and is being returned to the seller.)\n- `ReturnedToSeller` (The package was not delivered and was returned to the seller.)\n- `Lost` (The package is lost.)\n- `OutForDelivery` (The package is out for delivery.)\n- `Damaged` (The package was damaged by the carrier.)",
+											"disabled": true
+										},
+										{
+											"key": "ElectronicInvoiceStatuses",
+											"value": "<string>,<string>",
+											"description": "A list of `ElectronicInvoiceStatus` values. Used to select orders with electronic invoice statuses that match the specified values.\n\n**Possible values:**\n- `NotRequired` (Electronic invoice submission is not required for this order.)\n- `NotFound` (The electronic invoice was not submitted for this order.)\n- `Processing` (The electronic invoice is being processed for this order.)\n- `Errored` (The last submitted electronic invoice was rejected for this order.)\n- `Accepted` (The last submitted electronic invoice was submitted and accepted.)",
+											"disabled": true
+										},
+										{
+											"key": "NextToken",
+											"value": "<string>",
+											"description": "A string token returned in the response of your previous request.",
+											"disabled": true
+										},
+										{
+											"key": "AmazonOrderIds",
+											"value": "<string>,<string>",
+											"description": "A list of AmazonOrderId values. An AmazonOrderId is an Amazon-defined order identifier, in 3-7-7 format.",
+											"disabled": true
+										},
+										{
+											"key": "ActualFulfillmentSupplySourceId",
+											"value": "<string>",
+											"description": "Denotes the recommended sourceId where the order should be fulfilled from.",
+											"disabled": true
+										},
+										{
+											"key": "IsISPU",
+											"value": "<boolean>",
+											"description": "When true, this order is marked to be picked up from a store rather than delivered.",
+											"disabled": true
+										},
+										{
+											"key": "StoreChainStoreId",
+											"value": "<string>",
+											"description": "The store chain store identifier. Linked to a specific store in a store chain.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Returns orders created or updated during the time frame indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned. If NextToken is present, that will be used to retrieve the orders instead of other criteria.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "[v2026-01-01] ✨ searchOrders - Complete",
+							"id": "dd38b9be-a28c-430f-a2f2-fa90f98b819e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/2026-01-01/orders?lastUpdatedAfter={{lastUpdatedAfter}}&lastUpdatedBefore={{lastUpdatedBefore}}&marketplaceIds={{marketplace}}&includedData=BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"2026-01-01",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "lastUpdatedAfter",
+											"value": "{{lastUpdatedAfter}}",
+											"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**:  One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `lastUpdatedAfter` is provided, neither `createdAfter` or `createdBefore` may be provided."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "{{lastUpdatedBefore}}",
+											"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `lastUpdatedBefore` is optional when `lastUpdatedAfter` is set. But if specified, `lastUpdatedBefore` should be equal to or after the `lastUpdatedAfter` date and at least 2 minutes before current time. If `lastUpdatedBefore` is provided, neither `createdAfter` or `createdBefore` may be provided."
+										},
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nRefer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a complete list of marketplaceId values."
+										},
+										{
+											"key": "includedData",
+											"value": "BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+											"description": "A list of data sets to include in the response."
+										},
+										{
+											"key": "createdAfter",
+											"value": "2025-01-01T00:00:00Z",
+											"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `createdAfter` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+											"disabled": true
+										},
+										{
+											"key": "createdBefore",
+											"value": "2025-01-01T00:00:00Z",
+											"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `createdBefore` is optional when `createdAfter` is set. But if specified, `createdBefore` should be equal to or after the `createdAfter` date and at least 2 minutes before current time. If `createdBefore` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+											"disabled": true
+										},
+										{
+											"key": "fulfillmentStatuses",
+											"value": "PENDING,UNSHIPPED",
+											"description": "A list of `FulfillmentStatus` values used to filter the results.",
+											"disabled": true
+										},
+										{
+											"key": "fulfilledBy",
+											"value": "AMAZON,MERCHANT",
+											"description": "A list that indicates which party is responsible for fulfilling the order.",
+											"disabled": true
+										},
+										{
+											"key": "maxResultsPerPage",
+											"value": "50",
+											"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+											"disabled": true
+										},
+										{
+											"key": "paginationToken",
+											"value": "2YgYW55IGNhcm5hbCBwbGVhc3VyZS4",
+											"description": "A string token returned in the response of your previous request.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Returns orders that are created or updated during the specified time period. If you want to return specific types of orders, you can apply filters to your request. `paginationToken` doesn't affect any filters that you include in your request; it only impacts the pagination for the filtered orders response. \n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0056 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+							},
+							"response": []
+						},
+						{
+							"name": "[v0] Get Unshipped FBM Orders",
+							"id": "b5095508-e430-4096-84ea-b68467e24a34",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/v0/orders?LastUpdatedAfter={{lastUpdatedAfter}}&LastUpdatedBefore={{lastUpdatedBefore}}&OrderStatuses=Unshipped&MarketplaceIds={{marketplace}}&FulfillmentChannels=MFN",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"v0",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "LastUpdatedAfter",
+											"value": "{{lastUpdatedAfter}}",
+											"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+										},
+										{
+											"key": "LastUpdatedBefore",
+											"value": "{{lastUpdatedBefore}}",
+											"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+										},
+										{
+											"key": "OrderStatuses",
+											"value": "Unshipped",
+											"description": "A list of `OrderStatus` values used to filter the results.\n\n**Possible values:**\n- `PendingAvailability` (This status is available for pre-orders only. The order has been placed, payment has not been authorized, and the release date of the item is in the future.)\n- `Pending` (The order has been placed but payment has not been authorized.)\n- `Unshipped` (Payment has been authorized and the order is ready for shipment, but no items in the order have been shipped.)\n- `PartiallyShipped` (One or more, but not all, items in the order have been shipped.)\n- `Shipped` (All items in the order have been shipped.)\n- `InvoiceUnconfirmed` (All items in the order have been shipped. The seller has not yet given confirmation to Amazon that the invoice has been shipped to the buyer.)\n- `Canceled` (The order has been canceled.)\n- `Unfulfillable` (The order cannot be fulfilled. This state applies only to Multi-Channel Fulfillment orders.)"
+										},
+										{
+											"key": "MarketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nSee the [Selling Partner API Developer Guide](doc:marketplace-ids) for a complete list of marketplaceId values."
+										},
+										{
+											"key": "FulfillmentChannels",
+											"value": "MFN",
+											"description": "A list that indicates how an order was fulfilled. Filters the results by fulfillment channel. Possible values: AFN (Fulfillment by Amazon); MFN (Fulfilled by the seller)."
+										},
+										{
+											"key": "CreatedAfter",
+											"value": "2024-05-10",
+											"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. Either the CreatedAfter parameter or the LastUpdatedAfter parameter is required. Both cannot be empty. The date must be in ISO 8601 format.",
+											"disabled": true
+										},
+										{
+											"key": "CreatedBefore",
+											"value": "<string>",
+											"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in ISO 8601 format.",
+											"disabled": true
+										},
+										{
+											"key": "PaymentMethods",
+											"value": "<string>,<string>",
+											"description": "A list of payment method values. Used to select orders paid using the specified payment methods. Possible values: COD (Cash on delivery); CVS (Convenience store payment); Other (Any payment method other than COD or CVS).",
+											"disabled": true
+										},
+										{
+											"key": "BuyerEmail",
+											"value": "<string>",
+											"description": "The email address of a buyer. Used to select orders that contain the specified email address.",
+											"disabled": true
+										},
+										{
+											"key": "SellerOrderId",
+											"value": "<string>",
+											"description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If SellerOrderId is specified, then FulfillmentChannels, OrderStatuses, PaymentMethod, LastUpdatedAfter, LastUpdatedBefore, and BuyerEmail cannot be specified.",
+											"disabled": true
+										},
+										{
+											"key": "MaxResultsPerPage",
+											"value": "<integer>",
+											"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+											"disabled": true
+										},
+										{
+											"key": "EasyShipShipmentStatuses",
+											"value": "<string>,<string>",
+											"description": "A list of `EasyShipShipmentStatus` values. Used to select Easy Ship orders with statuses that match the specified values. If `EasyShipShipmentStatus` is specified, only Amazon Easy Ship orders are returned.\n\n**Possible values:**\n- `PendingSchedule` (The package is awaiting the schedule for pick-up.)\n- `PendingPickUp` (Amazon has not yet picked up the package from the seller.)\n- `PendingDropOff` (The seller will deliver the package to the carrier.)\n- `LabelCanceled` (The seller canceled the pickup.)\n- `PickedUp` (Amazon has picked up the package from the seller.)\n- `DroppedOff` (The package is delivered to the carrier by the seller.)\n- `AtOriginFC` (The packaged is at the origin fulfillment center.)\n- `AtDestinationFC` (The package is at the destination fulfillment center.)\n- `Delivered` (The package has been delivered.)\n- `RejectedByBuyer` (The package has been rejected by the buyer.)\n- `Undeliverable` (The package cannot be delivered.)\n- `ReturningToSeller` (The package was not delivered and is being returned to the seller.)\n- `ReturnedToSeller` (The package was not delivered and was returned to the seller.)\n- `Lost` (The package is lost.)\n- `OutForDelivery` (The package is out for delivery.)\n- `Damaged` (The package was damaged by the carrier.)",
+											"disabled": true
+										},
+										{
+											"key": "ElectronicInvoiceStatuses",
+											"value": "<string>,<string>",
+											"description": "A list of `ElectronicInvoiceStatus` values. Used to select orders with electronic invoice statuses that match the specified values.\n\n**Possible values:**\n- `NotRequired` (Electronic invoice submission is not required for this order.)\n- `NotFound` (The electronic invoice was not submitted for this order.)\n- `Processing` (The electronic invoice is being processed for this order.)\n- `Errored` (The last submitted electronic invoice was rejected for this order.)\n- `Accepted` (The last submitted electronic invoice was submitted and accepted.)",
+											"disabled": true
+										},
+										{
+											"key": "NextToken",
+											"value": "<string>",
+											"description": "A string token returned in the response of your previous request.",
+											"disabled": true
+										},
+										{
+											"key": "AmazonOrderIds",
+											"value": "<string>,<string>",
+											"description": "A list of AmazonOrderId values. An AmazonOrderId is an Amazon-defined order identifier, in 3-7-7 format.",
+											"disabled": true
+										},
+										{
+											"key": "ActualFulfillmentSupplySourceId",
+											"value": "<string>",
+											"description": "Denotes the recommended sourceId where the order should be fulfilled from.",
+											"disabled": true
+										},
+										{
+											"key": "IsISPU",
+											"value": "<boolean>",
+											"description": "When true, this order is marked to be picked up from a store rather than delivered.",
+											"disabled": true
+										},
+										{
+											"key": "StoreChainStoreId",
+											"value": "<string>",
+											"description": "The store chain store identifier. Linked to a specific store in a store chain.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Returns orders created or updated during the time frame indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned. If NextToken is present, that will be used to retrieve the orders instead of other criteria.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "[v2026-01-01] ✨ Search Unshipped FBM Orders",
+							"id": "e744ba94-1983-4b05-ba35-cd100a0f7ba1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/2026-01-01/orders?lastUpdatedAfter={{lastUpdatedAfter}}&lastUpdatedBefore={{lastUpdatedBefore}}&fulfillmentStatuses=UNSHIPPED&marketplaceIds={{marketplace}}&includedData=BUYER,RECIPIENT,FULFILLMENT,PROCEEDS&fulfilledBy=MERCHANT",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"orders",
+										"2026-01-01",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "lastUpdatedAfter",
+											"value": "{{lastUpdatedAfter}}",
+											"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**:  One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `lastUpdatedAfter` is provided, neither `createdAfter` or `createdBefore` may be provided."
+										},
+										{
+											"key": "lastUpdatedBefore",
+											"value": "{{lastUpdatedBefore}}",
+											"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `lastUpdatedBefore` is optional when `lastUpdatedAfter` is set. But if specified, `lastUpdatedBefore` should be equal to or after the `lastUpdatedAfter` date and at least 2 minutes before current time. If `lastUpdatedBefore` is provided, neither `createdAfter` or `createdBefore` may be provided."
+										},
+										{
+											"key": "fulfillmentStatuses",
+											"value": "UNSHIPPED",
+											"description": "A list of `FulfillmentStatus` values used to filter the results."
+										},
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nRefer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a complete list of marketplaceId values."
+										},
+										{
+											"key": "includedData",
+											"value": "BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+											"description": "A list of data sets to include in the response."
+										},
+										{
+											"key": "fulfilledBy",
+											"value": "MERCHANT",
+											"description": "A list that indicates which party is responsible for fulfilling the order."
+										},
+										{
+											"key": "createdAfter",
+											"value": "2025-01-01T00:00:00Z",
+											"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `createdAfter` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+											"disabled": true
+										},
+										{
+											"key": "createdBefore",
+											"value": "2025-01-01T00:00:00Z",
+											"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `createdBefore` is optional when `createdAfter` is set. But if specified, `createdBefore` should be equal to or after the `createdAfter` date and at least 2 minutes before current time. If `createdBefore` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+											"disabled": true
+										},
+										{
+											"key": "maxResultsPerPage",
+											"value": "50",
+											"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+											"disabled": true
+										},
+										{
+											"key": "paginationToken",
+											"value": "2YgYW55IGNhcm5hbCBwbGVhc3VyZS4",
+											"description": "A string token returned in the response of your previous request.",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Returns orders that are created or updated during the specified time period. If you want to return specific types of orders, you can apply filters to your request. `paginationToken` doesn't affect any filters that you include in your request; it only impacts the pagination for the filtered orders response. \n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0056 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+							},
+							"response": []
+						}
+					],
+					"id": "bc7af670-d1fb-4b59-ac5f-f494f4c809e9",
+					"description": "**Update your sync workflows with new parameter names and values.**\n\n### Key Changes\n\n- `MarketplaceIds` → `marketplaceIds`\n    \n- `LastUpdatedAfter` → `lastUpdatedAfter`\n    \n- `NextToken` → `paginationToken`\n    \n- `OrderStatuses` → `fulfillmentStatuses`\n    \n- `FulfillmentChannels` → `fulfilledBy`\n    \n- `Unshipped` → `UNSHIPPED`\n    \n- `MFN` → `MERCHANT`"
+				},
+				{
+					"name": "Step 4: Migration Patterns",
+					"item": [
+						{
+							"name": "Pattern A: Daily Sync",
+							"item": [
+								{
+									"name": "[v0] 1. Get Orders",
+									"id": "3510f3bc-84a0-487b-b7be-53530d11fafb",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders?LastUpdatedAfter={{lastUpdatedAfter}}&LastUpdatedBefore={{lastUpdatedBefore}}&MarketplaceIds={{marketplace}}",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders"
+											],
+											"query": [
+												{
+													"key": "LastUpdatedAfter",
+													"value": "{{lastUpdatedAfter}}",
+													"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+												},
+												{
+													"key": "LastUpdatedBefore",
+													"value": "{{lastUpdatedBefore}}",
+													"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+												},
+												{
+													"key": "MarketplaceIds",
+													"value": "{{marketplace}}",
+													"description": "(Required) A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nSee the [Selling Partner API Developer Guide](doc:marketplace-ids) for a complete list of marketplaceId values."
+												},
+												{
+													"key": "MaxResultsPerPage",
+													"value": "50",
+													"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+													"disabled": true
+												},
+												{
+													"key": "CreatedAfter",
+													"value": "2024-05-10",
+													"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. Either the CreatedAfter parameter or the LastUpdatedAfter parameter is required. Both cannot be empty. The date must be in ISO 8601 format.",
+													"disabled": true
+												},
+												{
+													"key": "CreatedBefore",
+													"value": "<string>",
+													"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in ISO 8601 format.",
+													"disabled": true
+												},
+												{
+													"key": "OrderStatuses",
+													"value": "<string>,<string>",
+													"description": "A list of `OrderStatus` values used to filter the results.\n\n**Possible values:**\n- `PendingAvailability` (This status is available for pre-orders only. The order has been placed, payment has not been authorized, and the release date of the item is in the future.)\n- `Pending` (The order has been placed but payment has not been authorized.)\n- `Unshipped` (Payment has been authorized and the order is ready for shipment, but no items in the order have been shipped.)\n- `PartiallyShipped` (One or more, but not all, items in the order have been shipped.)\n- `Shipped` (All items in the order have been shipped.)\n- `InvoiceUnconfirmed` (All items in the order have been shipped. The seller has not yet given confirmation to Amazon that the invoice has been shipped to the buyer.)\n- `Canceled` (The order has been canceled.)\n- `Unfulfillable` (The order cannot be fulfilled. This state applies only to Multi-Channel Fulfillment orders.)",
+													"disabled": true
+												},
+												{
+													"key": "FulfillmentChannels",
+													"value": "<string>,<string>",
+													"description": "A list that indicates how an order was fulfilled. Filters the results by fulfillment channel. Possible values: AFN (Fulfillment by Amazon); MFN (Fulfilled by the seller).",
+													"disabled": true
+												},
+												{
+													"key": "PaymentMethods",
+													"value": "<string>,<string>",
+													"description": "A list of payment method values. Used to select orders paid using the specified payment methods. Possible values: COD (Cash on delivery); CVS (Convenience store payment); Other (Any payment method other than COD or CVS).",
+													"disabled": true
+												},
+												{
+													"key": "BuyerEmail",
+													"value": "<string>",
+													"description": "The email address of a buyer. Used to select orders that contain the specified email address.",
+													"disabled": true
+												},
+												{
+													"key": "SellerOrderId",
+													"value": "<string>",
+													"description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If SellerOrderId is specified, then FulfillmentChannels, OrderStatuses, PaymentMethod, LastUpdatedAfter, LastUpdatedBefore, and BuyerEmail cannot be specified.",
+													"disabled": true
+												},
+												{
+													"key": "EasyShipShipmentStatuses",
+													"value": "<string>,<string>",
+													"description": "A list of `EasyShipShipmentStatus` values. Used to select Easy Ship orders with statuses that match the specified values. If `EasyShipShipmentStatus` is specified, only Amazon Easy Ship orders are returned.\n\n**Possible values:**\n- `PendingSchedule` (The package is awaiting the schedule for pick-up.)\n- `PendingPickUp` (Amazon has not yet picked up the package from the seller.)\n- `PendingDropOff` (The seller will deliver the package to the carrier.)\n- `LabelCanceled` (The seller canceled the pickup.)\n- `PickedUp` (Amazon has picked up the package from the seller.)\n- `DroppedOff` (The package is delivered to the carrier by the seller.)\n- `AtOriginFC` (The packaged is at the origin fulfillment center.)\n- `AtDestinationFC` (The package is at the destination fulfillment center.)\n- `Delivered` (The package has been delivered.)\n- `RejectedByBuyer` (The package has been rejected by the buyer.)\n- `Undeliverable` (The package cannot be delivered.)\n- `ReturningToSeller` (The package was not delivered and is being returned to the seller.)\n- `ReturnedToSeller` (The package was not delivered and was returned to the seller.)\n- `Lost` (The package is lost.)\n- `OutForDelivery` (The package is out for delivery.)\n- `Damaged` (The package was damaged by the carrier.)",
+													"disabled": true
+												},
+												{
+													"key": "ElectronicInvoiceStatuses",
+													"value": "<string>,<string>",
+													"description": "A list of `ElectronicInvoiceStatus` values. Used to select orders with electronic invoice statuses that match the specified values.\n\n**Possible values:**\n- `NotRequired` (Electronic invoice submission is not required for this order.)\n- `NotFound` (The electronic invoice was not submitted for this order.)\n- `Processing` (The electronic invoice is being processed for this order.)\n- `Errored` (The last submitted electronic invoice was rejected for this order.)\n- `Accepted` (The last submitted electronic invoice was submitted and accepted.)",
+													"disabled": true
+												},
+												{
+													"key": "NextToken",
+													"value": "<string>",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												},
+												{
+													"key": "AmazonOrderIds",
+													"value": "<string>,<string>",
+													"description": "A list of AmazonOrderId values. An AmazonOrderId is an Amazon-defined order identifier, in 3-7-7 format.",
+													"disabled": true
+												},
+												{
+													"key": "ActualFulfillmentSupplySourceId",
+													"value": "<string>",
+													"description": "Denotes the recommended sourceId where the order should be fulfilled from.",
+													"disabled": true
+												},
+												{
+													"key": "IsISPU",
+													"value": "<boolean>",
+													"description": "When true, this order is marked to be picked up from a store rather than delivered.",
+													"disabled": true
+												},
+												{
+													"key": "StoreChainStoreId",
+													"value": "<string>",
+													"description": "The store chain store identifier. Linked to a specific store in a store chain.",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Returns orders created or updated during the time frame indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned. If NextToken is present, that will be used to retrieve the orders instead of other criteria.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v2026-01-01] ✨ Search Orders - Complete Orders Sync",
+									"id": "98035894-512d-4c38-b189-1959ae17bc74",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/2026-01-01/orders?lastUpdatedAfter={{lastUpdatedAfter}}&lastUpdatedBefore={{lastUpdatedBefore}}&marketplaceIds={{marketplace}}&includedData=BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"2026-01-01",
+												"orders"
+											],
+											"query": [
+												{
+													"key": "lastUpdatedAfter",
+													"value": "{{lastUpdatedAfter}}",
+													"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**:  One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `lastUpdatedAfter` is provided, neither `createdAfter` or `createdBefore` may be provided."
+												},
+												{
+													"key": "lastUpdatedBefore",
+													"value": "{{lastUpdatedBefore}}",
+													"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `lastUpdatedBefore` is optional when `lastUpdatedAfter` is set. But if specified, `lastUpdatedBefore` should be equal to or after the `lastUpdatedAfter` date and at least 2 minutes before current time. If `lastUpdatedBefore` is provided, neither `createdAfter` or `createdBefore` may be provided."
+												},
+												{
+													"key": "marketplaceIds",
+													"value": "{{marketplace}}",
+													"description": "A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nRefer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a complete list of marketplaceId values."
+												},
+												{
+													"key": "includedData",
+													"value": "BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+													"description": "A list of data sets to include in the response."
+												},
+												{
+													"key": "createdAfter",
+													"value": "2025-01-01T00:00:00Z",
+													"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `createdAfter` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+													"disabled": true
+												},
+												{
+													"key": "createdBefore",
+													"value": "2025-01-01T00:00:00Z",
+													"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `createdBefore` is optional when `createdAfter` is set. But if specified, `createdBefore` should be equal to or after the `createdAfter` date and at least 2 minutes before current time. If `createdBefore` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+													"disabled": true
+												},
+												{
+													"key": "fulfillmentStatuses",
+													"value": "PENDING,UNSHIPPED",
+													"description": "A list of `FulfillmentStatus` values used to filter the results.",
+													"disabled": true
+												},
+												{
+													"key": "fulfilledBy",
+													"value": "AMAZON,MERCHANT",
+													"description": "A list that indicates which party is responsible for fulfilling the order.",
+													"disabled": true
+												},
+												{
+													"key": "maxResultsPerPage",
+													"value": "50",
+													"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+													"disabled": true
+												},
+												{
+													"key": "paginationToken",
+													"value": "2YgYW55IGNhcm5hbCBwbGVhc3VyZS4",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Returns orders that are created or updated during the specified time period. If you want to return specific types of orders, you can apply filters to your request. `paginationToken` doesn't affect any filters that you include in your request; it only impacts the pagination for the filtered orders response. \n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0056 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+									},
+									"response": []
+								}
+							],
+							"id": "e54d6c1d-c7ca-4a6c-87db-a676535e8be6"
+						},
+						{
+							"name": "Pattern B: Order Detail",
+							"item": [
+								{
+									"name": "[v0] 1. getOrder",
+									"id": "59c973da-7937-4d38-b69e-144058124f4c",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId"
+											],
+											"variable": [
+												{
+													"id": "45dcc564-e401-44bf-8405-db6b601b2da6",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 2. getOrderItems",
+									"id": "4dc74303-1d21-45de-a312-cc0e03062297",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/orderItems",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"orderItems"
+											],
+											"query": [
+												{
+													"key": "NextToken",
+													"value": "{{nextToken}}",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"id": "4b5bfd5f-717f-4951-8b3a-c25bdfc186f8",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns detailed order item information for the order that you specify. If NextToken is provided, it's used to retrieve the next page of order items.\n\n__Note__: When an order is in the Pending state (the order has been placed but payment has not been authorized), the getOrderItems operation does not return information about pricing, taxes, shipping charges, gift status or promotions for the order items in the order. After an order leaves the Pending state (this occurs when payment has been authorized) and enters the Unshipped, Partially Shipped, or Shipped state, the getOrderItems operation returns information about pricing, taxes, shipping charges, gift status and promotions for the order items in the order.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 3. getOrderBuyerInfo",
+									"id": "944c6154-44ba-4524-b4b0-1957658d6bec",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/buyerInfo",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"buyerInfo"
+											],
+											"variable": [
+												{
+													"id": "403be973-f5df-4015-b23b-40cb05a16086",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An orderId is an Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns buyer information for the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 4. getOrderAddress",
+									"id": "3c469147-d660-4aba-afee-8c605f942a5b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/address",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"address"
+											],
+											"variable": [
+												{
+													"id": "e407bf16-ed2e-48d3-bcc9-d6e9dadfdda7",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An orderId is an Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns the shipping address for the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v2026-01-01] ✨ Get Order - Complete Order Detail",
+									"id": "4a7b5b81-6af8-4cab-a566-6e734ce7d072",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/2026-01-01/orders/:orderId?includedData=BUYER, RECIPIENT, FULFILLMENT, PROCEEDS, EXPENSE, PROMOTION, CANCELLATION, PACKAGES",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"2026-01-01",
+												"orders",
+												":orderId"
+											],
+											"query": [
+												{
+													"key": "includedData",
+													"value": "BUYER, RECIPIENT, FULFILLMENT, PROCEEDS, EXPENSE, PROMOTION, CANCELLATION, PACKAGES",
+													"description": "A list of data sets to include in the response.x"
+												}
+											],
+											"variable": [
+												{
+													"id": "70e31f23-c9d1-424f-876f-8aee30ad6d35",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "An Amazon-defined order identifier."
+												}
+											]
+										},
+										"description": "Returns the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| --- | --- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\n**Table of supported Included Data:**\n\n| **Supported Values** | **Description** | **Attributes in Schema** |\n| --- | --- | --- |\n| BUYER | The information of the buyer who purchased the order | Order.buyer |\n| RECIPIENT | The information of the recipient to whom the order is delivered. | Order.recipient |\n| FULFILLMENT | The information about how this order is being processed and shipped applied to the order and order items. | Order.fulfillment  <br>Order.orderItems.fulfillment |\n| PROCEEDS | The revenue and financial breakdown for the order and order items. | Order.proceeds  <br>Order.orderItems.proceeds |\n| EXPENSE | The cost information applied to the order and order items. | Order.orderItems.expense |\n| PROMOTION | The discount and promotional offer details applied to the order and order items. | Order.orderItems.promotion |\n| CANCELLATION | The cancellation information applied to the order and order items. | Order.orderItems.cancellation |\n| PACKAGES | The shipping packages and tracking information. | order.packages |"
+									},
+									"response": []
+								}
+							],
+							"id": "80a93857-370f-4c13-828a-dd377447ceed"
+						},
+						{
+							"name": "Pattern C: Fulfillment Queue",
+							"item": [
+								{
+									"name": "[v0] 1. Get FBM Unshipped Orders",
+									"id": "9b1cc1c5-c9c6-4466-ace9-86a869fff1a7",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders?LastUpdatedAfter={{lastUpdatedAfter}}&LastUpdatedBefore={{lastUpdatedBefore}}&OrderStatuses=Unshipped&MarketplaceIds={{marketplace}}&FulfillmentChannels=MFN",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders"
+											],
+											"query": [
+												{
+													"key": "LastUpdatedAfter",
+													"value": "{{lastUpdatedAfter}}",
+													"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+												},
+												{
+													"key": "LastUpdatedBefore",
+													"value": "{{lastUpdatedBefore}}",
+													"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. The date must be in ISO 8601 format."
+												},
+												{
+													"key": "OrderStatuses",
+													"value": "Unshipped",
+													"description": "A list of `OrderStatus` values used to filter the results.\n\n**Possible values:**\n- `PendingAvailability` (This status is available for pre-orders only. The order has been placed, payment has not been authorized, and the release date of the item is in the future.)\n- `Pending` (The order has been placed but payment has not been authorized.)\n- `Unshipped` (Payment has been authorized and the order is ready for shipment, but no items in the order have been shipped.)\n- `PartiallyShipped` (One or more, but not all, items in the order have been shipped.)\n- `Shipped` (All items in the order have been shipped.)\n- `InvoiceUnconfirmed` (All items in the order have been shipped. The seller has not yet given confirmation to Amazon that the invoice has been shipped to the buyer.)\n- `Canceled` (The order has been canceled.)\n- `Unfulfillable` (The order cannot be fulfilled. This state applies only to Multi-Channel Fulfillment orders.)"
+												},
+												{
+													"key": "MarketplaceIds",
+													"value": "{{marketplace}}",
+													"description": "(Required) A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nSee the [Selling Partner API Developer Guide](doc:marketplace-ids) for a complete list of marketplaceId values."
+												},
+												{
+													"key": "FulfillmentChannels",
+													"value": "MFN",
+													"description": "A list that indicates how an order was fulfilled. Filters the results by fulfillment channel. Possible values: AFN (Fulfillment by Amazon); MFN (Fulfilled by the seller)."
+												},
+												{
+													"key": "CreatedAfter",
+													"value": "2024-05-10",
+													"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. Either the CreatedAfter parameter or the LastUpdatedAfter parameter is required. Both cannot be empty. The date must be in ISO 8601 format.",
+													"disabled": true
+												},
+												{
+													"key": "CreatedBefore",
+													"value": "<string>",
+													"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in ISO 8601 format.",
+													"disabled": true
+												},
+												{
+													"key": "PaymentMethods",
+													"value": "<string>,<string>",
+													"description": "A list of payment method values. Used to select orders paid using the specified payment methods. Possible values: COD (Cash on delivery); CVS (Convenience store payment); Other (Any payment method other than COD or CVS).",
+													"disabled": true
+												},
+												{
+													"key": "BuyerEmail",
+													"value": "<string>",
+													"description": "The email address of a buyer. Used to select orders that contain the specified email address.",
+													"disabled": true
+												},
+												{
+													"key": "SellerOrderId",
+													"value": "<string>",
+													"description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If SellerOrderId is specified, then FulfillmentChannels, OrderStatuses, PaymentMethod, LastUpdatedAfter, LastUpdatedBefore, and BuyerEmail cannot be specified.",
+													"disabled": true
+												},
+												{
+													"key": "MaxResultsPerPage",
+													"value": "<integer>",
+													"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+													"disabled": true
+												},
+												{
+													"key": "EasyShipShipmentStatuses",
+													"value": "<string>,<string>",
+													"description": "A list of `EasyShipShipmentStatus` values. Used to select Easy Ship orders with statuses that match the specified values. If `EasyShipShipmentStatus` is specified, only Amazon Easy Ship orders are returned.\n\n**Possible values:**\n- `PendingSchedule` (The package is awaiting the schedule for pick-up.)\n- `PendingPickUp` (Amazon has not yet picked up the package from the seller.)\n- `PendingDropOff` (The seller will deliver the package to the carrier.)\n- `LabelCanceled` (The seller canceled the pickup.)\n- `PickedUp` (Amazon has picked up the package from the seller.)\n- `DroppedOff` (The package is delivered to the carrier by the seller.)\n- `AtOriginFC` (The packaged is at the origin fulfillment center.)\n- `AtDestinationFC` (The package is at the destination fulfillment center.)\n- `Delivered` (The package has been delivered.)\n- `RejectedByBuyer` (The package has been rejected by the buyer.)\n- `Undeliverable` (The package cannot be delivered.)\n- `ReturningToSeller` (The package was not delivered and is being returned to the seller.)\n- `ReturnedToSeller` (The package was not delivered and was returned to the seller.)\n- `Lost` (The package is lost.)\n- `OutForDelivery` (The package is out for delivery.)\n- `Damaged` (The package was damaged by the carrier.)",
+													"disabled": true
+												},
+												{
+													"key": "ElectronicInvoiceStatuses",
+													"value": "<string>,<string>",
+													"description": "A list of `ElectronicInvoiceStatus` values. Used to select orders with electronic invoice statuses that match the specified values.\n\n**Possible values:**\n- `NotRequired` (Electronic invoice submission is not required for this order.)\n- `NotFound` (The electronic invoice was not submitted for this order.)\n- `Processing` (The electronic invoice is being processed for this order.)\n- `Errored` (The last submitted electronic invoice was rejected for this order.)\n- `Accepted` (The last submitted electronic invoice was submitted and accepted.)",
+													"disabled": true
+												},
+												{
+													"key": "NextToken",
+													"value": "<string>",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												},
+												{
+													"key": "AmazonOrderIds",
+													"value": "<string>,<string>",
+													"description": "A list of AmazonOrderId values. An AmazonOrderId is an Amazon-defined order identifier, in 3-7-7 format.",
+													"disabled": true
+												},
+												{
+													"key": "ActualFulfillmentSupplySourceId",
+													"value": "<string>",
+													"description": "Denotes the recommended sourceId where the order should be fulfilled from.",
+													"disabled": true
+												},
+												{
+													"key": "IsISPU",
+													"value": "<boolean>",
+													"description": "When true, this order is marked to be picked up from a store rather than delivered.",
+													"disabled": true
+												},
+												{
+													"key": "StoreChainStoreId",
+													"value": "<string>",
+													"description": "The store chain store identifier. Linked to a specific store in a store chain.",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Returns orders created or updated during the time frame indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned. If NextToken is present, that will be used to retrieve the orders instead of other criteria.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 2. Get Order Items",
+									"id": "751786c2-6f09-4e56-b60d-4b5e87866824",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/orderItems",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"orderItems"
+											],
+											"query": [
+												{
+													"key": "NextToken",
+													"value": "{{nextToken}}",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"id": "07305bc8-2122-48a5-968c-b75bcd32fc99",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns detailed order item information for the order that you specify. If NextToken is provided, it's used to retrieve the next page of order items.\n\n__Note__: When an order is in the Pending state (the order has been placed but payment has not been authorized), the getOrderItems operation does not return information about pricing, taxes, shipping charges, gift status or promotions for the order items in the order. After an order leaves the Pending state (this occurs when payment has been authorized) and enters the Unshipped, Partially Shipped, or Shipped state, the getOrderItems operation returns information about pricing, taxes, shipping charges, gift status and promotions for the order items in the order.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.5 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v0] 3. Get Order Address",
+									"id": "beac547f-f420-4d61-8c0e-e936b67a8f1f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/v0/orders/:orderId/address",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"v0",
+												"orders",
+												":orderId",
+												"address"
+											],
+											"variable": [
+												{
+													"id": "dc7f4ede-3d41-47ad-ae35-e15b3aa8f744",
+													"key": "orderId",
+													"value": "{{orderId}}",
+													"description": "(Required) An orderId is an Amazon-defined order identifier, in 3-7-7 format."
+												}
+											]
+										},
+										"description": "Returns the shipping address for the order that you specify.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+									},
+									"response": []
+								},
+								{
+									"name": "[v2026-01-01] ✨ Search Ready-to-Ship FBM Orders",
+									"id": "49db8065-4b05-4fdb-be3b-bdd0192860ec",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											},
+											{
+												"key": "x-amz-access-token",
+												"value": "{{access_token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/orders/2026-01-01/orders?lastUpdatedAfter={{lastUpdatedAfter}}&lastUpdatedBefore={{lastUpdatedBefore}}&fulfillmentStatuses=UNSHIPPED&marketplaceIds={{marketplace}}&includedData=BUYER,RECIPIENT,FULFILLMENT,PROCEEDS&fulfilledBy=MERCHANT",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"orders",
+												"2026-01-01",
+												"orders"
+											],
+											"query": [
+												{
+													"key": "lastUpdatedAfter",
+													"value": "{{lastUpdatedAfter}}",
+													"description": "A date used for selecting orders that were last updated after (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**:  One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `lastUpdatedAfter` is provided, neither `createdAfter` or `createdBefore` may be provided."
+												},
+												{
+													"key": "lastUpdatedBefore",
+													"value": "{{lastUpdatedBefore}}",
+													"description": "A date used for selecting orders that were last updated before (or at) a specified time. An update is defined as any change made by Amazon and by the seller, including the update in order status. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `lastUpdatedBefore` is optional when `lastUpdatedAfter` is set. But if specified, `lastUpdatedBefore` should be equal to or after the `lastUpdatedAfter` date and at least 2 minutes before current time. If `lastUpdatedBefore` is provided, neither `createdAfter` or `createdBefore` may be provided."
+												},
+												{
+													"key": "fulfillmentStatuses",
+													"value": "UNSHIPPED",
+													"description": "A list of `FulfillmentStatus` values used to filter the results."
+												},
+												{
+													"key": "marketplaceIds",
+													"value": "{{marketplace}}",
+													"description": "A list of MarketplaceId values. Used to select orders that were placed in the specified marketplaces.\n\nRefer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a complete list of marketplaceId values."
+												},
+												{
+													"key": "includedData",
+													"value": "BUYER,RECIPIENT,FULFILLMENT,PROCEEDS",
+													"description": "A list of data sets to include in the response."
+												},
+												{
+													"key": "fulfilledBy",
+													"value": "MERCHANT",
+													"description": "A list that indicates which party is responsible for fulfilling the order."
+												},
+												{
+													"key": "createdAfter",
+													"value": "2025-01-01T00:00:00Z",
+													"description": "A date used for selecting orders created after (or at) a specified time. Only orders placed after the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: One and only one of `createdAfter` or `lastUpdatedAfter` must be provided. If `createdAfter` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+													"disabled": true
+												},
+												{
+													"key": "createdBefore",
+													"value": "2025-01-01T00:00:00Z",
+													"description": "A date used for selecting orders created before (or at) a specified time. Only orders placed before the specified time are returned. The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.\n\n**Note**: `createdBefore` is optional when `createdAfter` is set. But if specified, `createdBefore` should be equal to or after the `createdAfter` date and at least 2 minutes before current time. If `createdBefore` is provided, neither `lastUpdatedAfter` or `lastUpdatedBefore` may be provided.",
+													"disabled": true
+												},
+												{
+													"key": "maxResultsPerPage",
+													"value": "50",
+													"description": "A number that indicates the maximum number of orders that can be returned per page. Value must be 1 - 100. Default 100.",
+													"disabled": true
+												},
+												{
+													"key": "paginationToken",
+													"value": "2YgYW55IGNhcm5hbCBwbGVhc3VyZS4",
+													"description": "A string token returned in the response of your previous request.",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Returns orders that are created or updated during the specified time period. If you want to return specific types of orders, you can apply filters to your request. `paginationToken` doesn't affect any filters that you include in your request; it only impacts the pagination for the filtered orders response. \n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0056 | 20 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that are applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may receive higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api) in the Selling Partner API documentation."
+									},
+									"response": []
+								}
+							],
+							"id": "dd4b7033-e1d3-400b-9bd1-a7153c4dcc7a"
+						}
+					],
+					"id": "1d404695-e0c6-400c-a36c-903e11a5d05c",
+					"description": "**Complete before/after workflows for common scenarios.**\n\n### Patterns\n\n- **A: Nightly Sync** - 99.7% reduction\n    \n- **B: Order Detail** - 80% reduction\n    \n- **C: FBM Queue** - 99% reduction"
+				}
+			],
+			"id": "7308aab4-b752-4a9c-bd7f-81c9c29a3ec7",
+			"description": "# Orders API Migration Collection\n\n📖 **Full Guide:** [Migrate to Orders API v2026-01-01 - GitHub Discussion](https://github.com/amzn/selling-partner-api-samples/discussions/253)\n\n## How to Use\n\n1. Fork this collection\n    \n2. Set variables: `orderId`, `marketplaceId`, `lastUpdatedAfter`\n    \n3. Follow the steps in order (matches the guide)\n    \n\n## Folders\n\n| Folder | Guide Section |\n| --- | --- |\n| Step 1 | See the Consolidation |\n| Step 2 | Master includedData |\n| Step 3 | Migrate searchOrders |\n| Step 4 | Migration Patterns |"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: pm.environment.get(\"oauth_url\"),",
+					"    method: 'POST',",
+					"    header: {",
+					"        'content-type': 'application/x-www-form-urlencoded',",
+					"        'Accept': 'application/json'",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+					"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+					"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+					"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+					"        ]",
+					"    }",
+					"}, function (err, res) {",
+					"    pm.environment.set(\"access_token\", res.json().access_token);",
+					"});"
+				],
+				"id": "5aafd306-2fc1-480e-a381-97d51e81011f"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				],
+				"id": "3dfe7579-f690-443a-8921-ef08436c5c76"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "orderId",
+			"value": "YOUR-ORDER-ID"
+		},
+		{
+			"key": "lastUpdatedAfter",
+			"value": "2025-01-01T00:00:00Z"
+		},
+		{
+			"key": "lastUpdatedBefore",
+			"value": "2026-01-01T00:00:00Z"
+		},
+		{
+			"key": "nextToken",
+			"value": "OPTIONA_PAGINATION_RETURNED_TOKEN",
+			"disabled": true
+		}
+	]
+}
