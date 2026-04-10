@@ -1,0 +1,3620 @@
+{
+	"info": {
+		"_postman_id": "718a39e7-138f-4c47-a9cd-69111208157b",
+		"name": "E. Product and Listings Management 📝",
+		"description": "# Product and Listings Management 📝\n\n## Description\n\nEverything you need to create, update, and manage product listings on Amazon. This collection provides step-by-step workflows for listing new items, creating offers, bulk uploading via feeds, and a recipe book of common listing tasks.\n\n## Overview\n\nThe [Listings APIs](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide) offer a modernized suite of SP-APIs for sellers, vendors, and third-party developers to build programmatic integrations for listing selection on Amazon.\n\nThis collection provides the recommended steps to build listings creation and management workflows by integrating with the Selling Partner API.\n\n📘 Learn more: [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n\n## SP-APIs Involved\n\n| API | Version | Documentation |\n| --- | --- | --- |\n| Listings Items API | v2021-08-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference) |\n| Product Type Definitions API | v2020-09-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/product-type-definitions-api-v2020-09-01-reference) |\n| Catalog Items API | v2022-04-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/catalog-items-api-v2022-04-01-reference) |\n| Feeds API | v2021-06-30 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) |\n\n## Use Cases\n\n| Folder | Description |\n| --- | --- |\n| Listings Workflows | End-to-end workflows for creating, updating, and bulk uploading listings |\n| Listings Recipes | Cheat-sheet for common listing tasks |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A seller or vendor account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, `refresh_token`, `marketplace`, `seller_id`, and `base_url` in the environment.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Start exploring** — The collection includes a pre-request script that automatically handles authentication.\n    \n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listings Workflows",
+			"item": [
+				{
+					"name": "Create a New Listing Item",
+					"item": [
+						{
+							"name": "Step 0: Authorization to generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "506aee16-6042-4997-9912-210cb61f9cb3"
+									}
+								}
+							],
+							"id": "d131cf57-f469-4dde-baa8-4736310e2752",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text",
+											"uuid": "f3b2779a-ee26-46a6-bb26-31d8efc253c5"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text",
+											"uuid": "76ffe760-83f7-4744-8e35-0664aed53bd3"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text",
+											"uuid": "be6c48ac-d60a-46ca-854a-75b228a8773c"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text",
+											"uuid": "90dfca97-c6db-4eb3-8fb4-183985a731ae"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Search Amazon Catalog by Keywords",
+							"id": "0b91bc31-4804-4059-8ff2-e14b8cf91fd3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/catalog/2022-04-01/items?marketplaceIds={{marketplace}}&keywords=<string>&includedData=summaries,attributes",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"catalog",
+										"2022-04-01",
+										"items"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "keywords",
+											"value": "<string>",
+											"description": "A comma-delimited list of words to search the Amazon catalog for. **Note:** Cannot be used with `identifiers`."
+										},
+										{
+											"key": "identifiers",
+											"value": "",
+											"description": "A comma-delimited list of product identifiers to search the Amazon catalog for. **Note:** Cannot be used with `keywords`.",
+											"disabled": true
+										},
+										{
+											"key": "identifiersType",
+											"value": "",
+											"description": "Type of product identifiers to search the Amazon catalog for. **Note:** Required when `identifiers` are provided.",
+											"disabled": true
+										},
+										{
+											"key": "locale",
+											"value": "",
+											"description": "Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.",
+											"disabled": true
+										},
+										{
+											"key": "sellerId",
+											"value": "",
+											"description": "A selling partner identifier, such as a seller account or vendor code. **Note:** Required when `identifiersType` is `SKU`.",
+											"disabled": true
+										},
+										{
+											"key": "keywords",
+											"value": "",
+											"description": "A comma-delimited list of words to search the Amazon catalog for. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "brandNames",
+											"value": "",
+											"description": "A comma-delimited list of brand names to limit the search for `keywords`-based queries. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "classificationIds",
+											"value": "",
+											"description": "A comma-delimited list of classification identifiers to limit the search for `keywords`-based queries. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "",
+											"description": "Number of results to be returned per page.",
+											"disabled": true
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "A token to fetch a certain page when there are multiple pages worth of results.",
+											"disabled": true
+										},
+										{
+											"key": "keywordsLocale",
+											"value": "",
+											"description": "The language of the keywords provided for `keywords`-based queries. Defaults to the primary locale of the marketplace. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "includedData",
+											"value": "summaries,attributes",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `summaries`."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: (Optional) Search Product Types by Item Name",
+							"id": "2a979ce7-d5c3-42cf-aace-0db78582def0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/?marketplaceIds={{marketplace}}&keywords=<string>&itemName=<string>&locale=<string>&searchLocale=<string>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes",
+										""
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "keywords",
+											"value": "<string>",
+											"description": "A comma-delimited list of keywords to search product types by."
+										},
+										{
+											"key": "itemName",
+											"value": "<string>",
+											"description": "Note: Cannot be used with \"keywords\". The title of the ASIN to get the product type recommendation. Note: Cannot be used with keywords."
+										},
+										{
+											"key": "locale",
+											"value": "<string>",
+											"description": "The locale for the display names in the response. Defaults to the primary locale of the marketplace."
+										},
+										{
+											"key": "searchLocale",
+											"value": "<string>",
+											"description": "The locale used for the keywords and itemName parameters. Defaults to the primary locale of the marketplace."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Call Product Type Definition to get JSON Schema",
+							"id": "7b61192a-3daa-40d2-a530-ffea900692a2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}&sellerId={{seller_id}}&requirements=LISTING&requirementsEnforced=ENFORCED&productTypeVersion=LATEST&locale=DEFAULT",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes",
+										":productType"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"key": "requirements",
+											"value": "LISTING",
+											"description": "LISTING, LISTING_PRODUCT_ONLY, LISTING_OFFER_ONLY"
+										},
+										{
+											"key": "requirementsEnforced",
+											"value": "ENFORCED",
+											"description": "ENFORCED, NOT_ENFORCED"
+										},
+										{
+											"key": "productTypeVersion",
+											"value": "LATEST",
+											"description": "The version of the Amazon product type to retrieve. Defaults to \"LATEST\",. Prerelease versions of product type definitions may be retrieved with \"RELEASE_CANDIDATE\". If no prerelease version is currently available, the \"LATEST\" live version will be provided."
+										},
+										{
+											"key": "locale",
+											"value": "DEFAULT"
+										}
+									],
+									"variable": [
+										{
+											"id": "d1801e72-5e6a-44ba-bdc7-b17c7b47135b",
+											"key": "productType",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: (Optional) Put Listings Item Validation Preview to validate errors",
+							"id": "f01383a8-20b6-409b-99ed-4154361fbbfd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"ANIMAL_HARNESS\",\n    \"attributes\": {\n        \"item_name\": [\n            {\n                \"value\": \"Front Dog Harness test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"brand\": [\n            {\n                \"value\": \"GENERIC\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"supplier_declared_has_product_identifier_exemption\": [\n            {\n                \"value\": true\n            }\n        ],\n        \"item_type_keyword\": [\n            {\n                \"value\": \"dog-harness\"\n            }\n        ],\n        \"model_number\": [\n            {\n                \"value\": \"BBS-1\"\n            }\n        ],\n        \"model_name\": [\n            {\n                \"value\": \"Front buckle\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"manufacturer\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"fulfillment_availability\": [\n            {\n                \"fulfillment_channel_code\": \"DEFAULT\",\n                \"is_inventory_available\": true\n            }\n        ],\n        \"condition_type\": [\n            {\n                \"value\": \"used_acceptable\"\n            }\n        ],\n        \"list_price\": [\n            {\n                \"value\": 20.99,\n                \"currency\": \"USD\"\n            }\n        ],\n        \"merchant_shipping_group\": [\n            {\n                \"value\": \"legacy-template-id\"\n            }\n        ],\n        \"product_description\": [\n            {\n                \"value\": \"The updated Front Harness is a padded dog harness designed for walks, adventures, and everything in between.\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"bullet_point\": [\n            {\n                \"value\": \"Pull On type\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"color\": [\n            {\n                \"language_tag\": \"en_US\",\n                \"value\": \"Blue\"\n            }\n        ],\n        \"care_instructions\": [\n            {\n                \"value\": \"Machine Wash\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"unit_count\": [\n            {\n                \"value\": 1,\n                \"type\": {\n                    \"value\": \"Count\",\n                    \"language_tag\": \"en_US\"\n                }\n            }\n        ],\n        \"included_components\": [\n            {\n                \"value\": \"1\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"specific_uses_for_product\": [\n            {\n                \"value\": \"Behavior\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"closure\": [\n            {\n                \"marketplace_id\": \"ATVPDKIKX0DER\",\n                \"type\": [\n                    {\n                        \"value\": \"Double Ring\",\n                        \"language_tag\": \"en_US\"\n                    }\n                ]\n            }\n        ],\n        \"country_of_origin\": [\n            {\n                \"value\": \"US\"\n            }\n        ],\n        \"supplier_declared_dg_hz_regulation\": [\n            {\n                \"value\": \"not_applicable\"\n            }\n        ],\n        \"directions\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ]\n    },\n    \"requirements\": \"LISTING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&mode=VALIDATION_PREVIEW&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"id": "753e3ab2-cd29-4b6f-847b-8327ab61c10b",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "ebb6bb6d-6c45-4999-b63e-57df842c9b7c",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Put Listings Item to Create New Listing",
+							"id": "e3af5946-6cbd-4eb5-b610-a85bfd306e8b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"ANIMAL_HARNESS\",\n    \"attributes\": {\n        \"item_name\": [\n            {\n                \"value\": \"Front Dog Harness test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"brand\": [\n            {\n                \"value\": \"GENERIC\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"supplier_declared_has_product_identifier_exemption\": [\n            {\n                \"value\": true\n            }\n        ],\n        \"item_type_keyword\": [\n            {\n                \"value\": \"dog-harness\"\n            }\n        ],\n        \"model_number\": [\n            {\n                \"value\": \"BBS-1\"\n            }\n        ],\n        \"model_name\": [\n            {\n                \"value\": \"Front buckle\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"manufacturer\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"fulfillment_availability\": [\n            {\n                \"fulfillment_channel_code\": \"DEFAULT\",\n                \"is_inventory_available\": true\n            }\n        ],\n        \"condition_type\": [\n            {\n                \"value\": \"used_acceptable\"\n            }\n        ],\n        \"list_price\": [\n            {\n                \"value\": 20.99,\n                \"currency\": \"USD\"\n            }\n        ],\n        \"merchant_shipping_group\": [\n            {\n                \"value\": \"legacy-template-id\"\n            }\n        ],\n        \"product_description\": [\n            {\n                \"value\": \"The updated Front Harness is a padded dog harness designed for walks, adventures, and everything in between.\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"bullet_point\": [\n            {\n                \"value\": \"Pull On type\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"color\": [\n            {\n                \"language_tag\": \"en_US\",\n                \"value\": \"Blue\"\n            }\n        ],\n        \"care_instructions\": [\n            {\n                \"value\": \"Machine Wash\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"unit_count\": [\n            {\n                \"value\": 1,\n                \"type\": {\n                    \"value\": \"Count\",\n                    \"language_tag\": \"en_US\"\n                }\n            }\n        ],\n        \"included_components\": [\n            {\n                \"value\": \"1\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"specific_uses_for_product\": [\n            {\n                \"value\": \"Behavior\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"closure\": [\n            {\n                \"marketplace_id\": \"ATVPDKIKX0DER\",\n                \"type\": [\n                    {\n                        \"value\": \"Double Ring\",\n                        \"language_tag\": \"en_US\"\n                    }\n                ]\n            }\n        ],\n        \"country_of_origin\": [\n            {\n                \"value\": \"US\"\n            }\n        ],\n        \"supplier_declared_dg_hz_regulation\": [\n            {\n                \"value\": \"not_applicable\"\n            }\n        ],\n        \"directions\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ]\n    },\n    \"requirements\": \"LISTING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"protocol": "https",
+									"host": [
+										"sellingpartnerapi-na",
+										"amazon",
+										"com"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US"
+										}
+									],
+									"variable": [
+										{
+											"id": "ed16da29-3ffe-4832-ba5b-fac345d8382a",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "7c79646c-2c47-4bf1-b650-161ca11f9dac",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 6 Get Listings Item to Review Status",
+							"id": "77bc067e-1686-4361-b550-3ddd38ae4c7d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&includedData=issues,attributes,summaries",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues,attributes,summaries",
+											"description": "A comma-delimited list of data sets to include in the response. Default: summaries."
+										}
+									],
+									"variable": [
+										{
+											"id": "58644769-a715-4378-856e-6e5566763452",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "eacb62c3-42d2-4d1f-b3bb-3b3cd239f739",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								},
+								"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "d81b67d7-5e5a-492d-8dc8-2d020a2c4fd5",
+					"description": "The following describes the steps to create an item that does not exist in the Amazon Catalog. This is an illustrative example and does not include steps to generate an input payload for the product type.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange to the refresh token for authorizing SP API.\n\n**Step 1: Search Amazon Catalog by Keywords**: Search for items in the Amazon catalog either by product identifier or keywords. If an exact match is found,  \ncreate an offer-only listing. If no match is found, proceed to the next step.\n\n**Step 2: (Optional) Search Product Types by Item Name**: Retrieve the applicable product type for your item. Search by itemName for accurate matching or use  \nkeywords. Leave parameters empty to view list of available product types.\n\n**Step 3: Call Product Type Definition to get JSON Schema:** Retrieve the JSON Schema containing product type attributes and data requirements for the given Product Type.\n\nPrepare and validate listing submission adhering to the product type's JSON Schema.\n\nCheck that the listing data meets requirements prior to submission by using JSON Schema validation utilities. Refer to [Amazon Product Type Definition Meta-Schema (v1)](https://developer-docs.amazon.com/sp-api/docs/product-type-definition-meta-schema) for more details on validating data with the product type JSON Schemas. Provide all required attributes, validate values, account for conditional rules, and meet all schema requirements.\n\n**Step 4: (Optional) Put Listings Item in \"Validation Preview\" to validate errors:** Validation preview provides a test environment that can be used to test listing workflows, including validation errors that prevent listing creation. Due to low rate limit, this is not intended for production workflows. Refer to [preview-errors-for-a-listings-item](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide#preview-errors-for-a-listings-item) for more details.\n\nStep 5: **Put Listings Item to Create New Listing:** Submit the listings item. Check submission status:  \nIf **ACCEPTED**: Initial validation passed; data submitted to the Amazon catalog for further processing.  \nIf **INVALID**: Review validation errors, correct data, and resubmit.  \nIssues may arise after initial validation is accepted. Proceed to Step 6.\n\n**Step 6: Get Listings Item to Review Status:** Retrieve the list of issues when `includedData` request parameter includes `issues` for a listing item.\n\nInstead of repeatedly polling [<code>getListingsItem</code>](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemsselleridsku) operation when issues occur, subscribe to the [<code>LISTINGS_ITEM_STATUS_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_status_change) or [<code>LISTINGS_ITEM_ISSUES_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_issues_change) asynchronous notifications. Amazon sends a push notification when the new item has been created or processing issues have occurred. This can help you build event-driven response handling.\n\nRefer to [Notifications APIs postman collection](https://www.postman.com/amazon-selling-partner-api/sp-api/collection/f4uya4u/notifications-api-subscribe-to-sp-api-notifications) for more."
+				},
+				{
+					"name": "Create an Offer For an Existing Item",
+					"item": [
+						{
+							"name": "Step 0: Authorization to get Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "35ba2804-d094-4858-9fa8-a2e780c48b6c"
+									}
+								}
+							],
+							"id": "5fab3fe7-018a-49dc-98f6-2906c453477a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text",
+											"uuid": "f3b2779a-ee26-46a6-bb26-31d8efc253c5"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text",
+											"uuid": "76ffe760-83f7-4744-8e35-0664aed53bd3"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text",
+											"uuid": "be6c48ac-d60a-46ca-854a-75b228a8773c"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text",
+											"uuid": "90dfca97-c6db-4eb3-8fb4-183985a731ae"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Search Amazon Catalog by product identifier(ASIN, UPC, EAN) or Keywords",
+							"id": "7e148cc8-b67a-4e3a-b256-d3c67daabaf5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/catalog/2022-04-01/items?marketplaceIds={{marketplace}}&identifiers=&includedData=attributes,summaries&identifiersType=ASIN",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"catalog",
+										"2022-04-01",
+										"items"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "keywords",
+											"value": "<string>",
+											"description": "A comma-delimited list of words to search the Amazon catalog for. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "identifiers",
+											"value": "",
+											"description": "A comma-delimited list of product identifiers to search the Amazon catalog for. **Note:** Cannot be used with `keywords`."
+										},
+										{
+											"key": "locale",
+											"value": "",
+											"description": "Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.",
+											"disabled": true
+										},
+										{
+											"key": "sellerId",
+											"value": "",
+											"description": "A selling partner identifier, such as a seller account or vendor code. **Note:** Required when `identifiersType` is `SKU`.",
+											"disabled": true
+										},
+										{
+											"key": "keywords",
+											"value": "",
+											"description": "A comma-delimited list of words to search the Amazon catalog for. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "brandNames",
+											"value": "",
+											"description": "A comma-delimited list of brand names to limit the search for `keywords`-based queries. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "classificationIds",
+											"value": "",
+											"description": "A comma-delimited list of classification identifiers to limit the search for `keywords`-based queries. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "",
+											"description": "Number of results to be returned per page.",
+											"disabled": true
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "A token to fetch a certain page when there are multiple pages worth of results.",
+											"disabled": true
+										},
+										{
+											"key": "keywordsLocale",
+											"value": "",
+											"description": "The language of the keywords provided for `keywords`-based queries. Defaults to the primary locale of the marketplace. **Note:** Cannot be used with `identifiers`.",
+											"disabled": true
+										},
+										{
+											"key": "includedData",
+											"value": "attributes,summaries",
+											"description": "A comma-delimited list of data sets to include in the response. Default: `summaries`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "ASIN",
+											"description": "Type of product identifiers to search the Amazon catalog for. **Note:** Required when `identifiers` are provided."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: Get Restrictions for ASIN",
+							"id": "eadf45f3-f2d9-41b6-ad57-97fce183fc5d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/restrictions?asin=<string>&sellerId={{seller_id}}&marketplaceIds={{marketplace}}&conditionType&reasonLocale",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"restrictions"
+									],
+									"query": [
+										{
+											"key": "asin",
+											"value": "<string>"
+										},
+										{
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "conditionType",
+											"value": null,
+											"description": "The condition used to filter restrictions.",
+											"type": "text"
+										},
+										{
+											"key": "reasonLocale",
+											"value": null,
+											"description": "A locale for reason text localization. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale.",
+											"type": "text"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Call Product Type Definition for PRODUCT product type with LISTING_OFFER_ONLY",
+							"id": "5f2f7eed-6d09-4b10-b55c-a5118fa6357b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/PRODUCT?marketplaceIds={{marketplace}}&sellerId={{seller_id}}&requirements=LISTING_OFFER_ONLY&requirementsEnforced=ENFORCED&productTypeVersion=LATEST&locale=DEFAULT",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes",
+										"PRODUCT"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"key": "requirements",
+											"value": "LISTING_OFFER_ONLY"
+										},
+										{
+											"key": "requirementsEnforced",
+											"value": "ENFORCED",
+											"description": "ENFORCED, NOT_ENFORCED"
+										},
+										{
+											"key": "productTypeVersion",
+											"value": "LATEST"
+										},
+										{
+											"key": "locale",
+											"value": "DEFAULT"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Put Listings Item to create offer",
+							"id": "bb31946c-a44e-4ec9-a132-683ffcc45390",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"ANIMAL_HARNESS\",\n    \"requirements\": \"LISTING_OFFER_ONLY\",\n    \"attributes\": {\n        \"merchant_suggested_asin\": [\n            {\n                \"value\": \"B0DXDX61P3\"\n            }\n        ],\n        \"condition_type\": [\n            {\n                \"value\": \"used_good\"\n            }\n        ],\n        \"purchasable_offer\": [\n            {\n                \"audience\": \"ALL\",\n                \"currency\": \"USD\",\n                \"our_price\": [\n                    {\n                        \"schedule\": [\n                            {\n                                \"value_with_tax\": 9.99\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										}
+									],
+									"variable": [
+										{
+											"id": "55c7c33f-55b9-4179-8815-f04b7ff3996d",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "46c6f2c3-724a-4186-93a7-8c167bb959e4",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Get Listings Item to review status",
+							"id": "eadb5f81-9f05-4fd3-923b-bf299a9e540e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&includedData=issues,attributes,summaries,offers,fulfillmentAvailability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues,attributes,summaries,offers,fulfillmentAvailability",
+											"description": "A comma-delimited list of data sets to include in the response. Default: summaries."
+										}
+									],
+									"variable": [
+										{
+											"id": "032078e8-0343-4165-9be2-4ebae1e4d43c",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "49806d04-4e4c-4bbd-b393-e04cc8d045b2",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								},
+								"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "9f7258a1-d336-4b3e-9aa7-4e8659140dcf",
+					"description": "The following describes the steps to list an offer for an item that already exists in the Amazon catalog. This is an illustrative example and does not include steps to generate an input payload for the product type.\n\n## Steps to Follow:\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange to the refresh token for authorizing SP API.\n\n**Step 1: Search Amazon Catalog by product identifier(ASIN, UPC, EAN) or** **Keywords**: Search for items in the Amazon catalog either by product identifier(ASIN, UPC, EAN) or keywords. If an exact match is found, continue to the next step.\n\n**Step 2: Check Seller's eligibility for ASIN**: Ceck whether seller is eligible to list that ASIN. Retrieve ASIN's eligibility requirements and restrictions before listing an item in the applicable condition. Both steps are essential before attempting to create an offer-only listing. Once you have verified the ASIN and checked for restrictions, you can proceed to create the offer-only listing.\n\n**Step 3: Call Product Type Definition to get JSON Schema for PRODUCT product type with** **LISTING_OFFER_ONLY** **requirements**: Retrieve the JSON Schema containing product type attributes and data requirements for the given Product Type.\n\nPrepare listing submission adhering to the PRODUCT product type JSON Schema using the ASIN or product identifier for the item found when searching the Amazon catalog.\n\nCheck that the listing data meets requirements prior to submission by using JSON Schema validation utilities. Refer to [Amazon Product Type Definition Meta-Schema (v1)](https://developer-docs.amazon.com/sp-api/docs/product-type-definition-meta-schema) for more details on validating data with the product type JSON Schemas. Provide all required attributes, validate values, account for conditional rules, and meet all schema requirements.\n\n**Step 4: Put Listings Item to Create New Listing:** Submit the listings item. Check submission status:  \nIf **ACCEPTED**: Initial validation passed; data submitted to the Amazon catalog for further processing.  \nIf **INVALID**: Review validation errors, correct data, and resubmit.  \nIssues may arise after initial validation is accepted. Proceed to Step 6.\n\n**Step 5: Get Listings Item to Review Status:** Retrieve the list of issues when includedData request parameter includes issues for a listing item.\n\nInstead of repeatedly polling [<code>getListingsItem</code>](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemsselleridsku) operation when issues occur, subscribe to the [<code>LISTINGS_ITEM_STATUS_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_status_change) or [<code>LISTINGS_ITEM_ISSUES_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_issues_change) asynchronous notifications. Amazon sends a push notification when the new item has been created or processing issues have occurred. This can help you build event-driven response handling.\n\nRefer to [Notifications APIs postman collection](https://www.postman.com/amazon-selling-partner-api/sp-api/collection/f4uya4u/notifications-api-subscribe-to-sp-api-notifications) for more."
+				},
+				{
+					"name": "Update a Listings Item",
+					"item": [
+						{
+							"name": "Step 0: Authorization to get Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "e8e47550-e4b2-4b02-b1a4-b9a50514477c"
+									}
+								}
+							],
+							"id": "4c584049-eabc-4847-b90d-e4a84c53ed79",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text",
+											"uuid": "f3b2779a-ee26-46a6-bb26-31d8efc253c5"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text",
+											"uuid": "76ffe760-83f7-4744-8e35-0664aed53bd3"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text",
+											"uuid": "be6c48ac-d60a-46ca-854a-75b228a8773c"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text",
+											"uuid": "90dfca97-c6db-4eb3-8fb4-183985a731ae"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Get Listings Item using SKU",
+							"id": "9e8f64ff-0225-4db0-a44b-867526ae13cd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&includedData=issues,attributes,summaries,offers,fulfillmentAvailability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues,attributes,summaries,offers,fulfillmentAvailability",
+											"description": "A comma-delimited list of data sets to include in the response. Default: summaries."
+										}
+									],
+									"variable": [
+										{
+											"id": "7fd7afbf-c9b5-4434-b07a-61d0795920b4",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "41d063ef-05a9-4633-a9ea-0736671ff865",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								},
+								"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: Get Product Type Definition for Product Type",
+							"id": "90fd9022-ba5a-4dcf-b6a3-4a1ec1ad5598",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}&sellerId={{seller_id}}&requirements=LISTING&requirementsEnforced=ENFORCED&productTypeVersion=LATEST&locale=DEFAULT",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes",
+										":productType"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"key": "requirements",
+											"value": "LISTING",
+											"description": "LISTING, LISTING_PRODUCT_ONLY"
+										},
+										{
+											"key": "requirementsEnforced",
+											"value": "ENFORCED",
+											"description": "ENFORCED, NOT_ENFORCED"
+										},
+										{
+											"key": "productTypeVersion",
+											"value": "LATEST"
+										},
+										{
+											"key": "locale",
+											"value": "DEFAULT"
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "825fb266-d150-484c-a2a2-f07a1fe4b0e5",
+											"key": "productType",
+											"value": "SUITCASE"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Patch Listings Item partial update",
+							"id": "ca1bb7d7-e336-4cf3-bd2a-544d424587b0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"ANIMAL_HARNESS\",\n    \"patches\": [\n        {\n            \"op\": \"add\",\n            \"path\": \"/attributes/style\",\n            \"value\": [\n                {\n                    \"value\": \"Easy to fit in\",\n                    \"language_tag\": \"en_US\"\n                }\n            ]\n        },\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/item_name\",\n            \"value\": [\n                {\n                    \"value\": \"Front Dog Harness, Reflective and Padded, No Pull Harness for Training and Everyday\",\n                    \"language_tag\": \"en_US\",\n                    \"marketplace_id\": \"ATVPDKIKX0DER\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										}
+									],
+									"variable": [
+										{
+											"id": "d9efd8b8-c82d-443c-9dae-69e273a9e376",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "02c9e2f4-9fc1-4fe9-9435-58200671f86c",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: (Optional) Put Listings Item full update",
+							"id": "d09a7e0f-c0c1-4e5a-857b-e59bbeb398d0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"ANIMAL_HARNESS\",\n    \"attributes\": {\n        \"item_name\": [\n            {\n                \"value\": \"Front Dog Harness test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"brand\": [\n            {\n                \"value\": \"GENERIC\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"supplier_declared_has_product_identifier_exemption\": [\n            {\n                \"value\": true\n            }\n        ],\n        \"item_type_keyword\": [\n            {\n                \"value\": \"dog-harness\"\n            }\n        ],\n        \"model_number\": [\n            {\n                \"value\": \"BBS-1\"\n            }\n        ],\n        \"model_name\": [\n            {\n                \"value\": \"Front buckle\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"manufacturer\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"fulfillment_availability\": [\n            {\n                \"fulfillment_channel_code\": \"DEFAULT\",\n                \"is_inventory_available\": true\n            }\n        ],\n        \"condition_type\": [\n            {\n                \"value\": \"used_acceptable\"\n            }\n        ],\n        \"list_price\": [\n            {\n                \"value\": 20.99,\n                \"currency\": \"USD\"\n            }\n        ],\n        \"merchant_shipping_group\": [\n            {\n                \"value\": \"legacy-template-id\"\n            }\n        ],\n        \"product_description\": [\n            {\n                \"value\": \"The updated Front Harness is a padded dog harness designed for walks, adventures, and everything in between.\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"bullet_point\": [\n            {\n                \"value\": \"Pull On type\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"color\": [\n            {\n                \"language_tag\": \"en_US\",\n                \"value\": \"Blue\"\n            }\n        ],\n        \"care_instructions\": [\n            {\n                \"value\": \"Machine Wash\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"unit_count\": [\n            {\n                \"value\": 1,\n                \"type\": {\n                    \"value\": \"Count\",\n                    \"language_tag\": \"en_US\"\n                }\n            }\n        ],\n        \"included_components\": [\n            {\n                \"value\": \"1\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"specific_uses_for_product\": [\n            {\n                \"value\": \"Behavior\",\n                \"language_tag\": \"en_US\"\n            }\n        ],\n        \"closure\": [\n            {\n                \"marketplace_id\": \"ATVPDKIKX0DER\",\n                \"type\": [\n                    {\n                        \"value\": \"Double Ring\",\n                        \"language_tag\": \"en_US\"\n                    }\n                ]\n            }\n        ],\n        \"country_of_origin\": [\n            {\n                \"value\": \"US\"\n            }\n        ],\n        \"supplier_declared_dg_hz_regulation\": [\n            {\n                \"value\": \"not_applicable\"\n            }\n        ],\n        \"directions\": [\n            {\n                \"value\": \"Test\",\n                \"language_tag\": \"en_US\"\n            }\n        ]\n    },\n    \"requirements\": \"LISTING\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										}
+									],
+									"variable": [
+										{
+											"id": "c61489f4-dcd1-48d0-90ed-e09687fb0f52",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "e47d1699-ac4d-4a5c-923d-10d9b1c5a124",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Get Listings Item to review status",
+							"id": "ed1384a6-d8ec-44f6-b6c7-6454eac372e9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&includedData=issues,attributes,summaries,offers,fulfillmentAvailability",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":SKU"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "includedData",
+											"value": "issues,attributes,summaries,offers,fulfillmentAvailability",
+											"description": "A comma-delimited list of data sets to include in the response. Default: summaries."
+										}
+									],
+									"variable": [
+										{
+											"id": "04e9df67-c065-4e43-b263-759038c0d103",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										},
+										{
+											"id": "e2b22ae7-b844-4a81-93ce-b88f0c0c28f6",
+											"key": "SKU",
+											"value": ""
+										}
+									]
+								},
+								"description": "Returns details about a listings item for a selling partner.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "34febcef-f974-47a7-a82f-068712f73d7b",
+					"description": "The following describes the steps to create an item that does not exist in the Amazon Catalog. This is an illustrative example and does not include steps to generate an input payload for the product type.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange to the refresh token for authorizing SP API.\n\n**Step 1: Get Listings Item using SKU**: Get the selling partners SKU that needs to be updated. Call the operation to check for existing attributes and retrieve the current state of the listing by SKU. Include `attributes` and `issues` in the `includedData` parameter.\n\n**Step 2: Call Product Type Definition to get JSON Schema:** Retrieve the JSON Schema containing product type attributes and data requirements for the given Product  \nType. Use `LISTING` or `LISTING_PRODUCT_ONLY` for the `requirements` parameter, depending on the attributes that are updated. Refer to [Listing requirements](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide#listing-requirements) for more information.\n\nPrepare listing submission adhering to the product type's JSON Schema. Non-editable values (`\"editable\": false`) cannot be modified from their existing values.\n\nCheck that the listing data meets requirements prior to submission by using JSON Schema validation utilities. Refer to [Amazon Product Type Definition Meta-Schema (v1)](https://developer-docs.amazon.com/sp-api/docs/product-type-definition-meta-schema) for more details on validating data with the product type JSON Schemas. Provide all required attributes, validate values, account for conditional rules, and meet all schema requirements.\n\n**Step 3: Patch Listings Item to Partial Update:** Submit the listings item to partial update listing.\n\n**Step 4: (Optional)Put Listings Item for Full Update:** Submit the listings item to fully update listing.\n\nSelling partners can update a listing by providing the individual attribute(s) to update using the `patchListingsItem` operation (partial update) or by providing _all_ listings item attribute(s) using the `putListingsItem` operation (full update).\n\nCheck submission status:  \nIf **ACCEPTED**: Initial validation passed; data submitted to the Amazon catalog for further processing.  \nIf **INVALID**: Review validation errors, correct data, and resubmit.  \nIssues may arise after initial validation is accepted. Proceed to Step 6.\n\n**Step 5: Get Listings Item to Review Status:** Retrieve the list of issues when includedData request parameter includes issues for a listing item.\n\nInstead of repeatedly polling [<code>getListingsItem</code>](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference#get-listings2021-08-01itemsselleridsku) operation when issues occur, subscribe to the [<code>LISTINGS_ITEM_STATUS_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_status_change) or [<code>LISTINGS_ITEM_ISSUES_CHANGE</code>](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide#listings_item_issues_change) asynchronous notifications. Amazon sends a push notification when the new item has been created, deleted, its buyability changes or processing issues have occurred. This can help you build event-driven response handling.\n\nRefer to [Notifications APIs postman collection](https://www.postman.com/amazon-selling-partner-api/sp-api/collection/f4uya4u/notifications-api-subscribe-to-sp-api-notifications) for more."
+				},
+				{
+					"name": "Bulk Upload Listings using JSON_LISTINGS_FEED Feed Type",
+					"item": [
+						{
+							"name": "Step 0: Authorization to get Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "53703c9a-1fe9-4032-9aa8-ebd354e4ff42"
+									}
+								}
+							],
+							"id": "cb291531-b8f3-4372-aeec-e2bdd1d591c7",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text",
+											"uuid": "f3b2779a-ee26-46a6-bb26-31d8efc253c5"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text",
+											"uuid": "76ffe760-83f7-4744-8e35-0664aed53bd3"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text",
+											"uuid": "be6c48ac-d60a-46ca-854a-75b228a8773c"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text",
+											"uuid": "90dfca97-c6db-4eb3-8fb4-183985a731ae"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Create Feed Document",
+							"id": "2f855bfe-935f-4c78-b9bd-bc5a25dd3299",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentType\": \"application/json\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/feeds/2021-06-30/documents",
+								"description": "Creates a feed document for the feed type that you specify. This operation returns a presigned URL for uploading the feed document contents. It also returns a `feedDocumentId` value that you can pass in with a subsequent call to the [`createFeed`](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference#createfeed) operation.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.5 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: Open URL From Step 1 And Upload Feed Content",
+							"id": "b6ca8ad3-6060-44a1-802c-3c36e55452c2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"header\": {\n    \"sellerId\": \"{{seller_id}}\",\n    \"version\": \"2.0\",\n    \"issueLocale\": \"en_US\",\n    \"report\": {\n      \"includedData\": [\n        \"issues\"\n      ],\n      \"apiVersion\": \"2021-08-01\"\n    }\n  },\n  \"messages\": [\n    {\n      \"messageId\": 1,\n      \"sku\": \"DogHarnessTest\",\n      \"operationType\": \"UPDATE\",\n      \"productType\": \"ANIMAL_HARNESS\",\n      \"requirements\": \"LISTING\",\n      \"attributes\": {\n        \"color\": [\n          {\n            \"value\": \"Blue\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"included_components\": [\n          {\n            \"value\": \"1\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"fulfillment_availability\": [\n          {\n            \"fulfillment_channel_code\": \"DEFAULT\",\n            \"is_inventory_available\": true\n          }\n        ],\n        \"manufacturer\": [\n          {\n            \"value\": \"Test\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"model_name\": [\n          {\n            \"value\": \"Front buckle\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"bullet_point\": [\n          {\n            \"value\": \"Pull On type\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"model_number\": [\n          {\n            \"value\": \"BBS-1\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"product_description\": [\n          {\n            \"value\": \"The updated Front Harness is a padded dog harness designed for walks, adventures, and everything in between.\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"brand\": [\n          {\n            \"value\": \"GENERIC\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"supplier_declared_dg_hz_regulation\": [\n          {\n            \"value\": \"not_applicable\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"closure\": [\n          {\n            \"type\": [\n              {\n                \"value\": \"Double Ring\",\n                \"language_tag\": \"en_US\"\n              }\n            ],\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"supplier_declared_has_product_identifier_exemption\": [\n          {\n            \"value\": true,\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"country_of_origin\": [\n          {\n            \"value\": \"US\",\n            \"marketplace_id\": \"ATVPDKI{{marketplace}}KX0DER\"\n          }\n        ],\n        \"merchant_shipping_group\": [\n          {\n            \"value\": \"legacy-template-id\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"item_name\": [\n          {\n            \"value\": \"Front Dog Harness test\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"list_price\": [\n          {\n            \"value\": 20.99,\n            \"currency\": \"USD\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"item_type_keyword\": [\n          {\n            \"value\": \"dog-harness\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"condition_type\": [\n          {\n            \"value\": \"used_acceptable\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"directions\": [\n          {\n            \"value\": \"Test\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"specific_uses_for_product\": [\n          {\n            \"value\": \"Behavior\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"care_instructions\": [\n          {\n            \"value\": \"Machine Wash\",\n            \"language_tag\": \"en_US\",\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"unit_count\": [\n          {\n            \"type\": {\n              \"value\": \"Count\",\n              \"language_tag\": \"en_US\"\n            },\n            \"value\": 1,\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ],\n        \"purchasable_offer\": [\n          {\n            \"currency\": \"USD\",\n            \"audience\": \"ALL\",\n            \"our_price\": [\n              {\n                \"schedule\": [\n                  {\n                    \"value_with_tax\": 9.99\n                  }\n                ]\n              }\n            ],\n            \"marketplace_id\": \"{{marketplace}}\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://tortuga-prod-na.s3-external-1.amazonaws.com/XXXXXXXXX.amzn1.tortuga.4.XX.XXXXXX?X-Amz-Algorithm=XXXXXX&X-Amz-Date=XXXX&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Expires=300&X-Amz-Credential=XXXX&X-Amz-Signature=XXXXXX",
+									"protocol": "https",
+									"host": [
+										"tortuga-prod-na",
+										"s3-external-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"XXXXXXXXX.amzn1.tortuga.4.XX.XXXXXX"
+									],
+									"query": [
+										{
+											"key": "X-Amz-Algorithm",
+											"value": "XXXXXX"
+										},
+										{
+											"key": "X-Amz-Date",
+											"value": "XXXX"
+										},
+										{
+											"key": "X-Amz-SignedHeaders",
+											"value": "content-type%3Bhost"
+										},
+										{
+											"key": "X-Amz-Expires",
+											"value": "300"
+										},
+										{
+											"key": "X-Amz-Credential",
+											"value": "XXXX"
+										},
+										{
+											"key": "X-Amz-Signature",
+											"value": "XXXXXX"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Create Feed",
+							"id": "5595da9d-1262-44e1-9ed0-ba4d550e0a9b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"feedType\": \"JSON_LISTINGS_FEED\",\n    \"marketplaceIds\": [\n        \"{{marketplace}}\"\n    ],\n    \"inputFeedDocumentId\": \"<provide inputFeedDocumentId returned in step 1>\",\n    \"feedOptions\": {}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/feeds/2021-06-30/feeds",
+								"description": "Creates a feed. Upload the contents of the feed document before calling this operation.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0083 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).\n\nThe rate limit for the [`JSON_LISTINGS_FEED`](https://developer-docs.amazon.com/sp-api/docs/listings-feed-type-values#listings-feed) feed type differs from the rate limit for the [`createFeed`](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference#post-feeds2021-06-30feeds) operation. For more information, refer to the [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide#should-i-submit-in-bulk-using-the-json_listings_feed-or-individually-with-the-listings-items-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Get Feed",
+							"id": "c706a09d-293e-46da-8613-d6c810701b5c",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept-encoding": true
+								},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/feeds/2021-06-30/feeds/:feedId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"feeds",
+										"2021-06-30",
+										"feeds",
+										":feedId"
+									],
+									"variable": [
+										{
+											"id": "991a7ade-d6e6-4587-9fbb-316bf02f6a0b",
+											"key": "feedId",
+											"value": "<provide feedId returned in step 3>",
+											"description": "(Required) The identifier for the feed. This identifier is unique only in combination with a seller ID."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Get Feed Document",
+							"id": "eafee1d9-34e7-4c2b-97d6-b90cc0fb029e",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept-encoding": true
+								},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/feeds/2021-06-30/documents/:feedDocumentId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"feeds",
+										"2021-06-30",
+										"documents",
+										":feedDocumentId"
+									],
+									"variable": [
+										{
+											"id": "b104bcdf-9d82-4537-a6da-3bdf912d8503",
+											"key": "feedDocumentId",
+											"value": "<provide resultFeedDocumentId returned in step 4>",
+											"description": "(Required) The identifier of the feed document."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "2bf78a34-9f9f-4d41-8042-0881e97c80e1",
+					"description": "The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.\n\nThe workflows listed in this document for creating, updating, and deleting listings items operate on individual items one at a time. For high-volume workflows where bulk submission mechanisms are preferred, you can also use the [<code>JSON_LISTINGS_FEED</code>](https://developer-docs.amazon.com/sp-api/docs/listings-feed-schema-v2) feed type with the [Feeds API](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference). For more information, refer to [Feeds API](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference).\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange to the refresh token for authorizing SP API.\n\n**Step 1: Create Feed Document:** Specify the content type for the feed that you are submitting. Returns a `feedDocumentId` value and a presigned **URL** for uploading the feed contents.\n\n**Step 2:** **Open URL From Step 1 And Upload Feed Content:** Refer to [Construct a feed](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-use-case-guide#step-2-construct-a-feed) for more information. Checkout [<code>JSON_LISTINGS_FEED</code>&nbsp;Schema](https://developer-docs.amazon.com/sp-api/docs/listings-feed-schema-v2) for the schema of the feed type.\n\nThe feed processing report(**Step 6**) generates once the items in the feed complete processing. The report includes any validation feedback from the Listings Items API. If you specify `includedData[0].issues` in the feed header, you can retrieve details (for example, processing issues) about the listings items. Refer to the example below:\n\n``` json\n{\n  \"header\": {\n    \"sellerId\": \"AXXXXXXXXXXXX\",\n    \"version\": \"2.0\",\n    \"issueLocale\": \"en_US\",\n    \"report\": {\n      \"includedData\": [\n        \"issues\"\n      ],\n      \"apiVersion\": \"2021-08-01\"\n    }\n  },\n  \"messages\": [\n    {}\n  ]\n}\n\n ```\n\nYou can also request additional information,such as `summaries` or `attributes`. See the full list of available enum [here](https://github.com/amzn/selling-partner-api-models/blob/main/schemas/feeds/listings-feed-processing-report-schema-v2.json).\n\n**Step 3: Create Feed:** Use the `inputFeedDocumentId` parameter to pass in the `feedDocumentId` value from Step 1. Specify the marketplace that you want the feed to be applied to and any relevant feed options. Amazon returns a `feedId` value.\n\n**Step 4: Get Feed:** Confirm feed processing by periodically calling this operation until the feed moves into one of the following terminal states: `DONE`, `CANCELLED`, or `FATAL`. Amazon returns the `resultFeedDocumentId` value when the feed moves into the `DONE` state. Proceed to next step.\n\nInstead of repeatedly calling [getFeed](https://developer-docs.amazon.com/sp-api/reference/getfeed) operation to check feed's status, subscribe to the `FEED_PROCESSING_FINISHED` asynchronous notifications. Periodically poll the Amazon SQS queue for the `FEED_PROCESSING_FINISHED` notification event, which provides information when the feed processing is `CANCELLED`, `DONE`, or `FATAL`. Amazon returns the `resultFeedDocumentId` value in the notification when the feed moves into the `DONE` state.\n\nThis can help you build event-driven response handling.\n\n**Step 5: Get Feed Document:** Use the `feedDocumentId` parameter to pass in the `resultFeedDocumentId` value from the previous step. Amazon returns the `feedDocumentId` value, a URL for downloading the feed processing report, and the compression algorithm.\n\n**Step 6: Download the feed processing report:** Download and check the feed processing report for errors generated during feed processing. If processing feed is encrypted, refer to [Download the feed processing report](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-use-case-guide#step-7-download-the-feed-processing-report).\n\nIf you have specified `issues` in Step 2, the processing report will contain all the validation issues occurred with the listings submission.\n\nIf there are errors, correct them and submit the corrected feed, starting at step 1. If there are no errors, your feed submission was successful."
+				}
+			],
+			"id": "6bf6554c-9506-46ae-b770-8a441a5a02e7",
+			"description": "The Selling Partner API for Listings APIs offers a modernized suite of Selling Partner APIs for sellers, vendors and third-party developers to build programmatic integrations for listing selection on Amazon. For details about API operations and associated data types and schemas, refer to the [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide).\n\nThis postman collection provide the recommendaded steps to build best-in-class listings creation and management workflows by integrating with the Selling Partner API.\n\n## **Key features**\n\n- **Create a new Listings Item**\n    \n- **Create Offer for an existing Item**\n    \n- **Update a Listings Items**\n    \n- **Bulk Upload Listings using JSON_LISTINGS_FEED**"
+		},
+		{
+			"name": "Listings Recipes",
+			"item": [
+				{
+					"name": "Add or Update a B2C Purchasable Offer",
+					"item": [
+						{
+							"name": "Add a B2C purchasable offer",
+							"id": "034a43cf-714c-4b72-a350-340079cbbcb9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 7.0\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "65f82956-db24-4ffb-a551-0449b7c524d3",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "943cfaa6-c136-4568-a7da-ea56bdeef5c1",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "9ec7cfbe-d931-458c-ad57-6cb7729b4263",
+					"description": "With the Listings API, you can manage your product offers and prices, for specific audiences. In this case, the request updates the price of a product for the B2C audience."
+				},
+				{
+					"name": "Add or Update a B2B Purchasabe Offer",
+					"item": [
+						{
+							"name": "Add a B2B purchasable offer",
+							"id": "1bfa5b1b-2155-47aa-8459-5362f7b3e0c8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"B2B\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 7.0\n                                }\n                            ]\n                        }\n                    ],\n                    \"quantity_discount_plan\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"discount_type\": \"fixed\",\n                                    \"levels\": [\n                                        {\n                                            \"lower_bound\": 2,\n                                            \"value\": 1.0\n                                        }\n                                    ]\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "55227fbc-593b-455d-beea-5af8ba5a02ef",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "bd5d0d10-2e74-4140-870f-09506407a661",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "4c27d9b1-576b-4622-8cc0-059f8d75d0b9",
+					"description": "With the Listings API, you can manage your product offers and prices, for specific audiences. In this case, the request updates the price of a product for the B2B audience."
+				},
+				{
+					"name": "Make an Offer B2B-only",
+					"item": [
+						{
+							"name": "Make an offer B2B-only",
+							"id": "d286537e-4443-47f1-9ef4-316473786257",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "54fe5e4b-09f3-4a93-8ec3-156af2ddf724",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "74d1d120-7468-4735-902f-e4cdbded19b8",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "bdddbd1a-e4b7-4282-b04f-2e8b4a88849a",
+					"description": "With the Listings API, you can manage your product offers and prices. In this case, the request deletes the B2C offer in order to make the product offer available to B2B customers only."
+				},
+				{
+					"name": "Close a Listing",
+					"item": [
+						{
+							"name": "Close a listing by deactivating its purchasable offer",
+							"id": "cfa7188f-e34f-45f5-9fcf-c756cbc8f14b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": 7.0\n                                }\n                            ]\n                        }\n                    ],\n                    \"start_at\": \"2024-01-01\",\n                    \"end_at\": \"2024-12-01\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "98f721bc-6502-4ed2-b442-d2b5df6bc86d",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "dfc93da7-b8c9-4ef9-ad92-f481da05a851",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "34b374ab-0cac-442d-91de-b33df66344b7",
+					"description": "A listing can be closed by deactivating its purchasable offer. The purchasable offer schedule is passed to an end date in the past.  \nThe `start_at` and `end_at` attributes are used to set the offer schedule.\n\nTo reopen the listing, an active offer (within the schedule) has to be re-added."
+				},
+				{
+					"name": "Remove a Discounted Price",
+					"item": [
+						{
+							"name": "1. Delete a current purchasable offer",
+							"id": "c8b2f6ee-18a8-4b64-9a76-722f6f30d796",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "30a5c887-2abc-417e-a3b3-cdbb5e026b6c",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "b7ca7d32-5ec5-497c-8717-c6161e4497cd",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "2. Add a new purchasable offer without discounted price",
+							"id": "9d37fcfe-0b34-4d52-9977-77757dd73e39",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"our_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"value_with_tax\": //your_offer_price\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "032e6d3f-d410-48fa-9755-8560ea80fd55",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "d20826fd-2b79-4cea-b8c4-7ab01c76a1ed",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "1cd40741-239f-4693-b16f-d04313af1f11",
+					"description": "Discounted prices are lower prices of the product that are usually set for a specific time range. In order to remove a discounted price, you start by deleting the full purchasable offer for the provided marketplace, audience and currency. In this example, we use the `B2C` or `ALL` audience.\n\nOnce the offer is deleted, the purchasable offer can be added again without the discounted_price as in **1\\. Add a B2C purchasable offer**"
+				},
+				{
+					"name": "Deactivate a Discounted Price",
+					"item": [
+						{
+							"name": "Deactivate a discounted price",
+							"id": "57f7e704-ab0a-4003-b571-73415c547889",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/purchasable_offer\",\n            \"value\": [\n                {\n                    \"currency\": \"USD\",\n                    \"audience\": \"ALL\",\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"discounted_price\": [\n                        {\n                            \"schedule\": [\n                                {\n                                    \"start_at\": \"2024-12-01\",\n                                    \"end_at\": \"2025-01-01\",\n                                    \"value_with_tax\": null\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "f07daba6-dbf5-4db8-927b-9177cc7a1750",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "fc890bb4-9b60-4bf2-b842-106845ea4ed9",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "d0da0a60-4792-477e-8f76-54d40c349fa9",
+					"description": "Discounted prices can be deactivated by moving both the `start_at` and `end_at` values to a past date while making sure the `end_at` is always higher than then the `start_at`.\n\nSetting the `value_with_tax` for the `discounted_price` to `null` is also a discount deactivation option"
+				},
+				{
+					"name": "Add MFN Inventory",
+					"item": [
+						{
+							"name": "Update the MFN/Default Inventory",
+							"id": "8afa32c4-a205-46a9-be4c-34210ba0b4e4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"DEFAULT\",\n                    \"quantity\": 10\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "2faf91bb-ccfb-481c-94ba-985538c92241",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "c971d07a-e005-4fbc-8174-6c2d6618ee42",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "5d9452e2-2c2b-4f08-86d4-0566c6e3127b",
+					"description": "Inventory for your SKUs/Listings is managed through the Listings API\n\nThis request shows how to update the quantity for the Default (Aka MFN) inventory using the `patchListingsItem` endpoint."
+				},
+				{
+					"name": "Update Fulfillment Latency",
+					"item": [
+						{
+							"name": "Update the fulfillment latency",
+							"id": "b9279fad-57a6-4862-aaa2-bc319158327f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"DEFAULT\",\n                    \"quantity\": 10,\n                    \"lead_time_to_ship_max_days\": 3\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "1d4a7ed6-9870-42ed-98e1-01e053f11506",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "5d18154c-1984-45f6-bb40-a00fa7b91eea",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "2f48ec54-91bf-4f20-b9b7-57fae7f1266d",
+					"description": "The fulfillment latency or lead time to shipping is the time in days between the seller receives an order and when they can ship the order. This can be updated along with the MFN inventory using the Listings API. `lead_time_to_ship_max_days` is the attribute used to send this data."
+				},
+				{
+					"name": "Switch Fulfillment to MFN/FBA",
+					"item": [
+						{
+							"name": "Switch fulfillment to FBA",
+							"id": "d6926f4e-cf34-4cd7-8250-a0cf8056aaa1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"DEFAULT\",\n                    \"quantity\": 0\n                }\n            ]\n        },\n        {\n            \"op\": \"add\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"AMAZON_NA\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "0fa09ebc-de23-47fe-a490-829c881c715c",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "7e795fa2-ba7a-4ee2-92ca-cafee32f899a",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "Switch fulfillment to MFN",
+							"id": "aa34b212-1089-4701-99d8-c1a58e108451",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"delete\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"AMAZON_NA\"\n                }\n            ]\n        },\n        {\n            \"op\": \"add\",\n            \"path\": \"/attributes/fulfillment_availability\",\n            \"value\": [\n                {\n                    \"fulfillment_channel_code\": \"DEFAULT\",\n                    \"quantity\": 50\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "a1470945-12c9-4a7d-b0e3-b7cf910741af",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "ba78d81f-aabc-42cf-b316-4d937dbe9e03",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "1175aece-af14-454d-81d0-e8b4d2f0829a",
+					"description": "With the Listings Items API, it is possible to switch the inventory for your SKUs to MFN vs FBA and vice versa.\n\nThe fulfillment setting is controlled by the `fulfillment_availability` attribute.\n\n- `DEFAULT` as a fulfillment value refers to the `MFN` stock.\n    \n- `AMAZON_NA`, `AMAZON_EU` and `AMAZON_FA` refer to the FBA stock in the corresponding regions."
+				},
+				{
+					"name": "Update a Product Title",
+					"item": [
+						{
+							"name": "Update the listing title",
+							"id": "fb16ec99-6c68-482b-9d4f-5709824f993d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/item_name\",\n            \"value\": [\n                {\n                    \"value\": \"My Product Title\",\n                    \"language_tag\": \"en_US\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "a94105c4-9e32-41b5-8295-27efb5556312",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "7a0c56df-f064-4dec-a178-720e7c0110be",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "85e1259f-9d9f-4612-9bc9-aca0e7c62d1e",
+					"description": "With the listings API, you manage all your listings and their attributes.\n\nThis request shows a simple `patchListingsItem` call to update a common product attribute: A listing title"
+				},
+				{
+					"name": "Update Product Images",
+					"item": [
+						{
+							"name": "Update a product main image",
+							"id": "65ce0e4b-a15a-4ebe-a9f5-66a3e86a38e1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/main_product_image_locator\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"media_location\": \"https://example/main.jpg\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_GB",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_GB",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "803a7f1e-6f9c-44bf-a9e1-1053a7cbdb71",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "f5b4c29e-2244-4bbe-aee7-78a314a03b2f",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "08211167-a446-41cf-ab4d-5daf14f22620",
+					"description": "Product images can be added and updated using the Listings Items API. This request demoes how to update the main image for your product. Other additional product images are added similarly using their corresponding attributes."
+				},
+				{
+					"name": "Assign a Product Tax Code (PTC) for VCS [EU-only]",
+					"item": [
+						{
+							"name": "Assign PTC code",
+							"id": "ff3dc508-043f-4833-a5fd-306139281cdb",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/product_tax_code\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\", //EU-UK marketplace\n                    \"value\": \"A_FOOD_COFFEE\" //Enum values retrieved from Product Type Definitions API\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_GB",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_GB",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "0cf9dc89-e26b-4b7f-8ffe-9e30209552a1",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "13f019e4-0586-424e-b084-426134aaa75b",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "766f158f-c856-4fb2-9416-a87779be4774",
+					"description": "In order for VCS to run VAT calculations using a SKU-specific VAT rate, a Product Tax Code (PTC) can be assigned to your products using the Listings Items API"
+				},
+				{
+					"name": "Manage GPSR Attributes [EU-UK only]",
+					"item": [
+						{
+							"name": "1. Add GPSR safety attestation",
+							"id": "187538af-d19b-48fa-bfaf-ae9338998845",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/gpsr_safety_attestation\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"value\": \"No\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_GB",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_GB",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "710e8369-866f-421d-a36e-761670ede2fb",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "ec994d4d-5852-4fd2-8760-70db12887e20",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "2. Add GPSR contact details",
+							"id": "e3dae56a-cad7-4bd7-a383-4c45ade48944",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/gpsr_manufacturer_reference\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"gpsr_manufacturer_email_address\": \"manufacturer@example.com\"\n                }\n            ]\n        },\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/dsa_responsible_party_address\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"value\": \"responsible-person@example.com\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_GB",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_GB",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "be3c1395-344e-4f5d-9491-a7d2c04cf97e",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "6b38185f-341c-4640-bf7b-3eafce428b35",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "3. Add GPSR compliance documents",
+							"id": "e7a0f285-f44f-41da-abb0-229af672ebbc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/compliance_media\",\n            \"value\": [\n                {\n                    \"marketplace_id\": \"{{marketplace}}\",\n                    \"content_type\": \"safety_information\",\n                    \"content_language\": \"de_DE\",\n                    \"source_location\": \"http://example.eg/sds_1.pdf\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_GB",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_GB",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "63277382-7201-4e7f-841e-8e186313ac6e",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "bafd926e-91f6-4d88-b24d-485792886e34",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "7b71847b-be28-4eae-9015-e895ee0cb374",
+					"description": "Selling partners who sell non-food products in EU-based stores must prove their GPSR compliance by **December 13, 2024**.\n\nThe following Listings API attributes have to be added to prove GPSR compliannce of your SKUs.\n\n- `gpsr_manufacturer_reference.gpsr_manufacturer_email_address` : Manufacturer's email (ASIN level)\n    \n- `dsa_responsible_party_address`: Responsible party's email (SKU level)\n    \n- `gpsr_safety_attestation`: Boolean. True if product is exempt from safety attestation\n    \n- `compliance_media` : Compliance document information\n    \n    - `content_type`: Valid types include `patient_fact_sheet`, `provider_fact_sheet`, `installation_manual`, `instructions_for_use`, `user_guide`, `user_manual`, `safety_information`\n        \n    - `content_language`: Language code (e.g., 'de_DE')\n        \n    - `source_location`: Document URL (not Google Drive or Dropbox)",
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								],
+								"id": "f812fcbb-f9a3-4f70-a5bb-8dbb3b0ff291"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								],
+								"id": "1279f173-329b-4be7-94dd-dc628f086121"
+							}
+						}
+					]
+				},
+				{
+					"name": "Dry-Run of a Listing Update",
+					"item": [
+						{
+							"name": "Dry-run a listing update",
+							"id": "ed75293c-ec6f-4213-81d2-2faca08b1c51",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"patches\": [\n        {\n            \"op\": \"replace\",\n            \"path\": \"/attributes/max_order_quantity\",\n            \"value\": [\n                {\n                    \"value\": -1\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US&mode=VALIDATION_PREVIEW",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										},
+										{
+											"key": "mode",
+											"value": "VALIDATION_PREVIEW"
+										}
+									],
+									"variable": [
+										{
+											"id": "4b2a1efb-3a2a-4525-88c3-c6a93b19636f",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "49d9c7c1-681e-4e9b-9b30-080df0520189",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "b0bb18ca-88d2-47ec-87a3-01d07e36aedd",
+					"description": "You can use the validation preview mode in your Listings API requests to dry-run a listing update.\n\nThis will synchronously perform the same checks that are preformed on submissions after being accepted for processing, but without persisting to the selling partner's catalog.\n\nTo use this feature, the `mode` parameter must be filled with `VALIDATION_PREVIEW`."
+				},
+				{
+					"name": "Retrieve Shipping Templates",
+					"item": [
+						{
+							"name": "Retrieve the seller shipping templates",
+							"id": "825fd93e-5d07-41c4-aa37-39446f0d55ca",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}&sellerId={{seller_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes",
+										":productType"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										}
+									],
+									"variable": [
+										{
+											"id": "40ef9fe5-a59f-4095-bb70-f3a01f4920b7",
+											"key": "productType",
+											"value": "PRODUCT"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "5f315b96-de48-465b-a756-cd8ac9a4de68",
+					"description": "With the Product Type Definitions API, an API that works in conjunction with the Listings Items API, you can retrieve the identifiers and titles of the shipping template the seller has created in their Seller Central account.\n\nTo get the shipping templates, the `seller_id` parameter has to be filled with the seller id. The response will contain the definition/json schema for the product type at `schema.link.resource`.\n\nThe shipping templates can be found on the json schema enums at attribute `merchant_shipping_group`"
+				},
+				{
+					"name": "Add a GTIN-exempt Listing",
+					"item": [
+						{
+							"name": "Submit a listing with GTIN exemption",
+							"id": "9b96ab4c-16e7-4041-86ff-bed1761e0e7a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"attributes\": {\n        \"supplier_declared_has_product_identifier_exemption\": [\n            {\n                \"value\": true\n            }\n        ],\n        \"brand\": [\n            {\n                \"value\": \"GENERIC\",\n                \"language_tag\": \"en_US\"\n            }\n        ] \n    }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "9d434037-857c-406b-b96c-f677f181ced6",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "2b7dbe7f-f073-4e51-919b-c286ef6228cc",
+											"key": "sku",
+											"value": "THE-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "4e9abbfb-e042-4c25-83f7-dc24a0e1d28d",
+					"description": "If you don't have a product identifier, you can create a product with a GTIN exemption. For exemption, you must submit a manual exemption request through your Seller Central account. For more information, refer to [Seller Central](https://sellercentral.amazon.com/help/hub/reference/G200426310).\n\nAfter you have received an approval, you can create a listings submission through the [Listings Items API v2021-08-01](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference). You must provide `GENERIC` as the brand name and set the `supplier_declared_has_product_identifier_exemption` attribute to `true`.\n\nNote: The request payload is limited to the GTIN exemption-relevant attributes. Other attributes are required in the submission as per the definition schema of your listings product types."
+				},
+				{
+					"name": "Find a Product Type Recommendation",
+					"item": [
+						{
+							"name": "Get a product type recommendation",
+							"id": "85c10d90-1379-41e0-8177-bcdba14ac005",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes?marketplaceIds={{marketplace}}&itemName=ASIN Title",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"definitions",
+										"2020-09-01",
+										"productTypes"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "itemName",
+											"value": "ASIN Title",
+											"description": "The title of the ASIN to get the product type recommendation."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "9883fef6-6b86-4050-8e5f-2647648ae0a6",
+					"description": "The Product Type Definitions API can be used to retrieve Amazon recommendations of product types for your to-be-added listing. By using the `itemName` parameter and providing the ASIN title, the API might return recommendations of product types that align the most with your listing, saving you time and effort on error fixing as you list your product to the Amazon catalog."
+				},
+				{
+					"name": "Submit Listings Relationships",
+					"item": [
+						{
+							"name": "1. Submit a parent SKU",
+							"id": "c529e658-54f5-4f7b-8800-be7dec2957ad",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"THE_PRODUCT_TYPE\",\n    \"attributes\": {\n        \"parentage_level\": [\n            {\n                \"value\": \"parent\"\n            }\n        ],\n        \"child_parent_sku_relationship\": [\n            {\n                \"child_relationship_type\": \"variation\"\n            }\n        ],\n        \"variation_theme\": [\n            {\n                \"name\": \"COLOR\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "abef905f-8b96-43a1-9673-f90bb71a64e1",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "afadae25-20de-4cfd-a207-04321f589434",
+											"key": "sku",
+											"value": "THE-PARENT-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						},
+						{
+							"name": "2. Submit a child SKU",
+							"id": "69fcd021-f0b5-47c3-b266-b3ad537da158",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productType\": \"PRODUCT\",\n    \"attributes\": {\n        \"parentage_level\": [\n            {\n                \"value\": \"child\"\n            }\n        ],\n        \"child_parent_sku_relationship\": [\n            {\n                \"child_relationship_type\": \"variation\",\n                \"parent_sku\": \"THE-PARENT-SKU\"\n            }\n        ],\n        \"variation_theme\": [\n            {\n                \"name\": \"COLOR\"\n            }\n        ],\n        \"color\": [\n            {\n                \"value\": \"blue\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId",
+										":sku"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "issueLocale",
+											"value": "en_US",
+											"description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: \"en_US\", \"fr_CA\", \"fr_FR\". Localized messages default to \"en_US\" when a localization is not available in the specified locale."
+										}
+									],
+									"variable": [
+										{
+											"id": "def40ece-c3f2-4ab3-85a6-d7ebcc0ac5cb",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
+										},
+										{
+											"id": "268a3669-9a25-4aa1-bbb5-b838ad753cc3",
+											"key": "sku",
+											"value": "THE-CHILD-SKU",
+											"description": "(Required) A selling partner provided identifier for an Amazon listing."
+										}
+									]
+								},
+								"description": "Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.\n\n**Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 5 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
+							},
+							"response": []
+						}
+					],
+					"id": "b2310595-352a-4d15-9ab7-03885ef0d166",
+					"description": "A variation family represents a collection of items for one product that is sold in multiple varieties. For example, a clothing article can come in multiple sizes and colors. Each unique size and color combination is represented by a separate listings item and grouped together by a parent listings item to provide a single detail page experience.  \nThis request shows you how to create listing variations using the Listings API.\n\nA parent listings item is created first and each child listings item refers to the parent listings item with the `child_parent_sku_relationship` attribute. Each listings item in the variation family uses the `parentage_level` attribute to define if it is a parent or child within the variation family and the `variation_theme` attribute to define the variated attributes for the variation family.\n\nNote:\n\n- You need a concrete product type to get these attributes in the schema. The attributes are not available on the `PRODUCT` product type.\n    \n- `COLOR` is used as a variation theme in these requests. Make sure to check the variation_theme enumerations for possible values such as `SIZE` or other combinations.\n    \n- The request bodies are reduced to the relationships-relevant attributes for demo purposes. Actual submissions require other applicable attributes as per the product type schema used."
+				},
+				{
+					"name": "Retrieve Listings By Filters",
+					"item": [
+						{
+							"name": "Search Listings Items",
+							"id": "ebd91f73-a21b-42ce-91bc-56726556bbd9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}&includedData=summaries,attributes,issues",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "includedData",
+											"value": "summaries,attributes,issues"
+										}
+									],
+									"variable": [
+										{
+											"id": "37dcb32a-6978-4803-8de0-8c979e6ca19f",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search Listings Items With ERRORS",
+							"id": "aafa7b5d-e455-4919-b8d5-60ae9ee6f77c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}&includedData=summaries,attributes,issues&withIssueSeverity=ERROR",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "includedData",
+											"value": "summaries,attributes,issues"
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "ERROR"
+										}
+									],
+									"variable": [
+										{
+											"id": "48e8fbb8-d0c4-4858-93ee-2086c83e69f4",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search CHILD Listings for PARENT SKU",
+							"id": "f273ba48-d1c5-4239-b423-6470d8f2ddee",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}&includedData=summaries,attributes,issues&variationParentSku=<String>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}"
+										},
+										{
+											"key": "includedData",
+											"value": "summaries,attributes,issues"
+										},
+										{
+											"key": "variationParentSku",
+											"value": "<String>"
+										}
+									],
+									"variable": [
+										{
+											"id": "21b92e7b-5046-417a-887b-c80ae0aaae00",
+											"key": "sellerId",
+											"value": "{{seller_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "57d08ccd-fe4e-4dac-a4f7-3f98d0df4c12",
+					"description": "Retrieve your listings using `searchListingsItems`. This operation returns information for multiple listings items based on filters such as product identifiers, issues, status, relationships, or creation date, for a given seller or vendor. To retrieve listings items in bulk, you can remove the filters.\n\nPlease note that even if more than 1,000 SKUs match the search criteria, the maximum number of results that can be returned and paged through is limited to 1,000. For example, if pageSize is set to 10, the maximum number of retrievable pages is 100. If you need to retrieve more than 1,000 listings, use the [Inventory Reports&nbsp;](https://developer-docs.amazon.com/sp-api/docs/report-type-values-inventory)  instead.\n\nRefer to the [searchListingsItems](https://developer-docs.amazon.com/sp-api/reference/searchlistingsitems) API reference guide to see the available query parameters for retrieving multiple listings items. For additional guidance, see the tutorial “[Search for listings items by product identifier (or other listings parameters)](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide#tutorial-search-for-listings-items-by-product-identifier-or-other-listings-parameters)” in the Listings Items API v2021-08-01 Use Case Guide."
+				}
+			],
+			"id": "d661cd91-a66c-48bb-81f7-f55205c20d16",
+			"description": "Multiple tasks can be achieved using the Listings API. This collection is a cheatsheet-like resource that guides you into how the API is used to execute changes such as:\n\n- How to add a B2C offer\n    \n- How to add a B2B offer\n    \n- How to switch fulfillment to MFN vs FBA\n    \n- and more...\n    \n\n---\n\n**Authorization**\n\nThe APIs in this collection require the _**x-amz-access-token**_ header in order for SP-API to authorize requests. The collection comes with a pre-script which calls the OAuth API to retrieve the access token and then stores it in the _{{access_token}}_ variable.  \nThe `Environments` tab in this workspace comes with environments for each API region and can be used with this collection. Make sure to select or fork the environment and fill in the values.\n\n<img src=\"https://content.pstmn.io/3746c588-782a-42c6-ae31-b7eae6c23348/U2NyZWVuc2hvdCAyMDI1LTAxLTE0IGF0IDE2LjQyLjQzLnBuZw==\" width=\"155\" height=\"173\">\n\n**Variables**\n\nVariables configured for this collection are:\n\n- Authorization:\n    \n    - client_id\n        \n    - client_secret\n        \n    - refresh_token\n        \n    - access_token\n        \n- Listings recipes:\n    \n    - sellerId\n        \n    - marketplace",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							"//retrieve and store access tokens using the authentication endpoint",
+							"//the access_token variable is then referenced in the x-amz-access-token header.",
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"oauth_url\"),",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/x-www-form-urlencoded',",
+							"        'Accept': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'urlencoded',",
+							"        urlencoded: [",
+							"            {key: \"grant_type\", value: \"refresh_token\", disabled: false},",
+							"            {key: \"refresh_token\", value: pm.environment.get(\"refresh_token\"), disabled: false},",
+							"            {key: \"client_id\", value: pm.environment.get(\"client_id\"), disabled: false},",
+							"            {key: \"client_secret\", value: pm.environment.get(\"client_secret\"), disabled: false}",
+							"        ]",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().access_token);",
+							"});"
+						],
+						"id": "380353f1-a69a-4880-8fcb-30da6a24a1d2"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {},
+						"exec": [
+							""
+						],
+						"id": "7306de2d-76a3-44ea-8b36-63ae84112b73"
+					}
+				}
+			]
+		}
+	]
+}
