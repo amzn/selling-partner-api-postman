@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "02e33adb-fabe-4772-b0e1-1869812608c0",
-		"name": "Getting Started with SP-API for Vendors",
-		"description": "Welcome to the Selling Partner API Getting Started collection for Vendors.\n\nWith this collection, you can easily start calling endpoints and getting familiar with most selling partner APIs.\n\nTo start, follow **1\\. FORK COLLECTION & AUTH** to fork the collection and setup your environment.\n\nOnce the environment variables are set, you can move to the authentication step and start calling the APIs you need to experiment with.",
+		"_postman_id": "317ec56a-7bd2-48a3-8b1a-b9f820c7bb10",
+		"name": "B. Getting Started with SP-API for Vendors 🤝",
+		"description": "# Getting Started with SP-API for Vendors\n\n## Description\n\nYour launchpad into the Selling Partner API as a vendor. This collection puts 13 SP-APIs at your fingertips with pre-built, ready-to-send requests — so you can go from zero to your first successful API call in minutes.\n\n## Overview\n\nThe [Selling Partner API (SP-API)](https://developer-docs.amazon.com/sp-api/docs/what-is-the-selling-partner-api) is Amazon's REST-based API suite that lets vendors programmatically manage their retail operations on Amazon — from purchase orders and shipments to catalog management, direct fulfillment, and analytics.\n\n📘 Learn more: [SP-API Vendor Use Cases](https://developer-docs.amazon.com/sp-api/docs/sp-api-vendor-use-cases)\n\n## SP-APIs Included\n\n| # | API | Documentation |\n| --- | --- | --- |\n| 2 | Catalog Items API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/catalog-items-api-v2022-04-01-reference) |\n| 3 | Listings (Product Type Definitions, Listings Items, Listings Restrictions) | [API Reference](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference) |\n| 4 | Feeds API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) |\n| 5 | Reports API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/reports-api-v2021-06-30-reference) |\n| 6 | Data Kiosk API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-reference) |\n| 7 | Notifications API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-reference) |\n| 8 | Vendor Retail Procurement API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/vendor-orders-api-v1-reference) |\n| 9 | Vendor Direct Fulfillment API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/vendor-direct-fulfillment-orders-api-v2021-12-28-reference) |\n| 10 | A+ Content Management API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/a-content-api-v2020-11-01-reference) |\n| 11 | Uploads API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/uploads-api-v2020-11-01-reference) |\n| 12 | Tokens API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/tokens-api-v2021-03-01-reference) |\n| 13 | Application Management API | [API Reference](https://developer-docs.amazon.com/sp-api/docs/application-management-api-v2023-11-30-reference) |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A vendor account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, and `refresh_token` in the environment. Make sure the `marketplace` and `base_url` match your target region.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Authenticate** — The collection includes a pre-request script that automatically retrieves and stores your access token. You can also manually call **1.1 : LWA Access Token** or **1.2 : LWA Grantless Access Token** (for [grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations)).\n    \n6. **Start exploring** — Navigate to any API folder and send requests. Use environment variables `{{variable}}` as needed for your API call parameters.\n    \n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [SP-API Vendor Use Cases](https://developer-docs.amazon.com/sp-api/docs/sp-api-vendor-use-cases)\n    \n- [SP-API Vendor FAQ](https://developer-docs.amazon.com/sp-api/docs/vendor-faq)\n    \n- [SP-API Endpoints (regional)](https://developer-docs.amazon.com/sp-api/docs/sp-api-endpoints)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -23,7 +23,7 @@
 										],
 										"type": "text/javascript",
 										"packages": {},
-										"id": "815b18f2-2400-4a0d-b086-2aa736ab8232"
+										"id": "a093676a-171d-45b7-8546-cc5b91898c49"
 									}
 								},
 								{
@@ -34,11 +34,11 @@
 										],
 										"type": "text/javascript",
 										"packages": {},
-										"id": "8f7cf3e7-abed-4bac-8bdf-3e59e3764e09"
+										"id": "7623d72d-62b0-4aa0-a19e-97140aed0d06"
 									}
 								}
 							],
-							"id": "04426aed-1ac6-4576-b3e2-47092d12f29c",
+							"id": "cef40281-34bb-431c-8feb-037d1a4a5337",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -80,7 +80,7 @@
 							"response": []
 						}
 					],
-					"id": "35e72350-490d-45e7-b1dc-0b6ca5d4fa21",
+					"id": "b25a74e9-6fc2-4276-afa9-2637963584ac",
 					"description": "Call this endpoint to **Login with Amazon (LWA)** and retrieve an access token.  \nA post-script is available and will store the returned access token to the environment variable **access_token** to then authenticate and authorize API requests.",
 					"auth": {
 						"type": "noauth"
@@ -94,7 +94,7 @@
 								"exec": [
 									""
 								],
-								"id": "85b7178c-dc1d-456f-831c-6bcab832f76d"
+								"id": "78882115-5536-455a-93e5-fb77bcb11f6c"
 							}
 						},
 						{
@@ -105,7 +105,7 @@
 								"exec": [
 									""
 								],
-								"id": "174401fa-c882-4b2c-ab80-f6a648b62f26"
+								"id": "8ecf5124-c0d3-4927-95ae-8a7aabd7ff91"
 							}
 						}
 					]
@@ -124,7 +124,7 @@
 										],
 										"type": "text/javascript",
 										"packages": {},
-										"id": "c4ffc29a-976a-4f76-b2be-ca57e398aa8f"
+										"id": "1be6f83f-8de8-4ab2-aa41-93a83d19ae9b"
 									}
 								},
 								{
@@ -135,11 +135,11 @@
 										],
 										"type": "text/javascript",
 										"packages": {},
-										"id": "a007175f-2f5c-4004-b39e-2b4e96e330a4"
+										"id": "e5f9c8ae-342a-4df5-9c58-9b6f577b0a15"
 									}
 								}
 							],
-							"id": "a4c56a43-f1bf-4668-8ad9-b31e7f97bc70",
+							"id": "a347163f-51d0-40d4-af80-0e40ad6bcfa0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -187,7 +187,7 @@
 							"response": []
 						}
 					],
-					"id": "5f0a33e4-a80c-4ebd-ae19-54194ec62cb1",
+					"id": "d84d5295-2746-4aa4-84ba-6e552c6f8868",
 					"description": "Call this endpoint to **Login with Amazon (LWA)** and retrieve a _grantless_ access token.\n\nA _grantless_ access token is required for Grantless Operations.  \nRead more on Grantless operations [here](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).  \n\nA post-script is available and will store the returned access token to the environment variable **access_token** to then authenticate and authorize API requests.",
 					"auth": {
 						"type": "noauth"
@@ -201,7 +201,7 @@
 								"exec": [
 									""
 								],
-								"id": "fb527e05-a59c-44ce-af12-87edb5d3fabf"
+								"id": "b4414b59-0f3c-44ec-8ec3-f5013b7aa861"
 							}
 						},
 						{
@@ -212,13 +212,13 @@
 								"exec": [
 									""
 								],
-								"id": "e5691d17-5e72-43f0-8142-10384ffd4302"
+								"id": "2f0a7a8b-fa5c-478f-a138-0aafa347e901"
 							}
 						}
 					]
 				}
 			],
-			"id": "fffb762c-6b2a-4996-a644-129b2a8b3bc1",
+			"id": "d80242b8-35c4-4729-8f3a-e64c83d74dba",
 			"description": "1. To fork this collection, Click on **\"Run in Postman\"** Button or right-click the collection and click on **Create a fork.**\n    \n2. Fork the [environment](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) you need\n    \n3. Fill the environment variables. Make sure valid \"client_id\", \"client_secret\" and \"refresh_token\" are set.\n    \n4. Ensure environment variables {{variable}} are used as needed for your API calls parameters.\n    \n\nNote: the collection comes with a pre-script: a script that's excuted before each run. The script uses the authentication endpoint to retrieve the access token and store it in the access_token. The access_token value is passed in the header **x-amz-access-token.**  \nIn, **1.1 : LWA Access Token**, it is also possible to do this step manually. For grantless operations, make sure to manually set the access token for the relevant request. The grantless token is retrieved using the **1.1 : Lwa Grantless Access Token**",
 			"auth": {
 				"type": "noauth"
@@ -232,7 +232,7 @@
 						"exec": [
 							""
 						],
-						"id": "3540b616-9aef-468c-bf8b-15bb0f3faabc"
+						"id": "dce4a623-890c-46ad-9880-aeb6e23b8ea3"
 					}
 				},
 				{
@@ -243,7 +243,7 @@
 						"exec": [
 							""
 						],
-						"id": "5346f22a-c935-4743-82e1-56f88ec51f9c"
+						"id": "74b79252-f98c-4dde-8502-094a28091745"
 					}
 				}
 			]
@@ -253,7 +253,7 @@
 			"item": [
 				{
 					"name": "get Catalog Item",
-					"id": "232e9624-5b0b-43de-8499-665a0d31c554",
+					"id": "3180d77d-61dc-4995-9ed2-07b9cdc5800f",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -271,9 +271,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/catalog/2022-04-01/items/:asin?marketplaceIds={{marketplace}}",
+							"raw": "{{base_url}}/catalog/2022-04-01/items/:asin?marketplaceIds={{marketplace}}",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"catalog",
@@ -302,6 +302,7 @@
 							],
 							"variable": [
 								{
+									"id": "5e205699-c3d3-4531-b88c-bbe221ce3f21",
 									"key": "asin",
 									"value": "",
 									"description": "(Required) The Amazon Standard Identification Number (ASIN) of the item."
@@ -314,7 +315,7 @@
 				},
 				{
 					"name": "search Catalog Items",
-					"id": "fc2103e1-4465-423d-a2af-fb9e9f77decc",
+					"id": "d3639d92-fc87-4aae-97ce-d4a0dda9ae3e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -332,9 +333,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/catalog/2022-04-01/items?marketplaceIds={{marketplace}}",
+							"raw": "{{base_url}}/catalog/2022-04-01/items?marketplaceIds={{marketplace}}",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"catalog",
@@ -420,7 +421,7 @@
 					"response": []
 				}
 			],
-			"id": "f250ab27-2295-452f-a5d4-4c39e1ebf2bf",
+			"id": "fa2a1306-684a-4e07-afa8-9bf69298b69b",
 			"description": "The Selling Partner API for Catalog Items provides programmatic access to information about items in the Amazon catalog.",
 			"auth": {
 				"type": "noauth"
@@ -434,7 +435,7 @@
 						"exec": [
 							""
 						],
-						"id": "d796b383-dc03-4aff-93ec-7ad6ddfe9ae2"
+						"id": "3e9a478c-2854-4029-ba56-1ca98e0c8c98"
 					}
 				},
 				{
@@ -445,7 +446,7 @@
 						"exec": [
 							""
 						],
-						"id": "13f48ee8-b729-4a1c-91c6-78f2002bdfb9"
+						"id": "b11193af-cabc-4b9f-bc6b-3d22e808c3b5"
 					}
 				}
 			]
@@ -458,7 +459,7 @@
 					"item": [
 						{
 							"name": "search Product Types Definitions",
-							"id": "11534912-82f6-4912-8e06-5edd466f20b3",
+							"id": "ad02e0ef-9973-46b1-932e-4cf9ddf6efc8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -471,9 +472,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/definitions/2020-09-01/productTypes?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"definitions",
@@ -518,7 +519,7 @@
 						},
 						{
 							"name": "get Product Type Definitions",
-							"id": "9ea364af-dd1d-4b3b-a53c-58498d8d342e",
+							"id": "5ca18260-fea5-4419-a92e-8eb6a05c297d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -531,9 +532,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/definitions/2020-09-01/productTypes/:productType?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"definitions",
@@ -573,14 +574,14 @@
 										},
 										{
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "A selling partner identifier. When provided, seller-specific requirements and values are populated within the product type definition schema, such as brand names associated with the selling partner.",
 											"disabled": true
 										}
 									],
 									"variable": [
 										{
-											"id": "1221338b-3801-43f8-a96d-14ecc3585724",
+											"id": "bb2809a2-a19e-442c-a91a-863942211df4",
 											"key": "productType",
 											"value": "",
 											"description": "(Required) The Amazon product type name."
@@ -592,7 +593,7 @@
 							"response": []
 						}
 					],
-					"id": "74a29255-4931-42b3-b159-f8f93e7f8d8a",
+					"id": "ed4d563e-082d-4562-add8-b23d9f0167ed",
 					"description": "The Selling Partner API for Product Type Definitions provides programmatic access to attribute and data requirements for product types in the Amazon catalog.\n\nUse this API to return the JSON Schema for a product type that you can then use with other Selling Partner APIs, such as the Selling Partner API for Listings Items or the Selling Partner API for Feeds (for JSON-based listing feeds) for the validation of the requirements of your submissions."
 				},
 				{
@@ -600,7 +601,7 @@
 					"item": [
 						{
 							"name": "get Listings Item",
-							"id": "52110f5d-336d-43df-b7d8-8d48c866a1f3",
+							"id": "0d6b4f33-9208-4886-adf2-8ab0da92d930",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -617,9 +618,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -649,13 +650,13 @@
 									],
 									"variable": [
 										{
-											"id": "b6629116-015a-4d47-83a1-881d202847b8",
+											"id": "9f05fc9f-9953-4897-a6d2-7bac3712e7e2",
 											"key": "sellerId",
 											"value": null,
 											"description": "A selling partner identifier, such as a merchant account or vendor code."
 										},
 										{
-											"id": "919320f4-47ea-471d-9960-79e4e1b24ffc",
+											"id": "a94a1da7-b50e-49c8-aa00-4e9027739930",
 											"key": "sku",
 											"value": "",
 											"description": "A selling partner provided identifier for an Amazon listing.\n\n"
@@ -667,7 +668,7 @@
 						},
 						{
 							"name": "search Listings Items",
-							"id": "66f3d836-2030-4aec-92ae-1fc44cbb9422",
+							"id": "00301d19-854e-470d-b547-0089576670df",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -684,9 +685,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -805,9 +806,9 @@
 									],
 									"variable": [
 										{
-											"id": "18d2e853-d89d-4bce-8364-0f60c9203921",
+											"id": "ca3a9d34-5588-4771-bbd2-63487b1a9fc5",
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 										}
 									]
@@ -818,7 +819,7 @@
 						},
 						{
 							"name": "put Listings Item",
-							"id": "22aa7aab-6231-48ce-8915-35777dd67b52",
+							"id": "e9bc224e-1225-46de-805c-145b7e59e308",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -843,9 +844,9 @@
 									"raw": "{\r\n  \"productType\": \"\",\r\n  \"attributes\": {\r\n  },\r\n  \"requirements\": \"LISTING\"\r\n}"
 								},
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -869,13 +870,13 @@
 									],
 									"variable": [
 										{
-											"id": "9e837e77-ef67-45e4-96d9-31d8e3c27d0b",
+											"id": "e982cb21-6397-4164-91e9-ef6e12fcc0e1",
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "A selling partner identifier, such as a merchant account or vendor code."
 										},
 										{
-											"id": "98576f87-5b9a-4455-90bc-6c6a2c68d983",
+											"id": "e845ae9c-e75c-43a8-9836-ee589a0b399a",
 											"key": "sku",
 											"value": null,
 											"description": "A selling partner provided identifier for an Amazon listing.\n\n"
@@ -887,7 +888,7 @@
 						},
 						{
 							"name": "patch Listings Item",
-							"id": "7949b7d4-8dbe-4ac0-b02d-7786855f0d3e",
+							"id": "d60b3613-b308-4487-afef-49134c2665ed",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -918,9 +919,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -956,13 +957,13 @@
 									],
 									"variable": [
 										{
-											"id": "e89f2829-e582-4986-9396-c5df509cb6dd",
+											"id": "a8f0a167-4fe4-481a-b122-1987a4c9f807",
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 										},
 										{
-											"id": "706e4e0f-d5ae-491c-9275-70c11a9dd1bf",
+											"id": "d07e791a-ddad-43db-8e07-18bb550afe4f",
 											"key": "sku",
 											"value": "",
 											"description": "(Required) A selling partner provided identifier for an Amazon listing."
@@ -975,7 +976,7 @@
 						},
 						{
 							"name": "delete Listings Item",
-							"id": "664956ef-3f24-4f65-bb01-bb8808025dc4",
+							"id": "d3b407a9-1e79-4cc5-b816-c206559c5441",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -992,9 +993,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:sku?marketplaceIds={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -1018,13 +1019,13 @@
 									],
 									"variable": [
 										{
-											"id": "ba0ebf83-1566-4638-8188-79f1406aeb09",
+											"id": "934e310a-1d96-4a18-9d3e-37d76b72fcd8",
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 										},
 										{
-											"id": "5113bd77-e5ca-4e49-aa5f-7a04cc8c9bb5",
+											"id": "e0a82d6b-6fd9-448a-a074-0603e4b91d27",
 											"key": "sku",
 											"value": "",
 											"description": "(Required) A selling partner provided identifier for an Amazon listing."
@@ -1036,7 +1037,7 @@
 							"response": []
 						}
 					],
-					"id": "7ca3d0f5-2f7b-4067-84ce-ae7a82eb5f17",
+					"id": "2414ca40-2b04-4a68-a4c6-092eea7355a3",
 					"description": "The Selling Partner API for Listings Items (Listings Items API) provides programmatic access to selling partner listings on Amazon.\n\nUse this API in collaboration with the Selling Partner API for Product Type Definitions, which you use to retrieve the information about Amazon product types needed to use the Listings Items API."
 				},
 				{
@@ -1044,7 +1045,7 @@
 					"item": [
 						{
 							"name": "get Listings Restrictions",
-							"id": "27d7be11-f0c0-49f3-8a26-a05f19f759df",
+							"id": "a7c6f2fd-6ee4-4e20-ab01-e41901ad8268",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1061,9 +1062,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/listings/2021-08-01/restrictions?marketplaceIds={{marketplace}}&sellerId={{sellerId}}&asin=",
+									"raw": "{{base_url}}/listings/2021-08-01/restrictions?marketplaceIds={{marketplace}}&sellerId={{seller_id}}&asin=",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -1078,7 +1079,7 @@
 										},
 										{
 											"key": "sellerId",
-											"value": "{{sellerId}}",
+											"value": "{{seller_id}}",
 											"description": "(Required) A selling partner identifier, such as a merchant account."
 										},
 										{
@@ -1105,11 +1106,11 @@
 							"response": []
 						}
 					],
-					"id": "f96846bd-418e-4836-85b7-02f70c584cd1",
+					"id": "85ae2bf9-f03e-40d0-bff7-25980eccacb5",
 					"description": "The Selling Partner API for Listings Restrictions provides programmatic access to restrictions on Amazon catalog listings."
 				}
 			],
-			"id": "533e9b67-b69e-4fc6-9d23-33d8513f998f",
+			"id": "6cca3079-8019-4ac8-95ab-615538400195",
 			"description": "The Selling Partner API offers a set of APIs to help you manage sellers listings. These are:\n\n- Product Type Definitions API\n    \n- Listings Restrictions API\n    \n- Listings API\n    \n\nWith these APIs, you can inspect product definitions, validate submissions for products and create, update or delete your listings.",
 			"auth": {
 				"type": "noauth"
@@ -1120,7 +1121,7 @@
 			"item": [
 				{
 					"name": "Step 1: create Feed Document",
-					"id": "3d086d0a-f621-4105-833b-a0f2cd10169a",
+					"id": "db339e8a-5e65-401b-921a-45572174cb2a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1144,13 +1145,13 @@
 							"mode": "raw",
 							"raw": "{\n  \"contentType\":\"application/json\"\n}"
 						},
-						"url": "{{baseUrl}}/feeds/2021-06-30/documents"
+						"url": "{{base_url}}/feeds/2021-06-30/documents"
 					},
 					"response": []
 				},
 				{
 					"name": "Step 2: create Feed",
-					"id": "2ebcb73c-725f-4744-b52b-cae01b2c3b7e",
+					"id": "fb6e12f7-2f72-48b1-85cb-133cd832dba5",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1174,13 +1175,13 @@
 							"mode": "raw",
 							"raw": "{\n    \"inputFeedDocumentId\": \"\",\n    \"feedType\": \"\",\n    \"marketplaceIds\": [\n        \"{{marketplace}}\"\n    ],\n    \"feedOptions\": {}\n}"
 						},
-						"url": "{{baseUrl}}/feeds/2021-06-30/feeds"
+						"url": "{{base_url}}/feeds/2021-06-30/feeds"
 					},
 					"response": []
 				},
 				{
 					"name": "Step 3: get Feed",
-					"id": "f696c080-2736-4d24-b1bb-95c915f4109e",
+					"id": "2069c53e-e17e-4559-8447-2699ad906628",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1197,9 +1198,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/feeds/2021-06-30/feeds/:feedId",
+							"raw": "{{base_url}}/feeds/2021-06-30/feeds/:feedId",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"feeds",
@@ -1209,6 +1210,7 @@
 							],
 							"variable": [
 								{
+									"id": "7c0c49c9-0ab5-440c-9b81-c83b91635075",
 									"key": "feedId",
 									"value": "",
 									"description": "(Required) The identifier for the feed. This identifier is unique only in combination with a seller ID."
@@ -1220,7 +1222,7 @@
 				},
 				{
 					"name": "Step 4: get Feed Document",
-					"id": "35801bf9-612d-44fb-86c0-debef172951c",
+					"id": "16a0fc9b-ff33-40c8-a5f0-154ab7472052",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1237,9 +1239,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/feeds/2021-06-30/documents/:feedDocumentId",
+							"raw": "{{base_url}}/feeds/2021-06-30/documents/:feedDocumentId",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"feeds",
@@ -1249,6 +1251,7 @@
 							],
 							"variable": [
 								{
+									"id": "00a3b682-01b8-4e7d-864c-92db53818ab7",
 									"key": "feedDocumentId",
 									"value": "",
 									"description": "(Required) The identifier of the feed document."
@@ -1260,7 +1263,7 @@
 				},
 				{
 					"name": "get All Feeds",
-					"id": "38a09020-3477-497e-8102-3ffdcc32fa48",
+					"id": "cc61eb1a-8ccc-42e9-9ff3-e6a23f762f5a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1277,9 +1280,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/feeds/2021-06-30/feeds",
+							"raw": "{{base_url}}/feeds/2021-06-30/feeds",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"feeds",
@@ -1335,7 +1338,7 @@
 					"response": []
 				}
 			],
-			"id": "c7b36056-137c-4a3b-a8b0-2cfcd0242aa3",
+			"id": "b80a8e0e-0cb5-416a-82ef-1b137ba7f783",
 			"description": "The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.\n\nThe Feeds API is an asynchronous API and need to be used as follows:\n\n1 - A feed document is created using the Create Feed Document operation. Data is uploaded to the document url returned.\n\n2 - A feed is created using the Create Feed operation\n\n3 - Get Feed is used to retrieve the feed status and details (or optionally use the FEED_PROCESSING_NOTIFICATION)\n\n4 - Retrieve the feed processing document\n\n---\n\nRefer to the Feed Type Values for a list of feeds that can be used:  \n[https://developer-docs.amazon.com/sp-api/docs/feed-type-values](https://developer-docs.amazon.com/sp-api/docs/feed-type-values)",
 			"auth": {
 				"type": "noauth"
@@ -1349,7 +1352,7 @@
 						"exec": [
 							""
 						],
-						"id": "3d55375d-8f6c-469b-9f4d-1cfe9eea1f39"
+						"id": "a058ae8d-5dbd-4ce3-b781-beca5b60e12c"
 					}
 				},
 				{
@@ -1360,7 +1363,7 @@
 						"exec": [
 							""
 						],
-						"id": "4d69fb8a-d8ab-4560-9a24-e77a6547366d"
+						"id": "eb0d0ba2-1bb6-44e0-9a62-8dcd9f0c7850"
 					}
 				}
 			]
@@ -1373,7 +1376,7 @@
 					"item": [
 						{
 							"name": "Step 1: create Report",
-							"id": "9ca2c214-a5aa-428e-9767-2442e2eb3d41",
+							"id": "5bc666a9-5ff4-4cda-aeda-c1f811710ec1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1394,14 +1397,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"marketplaceIds\": [\n        \"{{marketplace}}\"\n    ],\n    \"reportType\": \"\",\n    \"dataStartTime\": \"\",\n    \"dataEndTime\": \"\"\n}"
 								},
-								"url": "{{baseUrl}}/reports/2021-06-30/reports",
+								"url": "{{base_url}}/reports/2021-06-30/reports",
 								"description": "Creates a report."
 							},
 							"response": []
 						},
 						{
 							"name": "Step 2: get Report",
-							"id": "e69b6c56-a2fa-4111-9f33-7f5882e1703a",
+							"id": "6de55491-1457-4112-83c1-405cbd680dc5",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1415,9 +1418,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/reports/:reportId",
+									"raw": "{{base_url}}/reports/2021-06-30/reports/:reportId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1427,6 +1430,7 @@
 									],
 									"variable": [
 										{
+											"id": "10dd5176-dc69-4a2d-8f90-072557ab6259",
 											"key": "reportId",
 											"value": "",
 											"description": "(Required) The identifier for the report. This identifier is unique only in combination with a seller ID."
@@ -1439,7 +1443,7 @@
 						},
 						{
 							"name": "Step 3: get Report Document",
-							"id": "870920d1-46b1-4ec1-ac79-46d04e62406b",
+							"id": "7eaa04a2-9515-44e6-8572-510e749e4aff",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1453,9 +1457,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/documents/:reportDocumentId",
+									"raw": "{{base_url}}/reports/2021-06-30/documents/:reportDocumentId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1465,6 +1469,7 @@
 									],
 									"variable": [
 										{
+											"id": "90554604-a5a7-42ba-bc40-6744022c4920",
 											"key": "reportDocumentId",
 											"value": "",
 											"description": "(Required) The identifier for the report document."
@@ -1477,7 +1482,7 @@
 						},
 						{
 							"name": "get Reports",
-							"id": "dfc7f0ef-6ff6-464d-932b-add833c96cbd",
+							"id": "556faf3d-319a-4e9b-aba8-9b3a5c08be0c",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1491,9 +1496,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2020-09-04/reports",
+									"raw": "{{base_url}}/reports/2020-09-04/reports",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1551,7 +1556,7 @@
 						},
 						{
 							"name": "cancel Report",
-							"id": "1deeb59c-6f52-4c7c-b4ff-d0bfb130fca1",
+							"id": "01e43c68-2cf8-4a4d-9fbd-c36440a637d9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1569,9 +1574,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/reports/:reportId",
+									"raw": "{{base_url}}/reports/2021-06-30/reports/:reportId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1581,6 +1586,7 @@
 									],
 									"variable": [
 										{
+											"id": "99158bbe-b65e-4cfb-8f19-781d62101ebf",
 											"key": "reportId",
 											"value": "<string>",
 											"description": "(Required) The identifier for the report. This identifier is unique only in combination with a seller ID."
@@ -1592,7 +1598,7 @@
 							"response": []
 						}
 					],
-					"id": "dbb8d116-1661-48c6-95d7-f2457ad8c4c2",
+					"id": "312dc763-b76c-48ec-8c12-6db18bcd4707",
 					"description": "Requesting reports is done as follows:\n\n1 - Create a report\n\n2 - Retrieve the report status and details using **getReport** (Optionally subscribe to the REPORT_PROCESSING_FINISHED notification)\n\n3 - Use the document id from step 2 in **getReportDocument** to retrieve the downloadable report link"
 				},
 				{
@@ -1600,7 +1606,7 @@
 					"item": [
 						{
 							"name": "Step 1: create Report Schedule",
-							"id": "ef56128a-e235-4343-a36e-11cfe8018d61",
+							"id": "c51a598e-a1e3-4d36-86d0-bd1b2d0024d8",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1621,14 +1627,14 @@
 									"mode": "raw",
 									"raw": "{\n    \"marketplaceIds\": [\n        \"{{marketplace}}}\"\n    ],\n    \"period\": \"\",\n    \"reportType\": \"\",\n    \"nextReportCreationTime\": \"\"\n}"
 								},
-								"url": "{{baseUrl}}/reports/2021-06-30/schedules",
+								"url": "{{base_url}}/reports/2021-06-30/schedules",
 								"description": "Creates a report schedule. If a report schedule with the same report type and marketplace IDs already exists, it will be cancelled and replaced with this one."
 							},
 							"response": []
 						},
 						{
 							"name": "Step 2 : get Reports",
-							"id": "94f75ec2-224c-4d23-b390-39ec8bca490f",
+							"id": "4f7fb28a-6df1-4cd4-8eff-3289babff411",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1642,9 +1648,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2020-09-04/reports",
+									"raw": "{{base_url}}/reports/2020-09-04/reports",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1702,7 +1708,7 @@
 						},
 						{
 							"name": "Step 3: get Report Document",
-							"id": "ea332c2d-458e-467f-bf87-c84031b4dbb9",
+							"id": "4579a798-38e1-4068-b6b9-ad60d93b544b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1716,9 +1722,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/documents/:reportDocumentId",
+									"raw": "{{base_url}}/reports/2021-06-30/documents/:reportDocumentId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1728,6 +1734,7 @@
 									],
 									"variable": [
 										{
+											"id": "cc1f4337-fd17-4fef-986f-651d97f8022b",
 											"key": "reportDocumentId",
 											"value": "",
 											"description": "(Required) The identifier for the report document."
@@ -1740,7 +1747,7 @@
 						},
 						{
 							"name": "get Report Schedule",
-							"id": "bbf09c47-b856-4f83-826f-39fdbeb07e0b",
+							"id": "2038e666-610a-4538-8206-9322ba8b6b45",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1754,9 +1761,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/schedules/:reportScheduleId",
+									"raw": "{{base_url}}/reports/2021-06-30/schedules/:reportScheduleId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1766,6 +1773,7 @@
 									],
 									"variable": [
 										{
+											"id": "7a59a0f3-b117-497b-820b-d2de36113e67",
 											"key": "reportScheduleId",
 											"value": "",
 											"description": "(Required) The identifier for the report schedule. This identifier is unique only in combination with a seller ID."
@@ -1778,7 +1786,7 @@
 						},
 						{
 							"name": "cancel Report Schedule",
-							"id": "e43a7317-c20e-4e64-883e-66370cd0472a",
+							"id": "68ce6af9-8016-4dca-87f8-8cb2e77a1a01",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1792,9 +1800,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/schedules/:reportScheduleId",
+									"raw": "{{base_url}}/reports/2021-06-30/schedules/:reportScheduleId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1804,6 +1812,7 @@
 									],
 									"variable": [
 										{
+											"id": "da9c0e9c-c5d8-4a0b-a7fd-85ba3bf400b4",
 											"key": "reportScheduleId",
 											"value": "",
 											"description": "(Required) The identifier for the report schedule. This identifier is unique only in combination with a seller ID."
@@ -1816,7 +1825,7 @@
 						},
 						{
 							"name": "get Report Schedules",
-							"id": "aeb63d8a-1c01-42aa-8181-3978427ab035",
+							"id": "b0c400a9-b4ee-474e-b976-2ec353727c0e",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1830,9 +1839,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/reports/2021-06-30/schedules?reportTypes=",
+									"raw": "{{base_url}}/reports/2021-06-30/schedules?reportTypes=",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"reports",
@@ -1852,11 +1861,11 @@
 							"response": []
 						}
 					],
-					"id": "66bef439-ed1e-479b-898f-df6e1fa67a86",
+					"id": "ed3ac9e7-fc96-421c-abc1-68cc173291f9",
 					"description": "You can schedule requests for reports so that they are submitted periodically, using the `createReportSchedule` operation. Use the period enumeration to specify the time period. To identify which reports can be scheduled, review the [Report Type Values](https://developer-docs.amazon.com/sp-api/docs/report-type-values) in the Selling Partner API documentation.\n\nScheduling a report is done as follows:\n\n1 - Create a report schedule for a report type\n\n2 - Check the reports using the **getReports** operation though. Ideally, the REPORT_PROCESSING_FINISHED notification is used to inform about newly generated instances of the scheduled report instead of polling.\n\n3 - Use the **reportDocumentId** when available to download the report"
 				}
 			],
-			"id": "491540db-2002-4354-8f0f-ff1296b9c7f4",
+			"id": "da0a5f2e-e054-48f1-a9b9-0c388d091628",
 			"description": "The Selling Partner API for Reports lets you retrieve and manage a variety of reports that can help selling partners manage their businesses.\n\nYou can either request or schedule reports depending on their availability. Please note that some reports are either requested or scheduled.\n\n---\n\nFor more information, please refer to the report type values page:\n\n[https://developer-docs.amazon.com/sp-api/docs/report-type-values](https://developer-docs.amazon.com/sp-api/docs/report-type-values)",
 			"auth": {
 				"type": "noauth"
@@ -1870,7 +1879,7 @@
 						"exec": [
 							""
 						],
-						"id": "4fe7f975-e696-4748-bc5a-46c7f3f36f2c"
+						"id": "78da96bd-0324-43bc-8382-5f69e24eada1"
 					}
 				},
 				{
@@ -1881,7 +1890,7 @@
 						"exec": [
 							""
 						],
-						"id": "199603f5-e773-4cc1-a190-f5b3146a71c8"
+						"id": "047eca90-f1f0-4f70-831f-16cc6d335355"
 					}
 				}
 			]
@@ -1891,7 +1900,7 @@
 			"item": [
 				{
 					"name": "Step 1 : create Query",
-					"id": "a4b93857-d36b-4a28-bd2b-f153ad930c36",
+					"id": "7e6afcb5-0529-4211-ad06-8da3a85c6258",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1922,14 +1931,14 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/dataKiosk/2023-11-15/queries",
+						"url": "{{base_url}}/dataKiosk/2023-11-15/queries",
 						"description": "Creates a Data Kiosk query request.\n\n**Note:** The retention of a query varies based on the fields requested. Each field within a schema is annotated with a `@resultRetention` directive that defines how long a query containing that field will be retained. When a query contains multiple fields with different retentions, the shortest (minimum) retention is applied. The retention of a query's resulting documents always matches the retention of the query.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 15 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 					},
 					"response": []
 				},
 				{
 					"name": "Step 2 : get Query",
-					"id": "f6270900-d8dd-4c16-9ae2-3808eb14941f",
+					"id": "6b930551-918b-4125-aa98-0eed9d7c4628",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1947,9 +1956,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/dataKiosk/2023-11-15/queries/:queryId",
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries/:queryId",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"dataKiosk",
@@ -1959,6 +1968,7 @@
 							],
 							"variable": [
 								{
+									"id": "67a46469-ea22-454b-9a1a-cf8a588a2ae8",
 									"key": "queryId",
 									"value": "",
 									"description": "(Required) The query identifier."
@@ -1971,7 +1981,7 @@
 				},
 				{
 					"name": "Step 3 : get Document",
-					"id": "9a89c7d5-217e-4090-81e1-ba62eb2f54f9",
+					"id": "96702b56-f51c-4d0e-b6d4-2c19925ededa",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1989,9 +1999,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/dataKiosk/2023-11-15/documents/:documentId",
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/documents/:documentId",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"dataKiosk",
@@ -2001,6 +2011,7 @@
 							],
 							"variable": [
 								{
+									"id": "ee84120d-aff7-468c-ab5d-2f2a563d03f8",
 									"key": "documentId",
 									"value": "<string>",
 									"description": "(Required) The identifier for the Data Kiosk document."
@@ -2013,7 +2024,7 @@
 				},
 				{
 					"name": "get Queries",
-					"id": "98b832ab-0393-4e49-9fda-f72e3c6d6c18",
+					"id": "607ce3a6-5ffa-479f-af24-4f21e1ef12f8",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2031,9 +2042,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/dataKiosk/2023-11-15/queries",
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"dataKiosk",
@@ -2079,7 +2090,7 @@
 				},
 				{
 					"name": "cancel Query",
-					"id": "1bec08c7-7757-4cfd-a75b-0ca325b143cf",
+					"id": "63a024cc-9453-4d0e-a8d5-08bc6eb77d7b",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2097,9 +2108,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/dataKiosk/2023-11-15/queries/:queryId",
+							"raw": "{{base_url}}/dataKiosk/2023-11-15/queries/:queryId",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"dataKiosk",
@@ -2109,6 +2120,7 @@
 							],
 							"variable": [
 								{
+									"id": "989c4067-9ed5-4d9c-b079-32005a3b693c",
 									"key": "queryId",
 									"value": "<string>",
 									"description": "(Required) The identifier for the query. This identifier is unique only in combination with a selling partner account ID."
@@ -2120,7 +2132,7 @@
 					"response": []
 				}
 			],
-			"id": "0f072a7b-012f-4b27-af86-579efaca67e5",
+			"id": "bbdfcf99-0297-4db8-878a-b9495fffd1e4",
 			"description": "The Selling Partner API for Data Kiosk lets you submit GraphQL queries from a variety of schemas to help selling partners manage their businesses.\n\nData Kiosk is the next generation of Reporting with the Selling Partner API.\n\n---\n\nVisit the Data Kiosk Schema Explorer: [https://sellercentral.amazon.com/datakiosk-schema-explorer](https://sellercentral.amazon.com/datakiosk-schema-explorer)\n\n---\n\nFollow the [use case](https://developer-docs.amazon.com/sp-api/docs/data-kiosk-api-v2023-11-15-use-case-guide) page for step-by-step guidance.",
 			"auth": {
 				"type": "noauth"
@@ -2134,7 +2146,7 @@
 						"exec": [
 							""
 						],
-						"id": "63e9b5e1-a4dd-4064-9810-ec27fc95252c"
+						"id": "ca1c9ed4-e7bf-485d-ad9a-1f1af4d803f9"
 					}
 				},
 				{
@@ -2145,7 +2157,7 @@
 						"exec": [
 							""
 						],
-						"id": "9e082931-fd77-4a36-9e70-a341982b0075"
+						"id": "5a10c6f8-0efc-4723-ae01-13d001f6860b"
 					}
 				}
 			]
@@ -2155,7 +2167,7 @@
 			"item": [
 				{
 					"name": "Step 1 : [Grantless] create Destination",
-					"id": "3ddfc438-1176-4876-94b1-e5f4092d60e4",
+					"id": "d40848c1-731d-42cc-b981-809169bfe4ca",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2175,14 +2187,14 @@
 							"mode": "raw",
 							"raw": "{\n  \"resourceSpecification\":\n  {\n    \"eventBridge\":\n    {\n      \"accountId\": \"\",\n      \"region\": \"\"\n    }\n  },\n  \"name\": \"\"\n}"
 						},
-						"url": "{{baseUrl}}/notifications/v1/destinations",
+						"url": "{{base_url}}/notifications/v1/destinations",
 						"description": "Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see \"Grantless operations\" in the Selling Partner API Developer Guide.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 1 | 5 |\n\nFor more information, see \"Usage Plans and Rate Limits\" in the Selling Partner API documentation."
 					},
 					"response": []
 				},
 				{
 					"name": "Step 2 : create Subscription",
-					"id": "a8a21bf0-7310-4bcb-9e0b-88b30877557f",
+					"id": "3394eab5-e5c2-4693-a8d4-efbb639b8db0",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2204,9 +2216,9 @@
 							"raw": "{\n    \"payloadVersion\": \"1.0\",\n    \"destinationId\": \"From Step 1\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/notifications/v1/subscriptions/:notificationType",
+							"raw": "{{base_url}}/notifications/v1/subscriptions/:notificationType",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"notifications",
@@ -2216,6 +2228,7 @@
 							],
 							"variable": [
 								{
+									"id": "7c1d8867-e8e6-4494-a117-4d375a7b3492",
 									"key": "notificationType",
 									"value": "",
 									"description": "(Required) The type of notification to which you want to subscribe.\n\n For more information about notification types, see the Notifications API Use Case Guide."
@@ -2228,7 +2241,7 @@
 				},
 				{
 					"name": "get Subscription",
-					"id": "107e0c18-a653-4f5b-a57b-3d94ed25eefe",
+					"id": "1020370b-370f-4b6c-a72d-53a2992bcb96",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -2242,9 +2255,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/notifications/v1/subscriptions/:notificationType",
+							"raw": "{{base_url}}/notifications/v1/subscriptions/:notificationType",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"notifications",
@@ -2254,6 +2267,7 @@
 							],
 							"variable": [
 								{
+									"id": "ba10edf9-e6bf-41c0-90d7-7f544914bff5",
 									"key": "notificationType",
 									"value": "",
 									"description": "(Required) The type of notification to which you want to subscribe.\n\n For more information about notification types, see the Notifications API Use Case Guide."
@@ -2265,7 +2279,7 @@
 					"response": []
 				}
 			],
-			"id": "2d8a94d9-71c1-429d-89da-5fc348492687",
+			"id": "f1f45b2b-5897-4f77-ba72-4111b7644e41",
 			"description": "The Selling Partner API for Notifications lets you subscribe to notifications that are relevant to a selling partner's business.\n\nUsing this API you can create a destination to receive notifications, subscribe to notifications, delete notification subscriptions, and more\n\nFollow the [use case page](https://developer-docs.amazon.com/sp-api/docs/notifications-api-v1-use-case-guide) for step-by-step guidance.",
 			"auth": {
 				"type": "noauth"
@@ -2279,7 +2293,7 @@
 						"exec": [
 							""
 						],
-						"id": "3e5a1173-2ca7-48b9-9421-7896e9331645"
+						"id": "c750c2df-8c15-4de5-872c-b49c79521098"
 					}
 				},
 				{
@@ -2290,7 +2304,7 @@
 						"exec": [
 							""
 						],
-						"id": "b4dd5ce8-276f-462d-ad1d-f43dcf31cc3a"
+						"id": "fc27bd60-82bd-4908-8318-54f731afbb1d"
 					}
 				}
 			]
@@ -2303,7 +2317,7 @@
 					"item": [
 						{
 							"name": "get Purchase Orders",
-							"id": "66731269-948b-46a5-bc93-716f08313bec",
+							"id": "f11065cf-7ba0-4f2a-b826-18efcb80eaaa",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2321,9 +2335,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/orders/v1/purchaseOrders",
+									"raw": "{{base_url}}/vendor/orders/v1/purchaseOrders",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -2412,7 +2426,7 @@
 						},
 						{
 							"name": "acknowledge Purchase Order",
-							"id": "da4aa682-c962-4523-a40c-7bb782142f0c",
+							"id": "d0da5b6e-6107-4d8b-b24b-bf24bd07cc9f",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2443,14 +2457,14 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/orders/v1/acknowledgements",
+								"url": "{{base_url}}/vendor/orders/v1/acknowledgements",
 								"description": "Submits acknowledgements for one or more purchase orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						},
 						{
 							"name": "get Purchase Orders Status",
-							"id": "3472288a-3207-421d-9821-ba881fdf50f5",
+							"id": "c7a2d4f3-834e-48f2-b5eb-9114c4d7a568",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2468,9 +2482,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/orders/v1/purchaseOrdersStatus",
+									"raw": "{{base_url}}/vendor/orders/v1/purchaseOrdersStatus",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -2565,7 +2579,7 @@
 						},
 						{
 							"name": "get Purchase Order",
-							"id": "1117b3fd-ad8d-428f-862e-3df36bb5db0f",
+							"id": "11945f2f-e085-4b1d-9ea5-1821300d11e1",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2583,9 +2597,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/orders/v1/purchaseOrders/:purchaseOrderNumber",
+									"raw": "{{base_url}}/vendor/orders/v1/purchaseOrders/:purchaseOrderNumber",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -2596,6 +2610,7 @@
 									],
 									"variable": [
 										{
+											"id": "eecc306b-c73f-4f39-be04-0c5458aaa7b8",
 											"key": "purchaseOrderNumber",
 											"value": "",
 											"description": "(Required) The purchase order identifier for the order that you want. Formatting Notes: 8-character alpha-numeric code."
@@ -2607,7 +2622,7 @@
 							"response": []
 						}
 					],
-					"id": "d68b0408-f307-4712-a141-025fd5607d76",
+					"id": "bb8986d5-b9b6-4a88-b371-79d8a69b7fd5",
 					"description": "The Selling Partner API for Retail Procurement Orders provides programmatic access to vendor orders data.\n\n###",
 					"auth": {
 						"type": "noauth"
@@ -2621,7 +2636,7 @@
 								"exec": [
 									""
 								],
-								"id": "c94e0800-0eb7-4cfb-abbb-7e4ab0aa798c"
+								"id": "a436a316-2825-46bc-b149-87e1efbfecec"
 							}
 						},
 						{
@@ -2632,7 +2647,7 @@
 								"exec": [
 									""
 								],
-								"id": "d3f61edc-3168-461f-9cc9-68ad9f3c3f36"
+								"id": "ab096765-2e39-4c0a-b055-3fd68a6d3506"
 							}
 						}
 					]
@@ -2642,7 +2657,7 @@
 					"item": [
 						{
 							"name": "get Transaction",
-							"id": "54a173a1-4185-4d9e-a215-d81b01633de2",
+							"id": "20c22c87-7a0a-43d7-8026-4c5ed2e7e22b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2660,9 +2675,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/transactions/v1/transactions/:transactionId",
+									"raw": "{{base_url}}/vendor/transactions/v1/transactions/:transactionId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -2673,6 +2688,7 @@
 									],
 									"variable": [
 										{
+											"id": "5114b10a-cd01-43c7-809c-12a03bb181b7",
 											"key": "transactionId",
 											"value": "",
 											"description": "(Required) The GUID provided by Amazon in the 'transactionId' field in response to the post request of a specific transaction."
@@ -2684,7 +2700,7 @@
 							"response": []
 						}
 					],
-					"id": "f3d68ea8-7c3b-495d-8892-0e8637990607",
+					"id": "bb0505d9-fc2a-4b20-b134-d6b1fe4c5ede",
 					"description": "The Selling Partner API for Retail Procurement Transaction Status provides programmatic access to status information on specific asynchronous POST transactions for vendors.",
 					"auth": {
 						"type": "noauth"
@@ -2698,7 +2714,7 @@
 								"exec": [
 									""
 								],
-								"id": "776ae53c-6fc2-4a1e-8c86-9df5ec5a62a9"
+								"id": "daa04489-6bdc-43e3-afb7-dcf63440ffda"
 							}
 						},
 						{
@@ -2709,7 +2725,7 @@
 								"exec": [
 									""
 								],
-								"id": "2af527e4-6ff9-4ab4-a2e5-1dfdfb413431"
+								"id": "9022ec41-37d1-4d14-b9c9-d61dc328a683"
 							}
 						}
 					]
@@ -2719,7 +2735,7 @@
 					"item": [
 						{
 							"name": "submit Shipment Confirmations",
-							"id": "e87065b1-9e09-4f59-b005-70985e3b3e26",
+							"id": "c9174a9f-8385-4974-a87d-bfb09f3ee859",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2750,14 +2766,14 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/shipping/v1/shipmentConfirmations",
+								"url": "{{base_url}}/vendor/shipping/v1/shipmentConfirmations",
 								"description": "Submits one or more shipment confirmations for vendor orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						},
 						{
 							"name": "submit Shipments",
-							"id": "15fc7e8b-dc94-4154-8ea3-75e872484977",
+							"id": "ca0e3600-14f4-4c7b-ac26-cc7bd3bb1b98",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2788,14 +2804,14 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/shipping/v1/shipments",
+								"url": "{{base_url}}/vendor/shipping/v1/shipments",
 								"description": "Submits one or more shipment request for vendor Orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						},
 						{
 							"name": "get Shipment Details",
-							"id": "94730dee-2b5a-402a-a120-fc6825ccc7dd",
+							"id": "68c431e9-024b-4290-a4fa-8cb1e27e6708",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2813,9 +2829,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/shipping/v1/shipments",
+									"raw": "{{base_url}}/vendor/shipping/v1/shipments",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -2976,7 +2992,7 @@
 						},
 						{
 							"name": "get Shipment Labels",
-							"id": "f8bb3ef3-883c-461a-91e3-d200fcfc0d34",
+							"id": "44eb9ac6-37f8-4a1f-8083-4ca622875c5a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -2994,9 +3010,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/shipping/v1/transportLabels",
+									"raw": "{{base_url}}/vendor/shipping/v1/transportLabels",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -3060,14 +3076,14 @@
 							"response": []
 						}
 					],
-					"id": "c8e5b5fd-3853-4b84-a1e2-89da72cba21c"
+					"id": "6b849233-3b37-47eb-a298-62de47f1aa0e"
 				},
 				{
 					"name": "Invoices",
 					"item": [
 						{
 							"name": "submit Invoices",
-							"id": "a2b9102f-9a65-4a29-a88d-5f38c2df6e81",
+							"id": "7b8508d1-864a-47f5-aa80-3ab6cce22e9a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3098,17 +3114,17 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/payments/v1/invoices",
+								"url": "{{base_url}}/vendor/payments/v1/invoices",
 								"description": "Submit new invoices to Amazon.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						}
 					],
-					"id": "31ffa40d-acc6-47a5-bbe7-8ae74925f983",
+					"id": "9fa86bc3-5cc1-433f-a21c-4a6f782deeea",
 					"description": "The Selling Partner API for Retail Procurement Payments provides programmatic access to vendors payments data."
 				}
 			],
-			"id": "9ac28585-9550-4457-b4f8-f4c6a0191299",
+			"id": "84695b62-869e-49c9-9ea0-2fe137db784e",
 			"description": "The Selling Partner API for Retail Procurement Orders provides programmatic access to vendor orders data.",
 			"auth": {
 				"type": "noauth"
@@ -3122,7 +3138,7 @@
 						"exec": [
 							""
 						],
-						"id": "b777a223-a712-4742-b14f-3bbf38529b73"
+						"id": "ba33c62c-e3c6-4e5d-988e-2830d0b50f43"
 					}
 				},
 				{
@@ -3133,7 +3149,7 @@
 						"exec": [
 							""
 						],
-						"id": "9a71ba26-d748-4643-a327-16da0793a6d6"
+						"id": "e8d7f2fd-7dfc-4c5d-aa9c-27d121831d78"
 					}
 				}
 			]
@@ -3146,7 +3162,7 @@
 					"item": [
 						{
 							"name": "get Orders",
-							"id": "97388476-7b10-4e05-8ce9-0c52370d4a83",
+							"id": "8f25963d-fb53-4288-b6ab-14cbf1e95b5b",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3164,9 +3180,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/directFulfillment/orders/v1/purchaseOrders?createdAfter=&createdBefore=",
+									"raw": "{{base_url}}/vendor/directFulfillment/orders/v1/purchaseOrders?createdAfter=&createdBefore=",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -3230,7 +3246,7 @@
 						},
 						{
 							"name": "get Order",
-							"id": "a919c178-fbe2-40f2-bf05-d2ae34ba79d7",
+							"id": "e4e29a31-afbd-485f-b274-799ebd27f2b9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3248,9 +3264,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/directFulfillment/orders/v1/purchaseOrders/:purchaseOrderNumber",
+									"raw": "{{base_url}}/vendor/directFulfillment/orders/v1/purchaseOrders/:purchaseOrderNumber",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -3262,6 +3278,7 @@
 									],
 									"variable": [
 										{
+											"id": "91fb45b8-df75-4fc2-aecc-7a08c3a0253f",
 											"key": "purchaseOrderNumber",
 											"value": "",
 											"description": "(Required) The order identifier for the purchase order that you want. Formatting Notes: alpha-numeric code."
@@ -3274,7 +3291,7 @@
 						},
 						{
 							"name": "submit Acknowledgement",
-							"id": "9bf11345-78f8-4f8d-9efc-f0dfad4cdb08",
+							"id": "82457e42-af47-48c5-965f-6d6c7a4da6db",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3305,13 +3322,13 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/directFulfillment/orders/v1/acknowledgements",
+								"url": "{{base_url}}/vendor/directFulfillment/orders/v1/acknowledgements",
 								"description": "Submits acknowledgements for one or more purchase orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						}
 					],
-					"id": "b7e53da5-7a84-4e18-adc5-59495b06fc1c",
+					"id": "551a7281-0571-4d97-a566-60874300eab7",
 					"auth": {
 						"type": "noauth"
 					},
@@ -3324,7 +3341,7 @@
 								"exec": [
 									""
 								],
-								"id": "08460359-bd82-4a03-9365-d17e58c66dc9"
+								"id": "47dcdaca-e11d-4532-82c0-675f396ec2df"
 							}
 						},
 						{
@@ -3335,7 +3352,7 @@
 								"exec": [
 									""
 								],
-								"id": "ba1a5c8e-7c49-4aa1-90a5-9b26c0718c97"
+								"id": "bb5faca8-5612-4923-951b-2cbfff0aad43"
 							}
 						}
 					]
@@ -3345,7 +3362,7 @@
 					"item": [
 						{
 							"name": "submit Invoice",
-							"id": "33a8ee60-101c-4316-a819-4d0d533d65d1",
+							"id": "28df59da-d44d-4c0a-a10c-bba03ba047df",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3376,13 +3393,13 @@
 										}
 									}
 								},
-								"url": "{{baseUrl}}/vendor/directFulfillment/payments/v1/invoices",
+								"url": "{{base_url}}/vendor/directFulfillment/payments/v1/invoices",
 								"description": "Submits one or more invoices for a vendor's direct fulfillment orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 							},
 							"response": []
 						}
 					],
-					"id": "66166625-d734-4d9f-aae3-ce977d29069f",
+					"id": "812192eb-c8dc-4e89-8e23-ce124a891041",
 					"auth": {
 						"type": "noauth"
 					},
@@ -3395,7 +3412,7 @@
 								"exec": [
 									""
 								],
-								"id": "58eddcad-2c89-44c7-b484-32f298f277c2"
+								"id": "117a9f99-cf75-4ef5-b880-3134a12851eb"
 							}
 						},
 						{
@@ -3406,7 +3423,7 @@
 								"exec": [
 									""
 								],
-								"id": "aa10f762-cc67-4cc6-b0e2-d92032308137"
+								"id": "f94fc159-789e-4b63-935c-27693e4e800e"
 							}
 						}
 					]
@@ -3416,7 +3433,7 @@
 					"item": [
 						{
 							"name": "get Transaction Status",
-							"id": "b74df53d-e958-4576-aa77-8c9bed833eba",
+							"id": "8a51a12a-ff6c-4b05-a1e2-afade428e092",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -3434,9 +3451,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/vendor/directFulfillment/transactions/2021-12-28/transactions/:transactionId",
+									"raw": "{{base_url}}/vendor/directFulfillment/transactions/2021-12-28/transactions/:transactionId",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -3448,6 +3465,7 @@
 									],
 									"variable": [
 										{
+											"id": "d331ceb9-8015-4da1-aeb9-3b6c97851073",
 											"key": "transactionId",
 											"value": "",
 											"description": "(Required) Previously returned in the response to the POST request of a specific transaction."
@@ -3459,7 +3477,7 @@
 							"response": []
 						}
 					],
-					"id": "4cfd0d4c-0764-4b9e-b43e-e5c79bec29a9",
+					"id": "886d7736-66e6-4894-84fb-8c9660bf36e4",
 					"auth": {
 						"type": "noauth"
 					},
@@ -3472,7 +3490,7 @@
 								"exec": [
 									""
 								],
-								"id": "3c0a2515-5773-4eb5-9279-6155dcbef85a"
+								"id": "65e6c554-6702-4a98-ab9a-e6ba0524620b"
 							}
 						},
 						{
@@ -3483,7 +3501,7 @@
 								"exec": [
 									""
 								],
-								"id": "05249870-713b-4e08-b28a-c5cb9519fad7"
+								"id": "af339ad5-923b-4c2e-8215-b4e4e73bf534"
 							}
 						}
 					]
@@ -3496,7 +3514,7 @@
 							"item": [
 								{
 									"name": "get Shipping Labels",
-									"id": "1a2c9ece-6af2-4778-a4e6-cde1666b7f2c",
+									"id": "4d77a8c5-5967-4c50-bb05-403b9fb52dcb",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3514,9 +3532,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels?createdBefore=&createdAfter=",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels?createdBefore=&createdAfter=",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -3568,7 +3586,7 @@
 								},
 								{
 									"name": "get Shipping Label",
-									"id": "cd8658b1-1204-4bfa-a43b-f9f4b94c0933",
+									"id": "e8b869c1-1428-42ea-8da2-2b6d1a47332a",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3586,9 +3604,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/:purchaseOrderNumber",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/:purchaseOrderNumber",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -3600,6 +3618,7 @@
 											],
 											"variable": [
 												{
+													"id": "a37366ed-0eb5-4a00-9962-711ecd092695",
 													"key": "purchaseOrderNumber",
 													"value": "",
 													"description": "(Required) The purchase order number for which you want to return the shipping label and should be the same purchaseOrderNumber as received in the order."
@@ -3612,7 +3631,7 @@
 								},
 								{
 									"name": "create Shipping Labels",
-									"id": "ef155f16-f7bb-45af-815e-109634ad183c",
+									"id": "b07f207d-c91c-47e3-ae8e-30a10e88e9d0",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3644,9 +3663,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/:purchaseOrderNumber",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels/:purchaseOrderNumber",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -3658,6 +3677,7 @@
 											],
 											"variable": [
 												{
+													"id": "17521288-02a0-49a2-89ca-b77c371fcaca",
 													"key": "purchaseOrderNumber",
 													"value": "",
 													"description": "(Required) The purchase order number for which you want to return the shipping labels. It should be the same purchaseOrderNumber as received in the order."
@@ -3670,7 +3690,7 @@
 								},
 								{
 									"name": "submit Shipping Label Request",
-									"id": "a77fc6b9-c9d3-4c6f-8e86-426006741455",
+									"id": "30cc6398-ed70-499a-b7c5-e99d764bbaf4",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3701,13 +3721,13 @@
 												}
 											}
 										},
-										"url": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels",
+										"url": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shippingLabels",
 										"description": "Creates a shipping label for a purchase order and returns a transactionId for reference.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
 									},
 									"response": []
 								}
 							],
-							"id": "56b34303-e3bc-4645-8b23-7b3b4bcc78cb",
+							"id": "8d3519ab-67b1-416e-902e-76c26d803f04",
 							"auth": {
 								"type": "noauth"
 							},
@@ -3720,7 +3740,7 @@
 										"exec": [
 											""
 										],
-										"id": "87418927-c70f-4baf-b54f-fc5171d3f999"
+										"id": "7d265be4-03ac-4b48-9ef1-d5966b1d47f8"
 									}
 								},
 								{
@@ -3731,7 +3751,7 @@
 										"exec": [
 											""
 										],
-										"id": "51c1d1e9-4301-451e-ab16-3a796493ebde"
+										"id": "6db5168f-6449-4489-843f-e7b56956933e"
 									}
 								}
 							]
@@ -3741,7 +3761,7 @@
 							"item": [
 								{
 									"name": "submit Shipment Confirmations",
-									"id": "51a641bb-0647-4181-9abc-847840ada7d6",
+									"id": "49b7a1dc-a6ac-4cd0-9318-ecd556ff270b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3772,13 +3792,13 @@
 												}
 											}
 										},
-										"url": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shipmentConfirmations",
+										"url": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shipmentConfirmations",
 										"description": "Submits one or more shipment confirmations for vendor orders.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
 									},
 									"response": []
 								}
 							],
-							"id": "23594ca5-e8a7-4807-a103-98081519511b",
+							"id": "08472b46-2712-4db2-a644-fafc967f72ef",
 							"auth": {
 								"type": "noauth"
 							},
@@ -3791,7 +3811,7 @@
 										"exec": [
 											""
 										],
-										"id": "cff13641-c4e2-48c6-a881-00ac238c5009"
+										"id": "9176e0e8-ffbd-495c-b646-919446cd55a2"
 									}
 								},
 								{
@@ -3802,7 +3822,7 @@
 										"exec": [
 											""
 										],
-										"id": "46a3fc64-659b-4289-a72e-a1cd9d5bde7a"
+										"id": "0f14aef4-21fe-4d10-88dd-0bf1a82e2653"
 									}
 								}
 							]
@@ -3812,7 +3832,7 @@
 							"item": [
 								{
 									"name": "submit Shipment Status Updates",
-									"id": "2b904230-9132-4705-9c2c-2b018e7f729c",
+									"id": "7a66dcda-9681-4969-a1a6-618c43f15f0b",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3843,20 +3863,20 @@
 												}
 											}
 										},
-										"url": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/shipmentStatusUpdates",
+										"url": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/shipmentStatusUpdates",
 										"description": "This operation is only to be used by Vendor-Own-Carrier (VOC) vendors. Calling this API submits a shipment status update for the package that a vendor has shipped. It will provide the Amazon customer visibility on their order, when the package is outside of Amazon Network visibility.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 10 | 10 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api)."
 									},
 									"response": []
 								}
 							],
-							"id": "dbacbba5-39bb-4d47-855a-1fe63a456737"
+							"id": "19e8d10e-98df-488f-8e9a-f1b3e4d56e23"
 						},
 						{
 							"name": "Packing Slips",
 							"item": [
 								{
 									"name": "get Packing Slips",
-									"id": "72a1371e-8dbc-49bc-853b-7fa7d24a5160",
+									"id": "435f9829-ad32-4279-b866-896eeec8be5d",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3874,9 +3894,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/packingSlips?createdBefore=&createdAfter",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/packingSlips?createdBefore=&createdAfter=",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -3928,7 +3948,7 @@
 								},
 								{
 									"name": "get Packing Slip",
-									"id": "1eee29c4-5213-4b3b-82ea-a6a0bc919580",
+									"id": "4110bda3-1de9-4059-bfbf-cfc675086154",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -3946,9 +3966,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/packingSlips/:purchaseOrderNumber",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/packingSlips/:purchaseOrderNumber",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -3960,6 +3980,7 @@
 											],
 											"variable": [
 												{
+													"id": "303f4697-acaa-45af-94cc-70e4f72c2f42",
 													"key": "purchaseOrderNumber",
 													"value": "",
 													"description": "(Required) The purchaseOrderNumber for the packing slip you want."
@@ -3971,7 +3992,7 @@
 									"response": []
 								}
 							],
-							"id": "f2291578-c1af-4193-bd32-3694038bbdd5",
+							"id": "c93b21d8-8971-4968-a8f6-bf64d910288f",
 							"auth": {
 								"type": "noauth"
 							},
@@ -3984,7 +4005,7 @@
 										"exec": [
 											""
 										],
-										"id": "45c743d5-d438-45df-a9c8-210fc6a613ec"
+										"id": "553cfb23-1721-425a-b0c3-0e8853480682"
 									}
 								},
 								{
@@ -3995,7 +4016,7 @@
 										"exec": [
 											""
 										],
-										"id": "2278d94a-5752-4f68-8682-3e45c9ca244e"
+										"id": "b9d467fb-1e49-4c98-899e-1c5bee6dfcfb"
 									}
 								}
 							]
@@ -4005,7 +4026,7 @@
 							"item": [
 								{
 									"name": "get Customer Invoices",
-									"id": "0d3fa622-c83c-4e40-b86d-16e5ade962af",
+									"id": "6d8590b1-914f-48de-97af-983369bb57bf",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -4023,9 +4044,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/customerInvoices?createdAfter=&createdBefore=",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/customerInvoices?createdAfter=&createdBefore=",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -4077,7 +4098,7 @@
 								},
 								{
 									"name": "get Customer Invoice",
-									"id": "3ad470d7-e013-486a-9b2b-2f58078171ec",
+									"id": "a9fe9908-3059-4936-bc88-4e1e7ff91236",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -4095,9 +4116,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/vendor/directFulfillment/shipping/2021-12-28/customerInvoices/:purchaseOrderNumber",
+											"raw": "{{base_url}}/vendor/directFulfillment/shipping/2021-12-28/customerInvoices/:purchaseOrderNumber",
 											"host": [
-												"{{baseUrl}}"
+												"{{base_url}}"
 											],
 											"path": [
 												"vendor",
@@ -4109,6 +4130,7 @@
 											],
 											"variable": [
 												{
+													"id": "84f15d73-d51a-4fc2-a2fe-0181ae7ca390",
 													"key": "purchaseOrderNumber",
 													"value": "",
 													"description": "(Required) Purchase order number of the shipment for which to return the invoice."
@@ -4120,7 +4142,7 @@
 									"response": []
 								}
 							],
-							"id": "1f1197f1-ca39-4969-ae5e-b93537ed97ac",
+							"id": "8b689102-5230-41c6-9c2e-89c1fb95398d",
 							"auth": {
 								"type": "noauth"
 							},
@@ -4133,7 +4155,7 @@
 										"exec": [
 											""
 										],
-										"id": "5ee5caac-950f-427b-89b7-3924ea56dc58"
+										"id": "a34c8b10-949f-448d-8bf1-31e39e3d4495"
 									}
 								},
 								{
@@ -4144,13 +4166,13 @@
 										"exec": [
 											""
 										],
-										"id": "aa9f1e8c-dcf5-45b0-b93f-3678408750d2"
+										"id": "166fa149-49fd-48b0-82ab-cd1ad505e92b"
 									}
 								}
 							]
 						}
 					],
-					"id": "a283ee11-a4b9-4327-a9ff-3631fdc3f6e0",
+					"id": "635f466e-37f0-4dc7-a45f-3ce2e4372feb",
 					"auth": {
 						"type": "noauth"
 					},
@@ -4163,7 +4185,7 @@
 								"exec": [
 									""
 								],
-								"id": "81c3f7e4-b7d6-4bd2-87ac-d08343574293"
+								"id": "55392fc0-7907-474c-8b72-9da39fceedba"
 							}
 						},
 						{
@@ -4174,7 +4196,7 @@
 								"exec": [
 									""
 								],
-								"id": "b9849352-4f33-4c7c-b0fd-3a7bbd32ced3"
+								"id": "e35d6e91-baf2-46b0-a8bb-cca05aa977b5"
 							}
 						}
 					]
@@ -4184,7 +4206,7 @@
 					"item": [
 						{
 							"name": "submit Inventory Update",
-							"id": "c72aa1f4-9a87-4476-82ad-170b1ef60494",
+							"id": "37e1fce4-1a25-4217-afe6-79b17b26a40a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4216,9 +4238,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/vendor/directFulfillment/inventory/v1/warehouses/:warehouseId/items",
+									"raw": "{{base_url}}/vendor/directFulfillment/inventory/v1/warehouses/:warehouseId/items",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"vendor",
@@ -4231,6 +4253,7 @@
 									],
 									"variable": [
 										{
+											"id": "7e0cbddf-9fe4-442a-8413-10cccd28cd1a",
 											"key": "warehouseId",
 											"value": "",
 											"description": "(Required) Identifier for the warehouse for which to update inventory."
@@ -4242,7 +4265,7 @@
 							"response": []
 						}
 					],
-					"id": "300468e6-42dd-4a37-a236-7bfb44216bb4",
+					"id": "0971a68a-cd62-4a16-a810-98f6bdcf9774",
 					"auth": {
 						"type": "noauth"
 					},
@@ -4255,7 +4278,7 @@
 								"exec": [
 									""
 								],
-								"id": "7b23b231-e9c5-45a7-b7a8-9b860359626a"
+								"id": "60480717-bf50-4ae6-8599-a8f1b273be9d"
 							}
 						},
 						{
@@ -4266,13 +4289,13 @@
 								"exec": [
 									""
 								],
-								"id": "591d3d96-8fea-497f-a3ef-c93d3138c383"
+								"id": "c7854f1f-ffdd-4eb3-b3fc-52c38ea892bc"
 							}
 						}
 					]
 				}
 			],
-			"id": "9c7ee582-070c-48a8-a531-9bd929ebcd14",
+			"id": "6c20332b-bd90-4fa9-9402-c271934c731d",
 			"description": "Help vendors in the **Direct Fulfillment (DF) program** manage their direct fulfillment operations programmatically through web service integration."
 		},
 		{
@@ -4283,7 +4306,7 @@
 					"item": [
 						{
 							"name": "search Content Publish Records",
-							"id": "6109faa0-f5af-44db-aebf-2f08dc1d0017",
+							"id": "b28e1297-3154-4498-8e1a-0c9b50bff9d0",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4301,9 +4324,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentPublishRecords?marketplaceId={{marketplace}}&asin=<string>",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentPublishRecords?marketplaceId={{marketplace}}&asin=<string>",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4335,7 +4358,7 @@
 						},
 						{
 							"name": "search Content Documents",
-							"id": "336ca518-b1b6-45e4-a1b4-d5facaf48cb7",
+							"id": "ab8074bb-552f-4d50-ace6-d34da0ff7cd9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4353,9 +4376,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4382,7 +4405,7 @@
 						},
 						{
 							"name": "get Content Document",
-							"id": "a21e15f7-7310-4bbf-aa21-d2eb565ea17c",
+							"id": "df6cb8c1-3ce4-4096-ad58-6e6f9b053a43",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4400,9 +4423,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=CONTENTS",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=CONTENTS",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4424,6 +4447,7 @@
 									],
 									"variable": [
 										{
+											"id": "9f6e2ed6-a467-417a-8105-29daabeb4cf0",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier."
@@ -4436,7 +4460,7 @@
 						},
 						{
 							"name": "list Content Document Asin Relations",
-							"id": "88335542-4886-40aa-96a5-442e34221234",
+							"id": "9c905a96-a101-4196-8d47-8b02aa422709",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4454,9 +4478,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4492,6 +4516,7 @@
 									],
 									"variable": [
 										{
+											"id": "9fd0c90c-70de-4195-8d2c-66d870fbb7fc",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier."
@@ -4503,7 +4528,7 @@
 							"response": []
 						}
 					],
-					"id": "d8256673-3f59-4acf-b089-a1f3f16be5b7",
+					"id": "02961b99-4621-4ca0-8204-07277cb970d0",
 					"auth": {
 						"type": "noauth"
 					},
@@ -4516,7 +4541,7 @@
 								"exec": [
 									""
 								],
-								"id": "db0607e0-b111-4ffd-8333-ebe3008198e6"
+								"id": "e8633171-9499-435f-9443-f0a4619e542f"
 							}
 						},
 						{
@@ -4527,7 +4552,7 @@
 								"exec": [
 									""
 								],
-								"id": "15169685-d925-460e-8b53-5b75eb81dc20"
+								"id": "ed0f11f8-0183-4017-a0e7-218bc7ddbab7"
 							}
 						}
 					]
@@ -4537,7 +4562,7 @@
 					"item": [
 						{
 							"name": "create Content Document",
-							"id": "2c1b2e32-496b-4579-a6e8-1e09d0405982",
+							"id": "e20100e3-daca-4b3d-ace0-b6ea58fe0649",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4569,9 +4594,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4592,7 +4617,7 @@
 						},
 						{
 							"name": "update Content Document",
-							"id": "8e802480-27db-4957-a6c6-29c81783a312",
+							"id": "fef1b32d-46bb-4024-9761-3cd68c47e84a",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4624,9 +4649,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4643,6 +4668,7 @@
 									],
 									"variable": [
 										{
+											"id": "04b24330-6955-456c-a3b6-a432321f2ca5",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier."
@@ -4655,7 +4681,7 @@
 						},
 						{
 							"name": "post Content Document Asin Relations",
-							"id": "a31fc9fe-7f93-4931-a2b6-3c16f78b9683",
+							"id": "e042d5d0-1540-4aa1-bd98-6d3ee75571c3",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4687,9 +4713,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4707,6 +4733,7 @@
 									],
 									"variable": [
 										{
+											"id": "0008860a-27bc-4a1c-9e3f-18a636384f1b",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier."
@@ -4719,7 +4746,7 @@
 						},
 						{
 							"name": "validate Content Document Asin Relations",
-							"id": "09304a22-4495-4e97-8b4d-c1b9344997dc",
+							"id": "6195ae3c-db1a-451c-b117-889271c84d88",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4751,9 +4778,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentAsinValidations?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentAsinValidations?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4779,7 +4806,7 @@
 							"response": []
 						}
 					],
-					"id": "7f086885-849a-44b6-b221-ee4602b0ba38",
+					"id": "4a2ecb6f-b955-4865-9d0a-8b9ac925f727",
 					"auth": {
 						"type": "noauth"
 					},
@@ -4792,7 +4819,7 @@
 								"exec": [
 									""
 								],
-								"id": "3e44ab82-ea7a-47d6-a98a-4f4099b8119b"
+								"id": "24d6e993-8e79-4c5c-bcbe-7de430bdc12a"
 							}
 						},
 						{
@@ -4803,7 +4830,7 @@
 								"exec": [
 									""
 								],
-								"id": "eda31e88-989c-4589-b6ae-2f09a7f566ea"
+								"id": "679d7f0b-8da6-43ff-81f8-1676d40538e8"
 							}
 						}
 					]
@@ -4813,7 +4840,7 @@
 					"item": [
 						{
 							"name": "post Content Document Approval Submission",
-							"id": "dc565db3-41ec-4387-8916-9c2b7a8a6a55",
+							"id": "63a2d361-6418-43fc-9f92-3a53a8e8f3cd",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4831,9 +4858,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/approvalSubmissions?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/approvalSubmissions?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4851,6 +4878,7 @@
 									],
 									"variable": [
 										{
+											"id": "d95ea6cf-450b-4a11-908f-206c1aebee10",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier."
@@ -4863,7 +4891,7 @@
 						},
 						{
 							"name": "post Content Document Suspend Submission",
-							"id": "4142ad88-5d5f-4507-abcb-4c802c8c89c2",
+							"id": "7636c70c-c427-4d82-80a4-93cff874d3ea",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -4881,9 +4909,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/suspendSubmissions?marketplaceId={{marketplace}}",
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/suspendSubmissions?marketplaceId={{marketplace}}",
 									"host": [
-										"{{baseUrl}}"
+										"{{base_url}}"
 									],
 									"path": [
 										"aplus",
@@ -4901,6 +4929,7 @@
 									],
 									"variable": [
 										{
+											"id": "db4a4693-7e2b-498c-9488-93a85b8ccb27",
 											"key": "contentReferenceKey",
 											"value": "",
 											"description": "(Required) The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier."
@@ -4912,7 +4941,7 @@
 							"response": []
 						}
 					],
-					"id": "5b56ca62-5f31-42ea-b0fc-ea2534a2dd35",
+					"id": "af210a38-6ca8-4ab8-bde2-fa90788dd07d",
 					"auth": {
 						"type": "noauth"
 					},
@@ -4925,7 +4954,7 @@
 								"exec": [
 									""
 								],
-								"id": "4c3793ed-d165-4a45-b6cc-7b72d597f3bd"
+								"id": "a3ad7185-cb86-4f02-b912-93039871d97a"
 							}
 						},
 						{
@@ -4936,13 +4965,13 @@
 								"exec": [
 									""
 								],
-								"id": "bedefcf9-bea8-44da-835d-8999b989f984"
+								"id": "317dc6f1-637a-4d21-8be7-406764acb31f"
 							}
 						}
 					]
 				}
 			],
-			"id": "af9f2a72-e128-4e01-97be-18c75ebe391b",
+			"id": "a2c21e9b-0c1a-4c85-9354-12020283a020",
 			"description": "With the A+ Content API, you can build applications that help selling partners add rich marketing content to their Amazon product detail pages. A+ content helps selling partners share their brand and product story, which helps buyers make informed purchasing decisions. Selling partners assemble content by choosing from content modules and adding images and text.",
 			"auth": {
 				"type": "noauth"
@@ -4956,7 +4985,7 @@
 						"exec": [
 							""
 						],
-						"id": "512ad1b4-b4ea-478f-8e0d-24f41e930d4f"
+						"id": "62ed4f94-6ac2-46ee-b550-f2a276511774"
 					}
 				},
 				{
@@ -4967,7 +4996,7 @@
 						"exec": [
 							""
 						],
-						"id": "f5f2887d-201c-4e39-912f-1eff086cde77"
+						"id": "f4582c3e-fb9a-4cb1-b738-7ff87028598a"
 					}
 				}
 			]
@@ -4977,7 +5006,7 @@
 			"item": [
 				{
 					"name": "create Upload Destination For Resource",
-					"id": "be836d85-0fda-4ea8-b0eb-587af4fa1e9e",
+					"id": "b4f99cda-e335-4c45-a0c0-0f77f3098f55",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -4995,9 +5024,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/uploads/2020-11-01/uploadDestinations/:resource?marketplaceIds={{marketplace}}&contentMD5=",
+							"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/:resource?marketplaceIds={{marketplace}}&contentMD5=",
 							"host": [
-								"{{baseUrl}}"
+								"{{base_url}}"
 							],
 							"path": [
 								"uploads",
@@ -5025,6 +5054,7 @@
 							],
 							"variable": [
 								{
+									"id": "c48b7ce1-be37-4332-90a0-0c33019dd9af",
 									"key": "resource",
 									"value": "",
 									"description": "(Required) The resource for the upload destination that you are creating. For example, if you are creating an upload destination for the createLegalDisclosure operation of the Messaging API, the `{resource}` would be `/messaging/v1/orders/{amazonOrderId}/messages/legalDisclosure`, and the entire path would be `/uploads/2020-11-01/uploadDestinations/messaging/v1/orders/{amazonOrderId}/messages/legalDisclosure`. If you are creating an upload destination for an Aplus content document, the `{resource}` would be `aplus/2020-11-01/contentDocuments` and the path would be `/uploads/v1/uploadDestinations/aplus/2020-11-01/contentDocuments`."
@@ -5036,7 +5066,7 @@
 					"response": []
 				}
 			],
-			"id": "faf824e2-b974-4ac1-9f0e-2c52fcef534f",
+			"id": "35f43a9a-1291-44d0-bdac-844a10c943c8",
 			"description": "The Uploads API lets you upload files that you can programmatically access using other Selling Partner APIs, such as the A+ Content API and the Messaging API.",
 			"auth": {
 				"type": "noauth"
@@ -5050,7 +5080,7 @@
 						"exec": [
 							""
 						],
-						"id": "85a3d02f-af4c-45a2-a4ee-8a2d64eddcbb"
+						"id": "e2e61742-a82a-4b98-b1c5-2b99e3bb2caa"
 					}
 				},
 				{
@@ -5061,7 +5091,7 @@
 						"exec": [
 							""
 						],
-						"id": "f56803f1-4b5a-43b6-95f5-1d56a3387dc4"
+						"id": "2a870791-9d81-4def-94d2-d0987f704216"
 					}
 				}
 			]
@@ -5071,7 +5101,7 @@
 			"item": [
 				{
 					"name": "create Restricted Data Token",
-					"id": "e0461907-ed2e-4fa8-962f-8827df1f0614",
+					"id": "f7735fb0-72ab-4641-a90a-83c7d040ce6a",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -5092,13 +5122,13 @@
 							"mode": "raw",
 							"raw": "{\n  \"restrictedResources\": [\n    {\n      \"method\": \"\",\n      \"path\": \"\",\n      \"dataElements\": [\"\"]\n    }\n  ]\n}"
 						},
-						"url": "{{baseUrl}}/tokens/2021-03-01/restrictedDataToken",
+						"url": "{{base_url}}/tokens/2021-03-01/restrictedDataToken",
 						"description": "Returns a Restricted Data Token (RDT) for one or more restricted resources that you specify. A restricted resource is the HTTP method and path from a restricted operation that returns Personally Identifiable Information (PII), plus a dataElements value that indicates the type of PII requested. See the Tokens API Use Case Guide for a list of restricted operations. Use the RDT returned here as the access token in subsequent calls to the corresponding restricted operations.\n\n**Usage Plans:**\n\n| Plan type | Rate (requests per second) | Burst |\n| ---- | ---- | ---- |\n|Default| 1 | 10 |\n|Selling partner specific| Variable | Variable |\n\nThe x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see \"Usage Plans and Rate Limits\" in the Selling Partner API documentation."
 					},
 					"response": []
 				}
 			],
-			"id": "2bb15074-3762-4da3-8bc8-3bb17b7f7a1a",
+			"id": "ef5fb7a3-5a4d-4bd7-a3a9-07da57243068",
 			"description": "The Selling Partner API for Tokens provides a secure way to access a customer's PII (Personally Identifiable Information).\n\nYou can call the Tokens API to get a Restricted Data Token (RDT) for one or more restricted resources that you specify. The RDT authorizes subsequent calls to restricted operations that correspond to the restricted resources that you specified.",
 			"auth": {
 				"type": "noauth"
@@ -5112,7 +5142,7 @@
 						"exec": [
 							""
 						],
-						"id": "c5ad7e47-67f4-4577-b0c0-415faf970ba5"
+						"id": "1528c3ba-885e-4b0c-a7f7-7a1a86abcd06"
 					}
 				},
 				{
@@ -5123,7 +5153,7 @@
 						"exec": [
 							""
 						],
-						"id": "e0ab0430-658f-4d6c-9ce3-aed14a000177"
+						"id": "8214d686-d345-4fe5-8fca-873cc16f955d"
 					}
 				}
 			]
@@ -5133,7 +5163,7 @@
 			"item": [
 				{
 					"name": "[Grantless] rotate Application Client Secret",
-					"id": "9774daba-b128-42f3-94e6-e63131246eb0",
+					"id": "4edfa018-1050-447c-b0f1-f6d68b3b5dca",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -5150,13 +5180,13 @@
 								"type": "text"
 							}
 						],
-						"url": "{{baseUrl}}/applications/2023-11-30/clientSecret",
+						"url": "{{base_url}}/applications/2023-11-30/clientSecret",
 						"description": "Rotates application client secrets for a developer application. Developers must register a destination queue in the developer console before calling this operation. When this operation is called a new client secret is generated and sent to the developer-registered queue. For more information, refer to [Rotate your application client secret](https://developer-docs.amazon.com/sp-api/v0/docs/application-management-api-v2023-11-30-use-case-guide#tutorial-rotate-your-applications-client-secret).\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 0.0167 | 1 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api)."
 					},
 					"response": []
 				}
 			],
-			"id": "e1b93460-c2a2-48bf-b048-a103c15784e0",
+			"id": "c6a0b111-e4e8-4d41-878c-a081727a2170",
 			"description": "The Selling Partner API for Application Management lets you programmatically update the client secret on registered applications.",
 			"auth": {
 				"type": "noauth"
@@ -5170,7 +5200,7 @@
 						"exec": [
 							""
 						],
-						"id": "bd4f3cb7-3123-46ae-8dde-f0a7a8306174"
+						"id": "09fd9e45-5631-4699-a246-4efb4825e6d4"
 					}
 				},
 				{
@@ -5181,7 +5211,7 @@
 						"exec": [
 							""
 						],
-						"id": "171f9099-3a0c-4457-b115-b51926e74ff3"
+						"id": "b6d186f0-c163-4595-9c9f-9adac59cbb88"
 					}
 				}
 			]
@@ -5215,7 +5245,7 @@
 					"    pm.environment.set(\"access_token\", res.json().access_token);",
 					"});"
 				],
-				"id": "0105ef50-64d1-4a8f-ba04-f2fbdb9fb1d9"
+				"id": "d6ec9da1-c383-4a68-9fdc-7fd9d9a1a85e"
 			}
 		},
 		{
@@ -5225,7 +5255,7 @@
 				"exec": [
 					""
 				],
-				"id": "71dac507-ab9d-4bed-8af4-4320c94b95de"
+				"id": "dc71b296-59d6-4c3a-ac94-be0137000688"
 			}
 		}
 	]
