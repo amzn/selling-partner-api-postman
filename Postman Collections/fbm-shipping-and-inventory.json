@@ -2589,7 +2589,7 @@
 										}
 									}
 								},
-								"url": "https://sellingpartnerapi-na.amazon.com/shipping/v2/shipments/rates"
+								"url": "{{base_url}}/shipping/v2/shipments/rates"
 							},
 							"status": "OK",
 							"code": 200,

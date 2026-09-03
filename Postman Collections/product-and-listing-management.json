@@ -394,12 +394,9 @@
 									}
 								},
 								"url": {
-									"raw": "https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&issueLocale=en_US",
-									"protocol": "https",
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&issueLocale=en_US",
 									"host": [
-										"sellingpartnerapi-na",
-										"amazon",
-										"com"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",

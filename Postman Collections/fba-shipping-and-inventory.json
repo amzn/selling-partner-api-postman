@@ -76884,7 +76884,7 @@
 														}
 													}
 												},
-												"url": "https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/items"
+												"url": "{{base_url}}/fba/inventory/v1/items"
 											},
 											"status": "OK",
 											"code": 200,
@@ -77272,7 +77272,7 @@
 														}
 													}
 												},
-												"url": "https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/items/inventory"
+												"url": "{{base_url}}/fba/inventory/v1/items/inventory"
 											},
 											"status": "OK",
 											"code": 200,
@@ -77686,12 +77686,9 @@
 													}
 												],
 												"url": {
-													"raw": "https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?details=false&granularityType=Marketplace&granularityId=<string>&startDateTime=<dateTime>&sellerSkus=<string>,<string>&sellerSku=<string>&nextToken=<string>&marketplaceIds=<string>",
-													"protocol": "https",
+													"raw": "{{base_url}}/fba/inventory/v1/summaries?details=false&granularityType=Marketplace&granularityId=<string>&startDateTime=<dateTime>&sellerSkus=<string>,<string>&sellerSku=<string>&nextToken=<string>&marketplaceIds=<string>",
 													"host": [
-														"sellingpartnerapi-na",
-														"amazon",
-														"com"
+														"{{base_url}}"
 													],
 													"path": [
 														"fba",
@@ -78377,12 +78374,9 @@
 													}
 												],
 												"url": {
-													"raw": "https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/items/:sellerSku?marketplaceId=<string>",
-													"protocol": "https",
+													"raw": "{{base_url}}/fba/inventory/v1/items/:sellerSku?marketplaceId=<string>",
 													"host": [
-														"sellingpartnerapi-na",
-														"amazon",
-														"com"
+														"{{base_url}}"
 													],
 													"path": [
 														"fba",
