@@ -394,12 +394,10 @@
 									}
 								},
 								"url": {
-									"raw": "https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&issueLocale=en_US",
+									"raw": "https://{{base_url}}/listings/2021-08-01/items/:sellerId/:SKU?marketplaceIds={{marketplace}}&issueLocale=en_US",
 									"protocol": "https",
 									"host": [
-										"sellingpartnerapi-na",
-										"amazon",
-										"com"
+										"{{base_url}}"
 									],
 									"path": [
 										"listings",
@@ -420,12 +418,10 @@
 									],
 									"variable": [
 										{
-											"id": "ed16da29-3ffe-4832-ba5b-fac345d8382a",
 											"key": "sellerId",
 											"value": "{{seller_id}}"
 										},
 										{
-											"id": "7c79646c-2c47-4bf1-b650-161ca11f9dac",
 											"key": "SKU",
 											"value": ""
 										}
