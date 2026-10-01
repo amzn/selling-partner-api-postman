@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "718a39e7-138f-4c47-a9cd-69111208157b",
 		"name": "E. Product and Listings Management 📝",
-		"description": "# Product and Listings Management 📝\n\n## Description\n\nEverything you need to create, update, and manage product listings on Amazon. This collection provides step-by-step workflows for listing new items, creating offers, bulk uploading via feeds, and a recipe book of common listing tasks.\n\n## Overview\n\nThe [Listings APIs](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide) offer a modernized suite of SP-APIs for sellers, vendors, and third-party developers to build programmatic integrations for listing selection on Amazon.\n\nThis collection provides the recommended steps to build listings creation and management workflows by integrating with the Selling Partner API.\n\n📘 Learn more: [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n\n## SP-APIs Involved\n\n| API | Version | Documentation |\n| --- | --- | --- |\n| Listings Items API | v2021-08-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference) |\n| Product Type Definitions API | v2020-09-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/product-type-definitions-api-v2020-09-01-reference) |\n| Catalog Items API | v2022-04-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/catalog-items-api-v2022-04-01-reference) |\n| Feeds API | v2021-06-30 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) |\n\n## Use Cases\n\n| Folder | Description |\n| --- | --- |\n| Listings Workflows | End-to-end workflows for creating, updating, and bulk uploading listings |\n| Listings Recipes | Cheat-sheet for common listing tasks |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A seller or vendor account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, `refresh_token`, `marketplace`, `seller_id`, and `base_url` in the environment.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Start exploring** — The collection includes a pre-request script that automatically handles authentication.\n    \n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
+		"description": "# Product and Listings Management 📝\n\n## Description\n\nEverything you need to create, update, and manage product listings on Amazon. This collection provides step-by-step workflows for listing new items, creating offers, bulk uploading via feeds, and a recipe book of common listing tasks.\n\nThis collection also includes A+ Content Workflows with steps to successfully discover listings wiht A+ content attached and create Premium and Brand Story content.\n\n## Overview\n\nThe [Listings APIs](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide) offer a modernized suite of SP-APIs for sellers, vendors, and third-party developers to build programmatic integrations for listing selection on Amazon.\n\nThis collection provides the recommended steps to build listings creation and management workflows by integrating with the Selling Partner API.\n\n📘 Learn more: [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n\nThe [A+ Content API ](https://developer-docs.amazon/sp-api/docs/a-plus-content-api-use-case-guide) offers a comprehensive suite of SP-APIs for sellers and vendors and third-party developers to build programmatic integrations for A+ Standard and Premium and Brand Story content.\n\n## SP-APIs Involved\n\n| API | Version | Documentation |\n| --- | --- | --- |\n| Listings Items API | v2021-08-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-reference) |\n| Product Type Definitions API | v2020-09-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/product-type-definitions-api-v2020-09-01-reference) |\n| Catalog Items API | v2022-04-01 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/catalog-items-api-v2022-04-01-reference) |\n| Feeds API | v2021-06-30 | [API Reference](https://developer-docs.amazon.com/sp-api/docs/feeds-api-v2021-06-30-reference) |\n| A+ Content API | v2020-11-06 | [API Reference](https://developer-docs.amazon/sp-api/reference/a-content-management-v2020-11-01) |\n\n## Use Cases\n\n| Folder | Description |\n| --- | --- |\n| Listings Workflows | End-to-end workflows for creating, updating, and bulk uploading listings |\n| Listings Recipes | Cheat-sheet for common listing tasks |\n| A+ Content Workflows | End-to-end workflows for creating, updating and publishing A+ Premium and Brand Story content |\n\n## Getting Started\n\n### Prerequisites\n\n- A registered SP-API application ([How to register](https://developer-docs.amazon.com/sp-api/docs/registering-your-application))\n    \n- Valid SP-API credentials (LWA client ID and secret)\n    \n- A seller or vendor account authorized to your application\n    \n\n### Setup Steps\n\n1. **Fork the collection** — Click \"Fork\" on the collection to create your own copy.\n    \n2. **Fork the environment** — Fork the associated [environment template](https://www.postman.com/amazon-selling-partner-api/sp-api/environment/) as well.\n    \n3. **Set environment variables** — Fill in your `client_id`, `client_secret`, `refresh_token`, `marketplace`, `seller_id`, and `base_url` in the environment.\n    \n4. **Assign the environment** — Select the forked environment from the environment dropdown in Postman.\n    \n5. **Start exploring** — The collection includes a pre-request script that automatically handles authentication.\n    \n\n## Additional Resources\n\n- [SP-API Documentation](https://developer-docs.amazon.com/sp-api/)\n    \n- [Building Listings Management Workflows Guide](https://developer-docs.amazon.com/sp-api/docs/building-listings-management-workflows-guide)\n    \n- [A+ API Use Case Guide](https://developer-docs.amazon/sp-api/docs/a-plus-content-api-use-case-guide)\n    \n- [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -3611,6 +3611,2144 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "A+ Content Workflows 🎬",
+			"item": [
+				{
+					"name": "Discover Listings with Active A+ Content",
+					"item": [
+						{
+							"name": "Step 0: Authorization to generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "17d5e133-423d-45da-8bd0-5def7e1a2c59"
+									}
+								}
+							],
+							"id": "2962a61e-59cb-4c89-ac17-276e026d9899",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token",
+								"description": "Exchanges the LWA refresh token for an access token and stores it in the `access_token` environment variable used by every other request. Run it first, and again when a call returns 401 (tokens last one hour)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Search Content Documents",
+							"id": "811f326f-b0a1-4c43-8a96-8582ffa887d0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "nextPageToken from the previous response.",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: List Content Document ASIN Relations",
+							"id": "9b620570-9dde-4182-9590-58148efd7213",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}&includedDataSet=METADATA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"asins"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "METADATA",
+											"description": "Populates title, imageUrl, parent ASIN and badgeSet on each result. Without it only ASINs are returned and asinSet is ignored."
+										},
+										{
+											"key": "asinSet",
+											"value": "<provide an ASIN you own>",
+											"description": "Filter to specific ASINs (comma-delimited). Only applied together with includedDataSet=METADATA.",
+											"disabled": true
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "nextPageToken from the previous response.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "e0e5760a-b9d0-4961-82fb-2bcfad754e7e",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 1>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 1."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: (Optional) Search Content Publish Records",
+							"id": "11a7b455-5986-4a47-bfd7-0d00b43a3549",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentPublishRecords?marketplaceId={{marketplace}}&asin=<provide an ASIN returned in Step 2>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentPublishRecords"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "asin",
+											"value": "<provide an ASIN returned in Step 2>",
+											"description": "(Required) The ASIN to inspect."
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "nextPageToken from the previous response.",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Search and Filter Listings by A+ ASINs",
+							"id": "0618f371-42ac-4f9b-b254-42a7e59a428b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/listings/2021-08-01/items/:sellerId?marketplaceIds={{marketplace}}&identifiers=<provide up to 20 comma-delimited ASINs collected in Step 2>&identifiersType=ASIN&includedData=summaries&pageSize=20",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"listings",
+										"2021-08-01",
+										"items",
+										":sellerId"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A comma-delimited list of Amazon marketplace identifiers for the request."
+										},
+										{
+											"key": "identifiers",
+											"value": "<provide up to 20 comma-delimited ASINs collected in Step 2>",
+											"description": "A comma-delimited list of product identifiers to search listings items for (max 20). **Note:** Cannot be used with `keywords`."
+										},
+										{
+											"key": "identifiersType",
+											"value": "ASIN",
+											"description": "Type of product identifiers to search listings items for. **Note:** Required when `identifiers` are provided."
+										},
+										{
+											"key": "includedData",
+											"value": "summaries",
+											"description": "A comma-delimited list of data sets to include in the response. `summaries` returns asin, itemName, status, productType, conditionType and mainImage per listing."
+										},
+										{
+											"key": "pageSize",
+											"value": "20",
+											"description": "Number of results to be returned per page (max 20)."
+										},
+										{
+											"key": "withStatus",
+											"value": "",
+											"description": "Only listings with these statuses (`BUYABLE`, `DISCOVERABLE`), comma-delimited.",
+											"disabled": true
+										},
+										{
+											"key": "withoutStatus",
+											"value": "",
+											"description": "Only listings without these statuses.",
+											"disabled": true
+										},
+										{
+											"key": "withIssueSeverity",
+											"value": "",
+											"description": "Only listings that have issues of these severities (`WARNING`, `ERROR`).",
+											"disabled": true
+										},
+										{
+											"key": "keywords",
+											"value": "",
+											"description": "A comma-delimited list of keywords to search listings items for (matched on item name, SKU or ASIN). **Note:** Cannot be used with `identifiers`; use it without `identifiers` to page through the whole catalog and find the listings that have no A+ content yet.",
+											"disabled": true
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "nextPageToken from the previous response.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "c1a0330a-1105-4a11-9480-284b4e856ccb",
+											"key": "sellerId",
+											"value": "{{seller_id}}",
+											"description": "(Required) Your merchant token (Seller Central > Settings > Account Info) or vendor code."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Get and Inspect Content Document",
+							"id": "0d799b32-fbb3-4689-8ddd-9cc020806511",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/discover-listings"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=CONTENTS",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "METADATA",
+											"description": "(Required) The set of A+ Content data types to include in the response. `METADATA` returns status, name, badges and updateTime; `CONTENTS` returns the full content document. Pass both to get the complete record.",
+											"disabled": true
+										},
+										{
+											"key": "includedDataSet",
+											"value": "CONTENTS",
+											"description": "Include the full contentDocument with all modules."
+										}
+									],
+									"variable": [
+										{
+											"id": "fb7dad7a-aabf-4e52-9ce6-af6b7dce0ed1",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 1>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 1."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "6e525e5e-fb21-45fe-92e3-530203d77858",
+					"description": "Build the picture of which content document is applied to which ASIN, and where it is live, before you decide what to create, extend or upgrade.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Documents:** Every A+ document in the account, including content created in Seller Central or Vendor Central, with `status` and `badgeSet` (`[\"PREMIUM\"]`, `[\"STANDARD\"]`, `[]` for Brand Story). Page with `pageToken` until `nextPageToken` is empty.\n\n**Step 2: List Content Document ASIN Relations:** For each document from Step 1, the ASINs it is applied to. With `includedDataSet=METADATA` every ASIN carries a `badgeSet`: `CONTENT_PUBLISHED` means this document is live on that ASIN, `CONTENT_NOT_PUBLISHED` means it is attached but not live (a draft, or a document replaced by a newer one). The union of these results is the ASIN → document map for the whole account.\n\n**Step 3: (Optional) Search Content Publish Records:** For one ASIN, exactly what is live on it right now: one record per content family (`EBC`/`EMC` for Standard or Premium, `BrandStory`) and locale, with the `contentReferenceKey` of the live document. Use it to confirm a `CONTENT_PUBLISHED` badge or to tell a published document from a draft that is merely attached to the ASIN.\n\n**Step 4: Search Listings Items by ASIN:** Pass the ASINs collected in Step 2 as `identifiers` (comma-delimited, up to 20 per call) with `identifiersType=ASIN`. `includedData=summaries` returns SKU, item name, status and product type per listing, so you can join the A+ picture with your catalog (one ASIN can come back as several SKUs). Add `withStatus`, `withoutStatus` or `withIssueSeverity` to narrow the set.\n\n**Step 5: Get Content Document:** Open a document from Step 2 with `includedDataSet=CONTENTS` to see its modules; `badgeSet` tells the tier.\n\n> 📘 Listings **without** A+ content are the complement: page `searchListingsItems` without `identifiers` (or with `keywords`) and subtract the ASINs seen in Step 2. `identifiers` cannot be combined with `keywords` (`400 Invalid combination of parameters provided.`). \n  \n\n📘 Learn more: [Manage A+ content](https://developer-docs.amazon.com/sp-api/docs/manage-aplus-content) · [Listings Items API](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide)"
+				},
+				{
+					"name": "Create and Publish Brand Story Content",
+					"item": [
+						{
+							"name": "Step 0: Authorization to generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "50e26995-27e7-4ff1-81f4-e79d7991e9fe"
+									}
+								}
+							],
+							"id": "9e50e7e2-bd93-4db8-a3f4-252bc98a4073",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token",
+								"description": "Exchanges the LWA refresh token for an access token and stores it in the `access_token` environment variable used by every other request. Run it first, and again when a call returns 401 (tokens last one hour)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1a: Create Upload Destination for Brand Story Hero Background",
+							"id": "23b3fa28-4157-444e-8dfe-d06f2e5f2bc4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/jpeg",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/jpeg",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1b: Create Upload Destination for Brand Logo",
+							"id": "8908efaa-2cac-4a24-9aa1-902752e5189b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/png",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/png",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1c: Create Upload Destination for Product Image",
+							"id": "5804a303-101f-4b32-bd36-efd52aa4c06f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/jpeg",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/jpeg",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: (Optional) Validate Content Document and ASIN Relations",
+							"id": "e23837ce-d7a2-43a5-8d0b-4ab73ad78bc1",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentDocument\": {\n    \"name\": \"Brand Story - EN-US\",\n    \"contentType\": \"BrandStory\",\n    \"locale\": \"en-US\",\n    \"contentModuleList\": [\n      {\n        \"contentModuleType\": \"BRAND_STORY_IMAGE_WITH_LOGO\",\n        \"brandStoryImageWithLogo\": {\n          \"title\": {\n            \"value\": \"Our Story\",\n            \"decoratorSet\": []\n          },\n          \"description\": {\n            \"textList\": [\n              {\n                \"value\": \"Founded by two audio engineers who wanted studio sound to travel.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"desktopImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1920,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 820,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 130,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Workshop with headphones on a bench\"\n          },\n          \"mobileImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 800,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 560,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Workshop with headphones on a bench\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_ABOUT\",\n        \"brandStoryAbout\": {\n          \"logoImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 400,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 500,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Brand logo\"\n          },\n          \"title\": {\n            \"value\": \"Why We Build\",\n            \"decoratorSet\": []\n          },\n          \"slogan\": {\n            \"textList\": [\n              {\n                \"value\": \"Sound that respects your ears, materials that respect the planet.\",\n                \"decoratorSet\": []\n              }\n            ]\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_FOUR_ASIN\",\n        \"brandStoryFourAsin\": {\n          \"title\": {\n            \"value\": \"Explore the Range\",\n            \"decoratorSet\": []\n          },\n          \"brandStoreId\": {\n            \"value\": \"<provide your Brand Store id>\",\n            \"decoratorSet\": []\n          },\n          \"asinImages\": [\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE1\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Lite model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE2\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Pro model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE3\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Max model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE4\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Travel case\"\n                }\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_QUESTIONS\",\n        \"brandStoryQuestions\": {\n          \"questionAnswerPairs\": [\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"Where are your products made?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Designed in Berlin, assembled in our partner facility in Portugal.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"What makes your products unique?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Every driver is hand-tuned and every shell uses recycled aluminium.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"Why do you love what you do?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Because a great mix deserves to be heard the way it was made.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentAsinValidations?marketplaceId={{marketplace}}&asinSet=<provide an ASIN you own>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentAsinValidations"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "asinSet",
+											"value": "<provide an ASIN you own>",
+											"description": "The set of ASINs to validate. Repeat the parameter once per ASIN. Omit to validate the document structure only."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Create Content Document with Brand Story modules",
+							"id": "3d416b0d-c169-434f-b81a-ca032877cc4d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentDocument\": {\n    \"name\": \"Brand Story - EN-US\",\n    \"contentType\": \"BrandStory\",\n    \"locale\": \"en-US\",\n    \"contentModuleList\": [\n      {\n        \"contentModuleType\": \"BRAND_STORY_IMAGE_WITH_LOGO\",\n        \"brandStoryImageWithLogo\": {\n          \"title\": {\n            \"value\": \"Our Story\",\n            \"decoratorSet\": []\n          },\n          \"description\": {\n            \"textList\": [\n              {\n                \"value\": \"Founded by two audio engineers who wanted studio sound to travel.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"desktopImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1920,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 820,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 130,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Workshop with headphones on a bench\"\n          },\n          \"mobileImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 800,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 560,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Workshop with headphones on a bench\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_ABOUT\",\n        \"brandStoryAbout\": {\n          \"logoImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 400,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 500,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Brand logo\"\n          },\n          \"title\": {\n            \"value\": \"Why We Build\",\n            \"decoratorSet\": []\n          },\n          \"slogan\": {\n            \"textList\": [\n              {\n                \"value\": \"Sound that respects your ears, materials that respect the planet.\",\n                \"decoratorSet\": []\n              }\n            ]\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_FOUR_ASIN\",\n        \"brandStoryFourAsin\": {\n          \"title\": {\n            \"value\": \"Explore the Range\",\n            \"decoratorSet\": []\n          },\n          \"brandStoreId\": {\n            \"value\": \"<provide your Brand Store id>\",\n            \"decoratorSet\": []\n          },\n          \"asinImages\": [\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE1\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Lite model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE2\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Pro model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE3\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Max model\"\n                }\n              }\n            },\n            {\n              \"asinImage\": {\n                \"productAsin\": {\n                  \"value\": \"B0EXAMPLE4\",\n                  \"decoratorSet\": []\n                },\n                \"productImage\": {\n                  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1c>\",\n                  \"imageCropSpecification\": {\n                    \"size\": {\n                      \"width\": {\n                        \"value\": 166,\n                        \"units\": \"pixels\"\n                      },\n                      \"height\": {\n                        \"value\": 182,\n                        \"units\": \"pixels\"\n                      }\n                    },\n                    \"offset\": {\n                      \"x\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      },\n                      \"y\": {\n                        \"value\": 0,\n                        \"units\": \"pixels\"\n                      }\n                    }\n                  },\n                  \"altText\": \"Travel case\"\n                }\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"contentModuleType\": \"BRAND_STORY_QUESTIONS\",\n        \"brandStoryQuestions\": {\n          \"questionAnswerPairs\": [\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"Where are your products made?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Designed in Berlin, assembled in our partner facility in Portugal.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"What makes your products unique?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Every driver is hand-tuned and every shell uses recycled aluminium.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"questionAnswerPair\": {\n                \"question\": {\n                  \"value\": \"Why do you love what you do?\",\n                  \"decoratorSet\": []\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Because a great mix deserves to be heard the way it was made.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Post Brand Story Content Document to ASINs",
+							"id": "fa7a15b7-e9c7-4858-a3c2-ee7413466f17",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"asinSet\": [\n    \"<provide an ASIN you own>\",\n    \"<provide a second ASIN>\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"asins"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "7ac43536-5950-4870-919c-f5815aae26ec",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 3>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 3."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Submit Brand Story Content for Approval",
+							"id": "8d374151-0cd5-422a-8437-27d2d590b681",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/approvalSubmissions?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"approvalSubmissions"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "1afeee25-e6fb-48da-9ec1-b5afe9b14436",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 3>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 3."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 6: Poll Brand Story Content Approval Status",
+							"id": "1b627254-f74c-40d8-878e-ea90cdd7ed47",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/brand-story"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=METADATA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "METADATA",
+											"description": "(Required) The set of A+ Content data types to include in the response. `METADATA` returns status, name, badges and updateTime; `CONTENTS` returns the full content document. Pass both to get the complete record."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "CONTENTS",
+											"description": "Include the full contentDocument with all modules.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "40fa151c-f67d-4fd7-90e7-cdd3e6dab3c3",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 3>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 3."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "25268644-8867-4de0-a4ed-71dfc28bd6fa",
+					"description": "Brand Story renders under **From the brand** for sellers and vendors and is meant to sit next to Premium (or Standard) A+ Content, as its own `BrandStory` document.\n\nNote: Requires Brand Registry enrollment: without it `createContentDocument` returns `400` (`User [...] shouldn't be using project type: [BrandStory]`).\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations and Upload Images:** hero background (1464x625 desktop, 463x625 mobile), logo (362x453) and one product image per ASIN card. Paste each `uploadDestinationId` into the matching placeholder of Steps 2 and 3.\n\n**Step 2: (Optional) Validate Content Document and ASIN Relations:** dry-run the document and the ASINs.\n\n**Step 3: Create Content Document with Brand Story modules:** `contentType: BrandStory`. Exactly one `BRAND_STORY_IMAGE_WITH_LOGO` (the background hero card); About, Four ASIN, Media Asset and Questions cards render inside its carousel. Paste the returned `contentReferenceKey` into Steps 4 to 6.\n\n**Step 4: Post the Brand Story Content Document to ASINs:** the brand's ASINs.\n\n**Step 5: Submit Brand Story Content for Approval.**\n\n**Step 6: Poll Brand Story Content Approval Status:** poll `status`. `badgeSet` is `[]` for Brand Story.\n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Brand Story Modules](https://developer-docs.amazon/sp-api/docs/a-plus-brand-story-modules)"
+				},
+				{
+					"name": "Create and Publish A+ Premium Content",
+					"item": [
+						{
+							"name": "Step 0: Authorization to generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "f76696ce-2085-4851-8d93-ec109e65628a"
+									}
+								}
+							],
+							"id": "30b6c366-c9a0-4181-ac53-4f97c075f32c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token",
+								"description": "Exchanges the LWA refresh token for an access token and stores it in the `access_token` environment variable used by every other request. Run it first, and again when a call returns 401 (tokens last one hour)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1: Search ASIN Content Publish Records",
+							"id": "aa5b5366-deee-41a0-90b1-59f2a7d47dd0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentPublishRecords?marketplaceId={{marketplace}}&asin=<provide an ASIN you own>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentPublishRecords"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "asin",
+											"value": "<provide an ASIN you own>",
+											"description": "(Required) The Amazon Standard Identification Number (ASIN)."
+										},
+										{
+											"key": "pageToken",
+											"value": "",
+											"description": "nextPageToken from the previous response.",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2a: Create Upload Destination (Image 1)",
+							"id": "34d15a50-f677-4d65-94a0-bd23df7fef92",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/jpeg",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/jpeg",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2b: Create Upload Destination (Image 2)",
+							"id": "cfc43e60-f86e-4286-9758-84628f49ccd2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/jpeg",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/jpeg",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: (Optional) Validate Premium Content Document with ASINs",
+							"id": "7b45acd1-0f3a-49c4-9119-f178be9a44ce",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentDocument\": {\n    \"name\": \"Wireless Headphones - Premium - EN-US\",\n    \"contentType\": \"EBC\",\n    \"locale\": \"en-US\",\n    \"contentModuleList\": [\n      {\n        \"contentModuleType\": \"PREMIUM_IMAGE_TEXT\",\n        \"premiumImageText\": {\n          \"positionType\": \"LEFT\",\n          \"subheadline\": {\n            \"value\": \"ENGINEERED FOR EVERY DAY\",\n            \"decoratorSet\": []\n          },\n          \"headline\": {\n            \"value\": \"Wireless Freedom With 30 Hours of Battery Life\",\n            \"decoratorSet\": []\n          },\n          \"bodyText\": {\n            \"textList\": [\n              {\n                \"value\": \"Lightweight over-ear design with memory-foam cushions for all-day comfort.\",\n                \"decoratorSet\": []\n              },\n              {\n                \"value\": \"Fast charge: 10 minutes of charging gives you 5 hours of playback.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"image\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 240,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Headphones resting on a wooden desk next to a laptop\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_FULL_BACKGROUND_IMAGE\",\n        \"premiumFullBackgroundImage\": {\n          \"headline\": {\n            \"value\": \"Designed to Disappear Into Your Day\",\n            \"decoratorSet\": []\n          },\n          \"footer\": {\n            \"textList\": [\n              {\n                \"value\": \"Ultra-soft ear cushions and a balanced headband keep pressure even during long sessions.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"desktopImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1920,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 787,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 140,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Person wearing the headphones while commuting\"\n          },\n          \"mobileImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 240,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Person wearing the headphones while commuting\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_TEXT\",\n        \"premiumText\": {\n          \"headline\": {\n            \"value\": \"Tuned by Ear, Built to Last\",\n            \"decoratorSet\": []\n          },\n          \"description\": {\n            \"textList\": [\n              {\n                \"value\": \"Every driver is hand-tuned before it leaves the workshop, and the aluminium shell is designed to be repaired, not replaced.\",\n                \"decoratorSet\": []\n              }\n            ]\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_TECH_SPECS\",\n        \"premiumTechSpecs\": {\n          \"headline\": {\n            \"value\": \"Technical Specifications\",\n            \"decoratorSet\": []\n          },\n          \"columnCount\": 2,\n          \"techSpecs\": [\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Battery life\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"Up to 30 hours (ANC on)\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Charging\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"USB-C, 10 min = 5 hours\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Bluetooth\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"5.3, multipoint (2 devices)\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Weight\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"250 g\",\n                  \"decoratorSet\": []\n                }\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_FAQ\",\n        \"premiumFaq\": {\n          \"colorType\": \"LIGHT\",\n          \"faqs\": [\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Can I connect to two devices at once?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Yes. Multipoint Bluetooth keeps a laptop and a phone connected at the same time.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Does the case fit in a backpack pocket?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"The hard case folds flat and measures 18 x 20 x 6 cm.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentAsinValidations?marketplaceId={{marketplace}}&asinSet=<provide an ASIN you own>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentAsinValidations"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "asinSet",
+											"value": "<provide an ASIN you own>",
+											"description": "The set of ASINs to validate. Repeat the parameter once per ASIN. Omit to validate the document structure only."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Create Content Document with PREMIUM modules",
+							"id": "e4eb57e2-1d29-4d89-837a-d9946ad322ed",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentDocument\": {\n    \"name\": \"Wireless Headphones - Premium - EN-US\",\n    \"contentType\": \"EBC\",\n    \"locale\": \"en-US\",\n    \"contentModuleList\": [\n      {\n        \"contentModuleType\": \"PREMIUM_IMAGE_TEXT\",\n        \"premiumImageText\": {\n          \"positionType\": \"LEFT\",\n          \"subheadline\": {\n            \"value\": \"ENGINEERED FOR EVERY DAY\",\n            \"decoratorSet\": []\n          },\n          \"headline\": {\n            \"value\": \"Wireless Freedom With 30 Hours of Battery Life\",\n            \"decoratorSet\": []\n          },\n          \"bodyText\": {\n            \"textList\": [\n              {\n                \"value\": \"Lightweight over-ear design with memory-foam cushions for all-day comfort.\",\n                \"decoratorSet\": []\n              },\n              {\n                \"value\": \"Fast charge: 10 minutes of charging gives you 5 hours of playback.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"image\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2a>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 240,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Headphones resting on a wooden desk next to a laptop\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_FULL_BACKGROUND_IMAGE\",\n        \"premiumFullBackgroundImage\": {\n          \"headline\": {\n            \"value\": \"Designed to Disappear Into Your Day\",\n            \"decoratorSet\": []\n          },\n          \"footer\": {\n            \"textList\": [\n              {\n                \"value\": \"Ultra-soft ear cushions and a balanced headband keep pressure even during long sessions.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"desktopImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1920,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 787,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 140,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Person wearing the headphones while commuting\"\n          },\n          \"mobileImage\": {\n            \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 2b>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 240,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            },\n            \"altText\": \"Person wearing the headphones while commuting\"\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_TEXT\",\n        \"premiumText\": {\n          \"headline\": {\n            \"value\": \"Tuned by Ear, Built to Last\",\n            \"decoratorSet\": []\n          },\n          \"description\": {\n            \"textList\": [\n              {\n                \"value\": \"Every driver is hand-tuned before it leaves the workshop, and the aluminium shell is designed to be repaired, not replaced.\",\n                \"decoratorSet\": []\n              }\n            ]\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_TECH_SPECS\",\n        \"premiumTechSpecs\": {\n          \"headline\": {\n            \"value\": \"Technical Specifications\",\n            \"decoratorSet\": []\n          },\n          \"columnCount\": 2,\n          \"techSpecs\": [\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Battery life\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"Up to 30 hours (ANC on)\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Charging\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"USB-C, 10 min = 5 hours\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Bluetooth\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"5.3, multipoint (2 devices)\",\n                  \"decoratorSet\": []\n                }\n              }\n            },\n            {\n              \"techSpec\": {\n                \"specKey\": {\n                  \"value\": \"Weight\",\n                  \"decoratorSet\": []\n                },\n                \"specValue\": {\n                  \"value\": \"250 g\",\n                  \"decoratorSet\": []\n                }\n              }\n            }\n          ]\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_FAQ\",\n        \"premiumFaq\": {\n          \"colorType\": \"LIGHT\",\n          \"faqs\": [\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Can I connect to two devices at once?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Yes. Multipoint Bluetooth keeps a laptop and a phone connected at the same time.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Does the case fit in a backpack pocket?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"The hard case folds flat and measures 18 x 20 x 6 cm.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Post Premium Content Document ASIN Relations",
+							"id": "3e0a82a2-eae5-43e2-80f6-32188bc01ef9",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"asinSet\": [\n    \"<provide an ASIN you own>\",\n    \"<provide a second ASIN>\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"asins"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "7f97f4dc-d721-4833-a694-72c1c7aa0316",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 6: Submit Premium Content Document for Approval",
+							"id": "b1e87eff-3781-48f2-9399-19b5b35c3f21",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/approvalSubmissions?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"approvalSubmissions"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "e99f98e2-c12b-446e-9415-5bc4528f6f57",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 7: Poll Premium Content Document Approval Status",
+							"id": "01345815-45c0-4a68-89ca-548bed8dde57",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=METADATA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "METADATA",
+											"description": "(Required) The set of A+ Content data types to include in the response. `METADATA` returns status, name, badges and updateTime; `CONTENTS` returns the full content document. Pass both to get the complete record."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "CONTENTS",
+											"description": "Include the full contentDocument with all modules.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "6b1cac1f-b697-42ef-b894-95882df64c82",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "b076729c-1b69-4741-99a8-1199b1a2dbcf",
+					"description": "Premium A+ uses the same operations as Standard A+. Only the `contentModuleType` values (`PREMIUM_\\\\\\\\\\\\\\*`) and module schemas differ. This flow demoes the publishing of a five-module document: image + text, full-background image, text, tech specs and FAQ.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Publish Records:** what is live on the ASIN today, so you do not overwrite by accident (publishing a new document to an ASIN replaces the previous one of the same family).\n\n**Step 2: Create Upload Destinations and upload images:** one `createUploadDestinationForResource` per image, then POST the binary to the returned URL. Paste each `uploadDestinationId` into the matching placeholder of Steps 3 and 4.\n\n**Step 3: (Optional) Validate Premium Content Document with ASINs:** dry-run the structure and the ASINs. Fix every entry in `errors` before continuing.\n\n**Step 4: Create Content Document with PREMIUM modules:** `contentType` is `EBC` (seller) or `EMC` (vendor). Paste the returned `contentReferenceKey` into the path variable of Steps 5 to 7.\n\n**Step 5: Post Premium Content Document ASIN Relations:** the full ASIN set (replacement, not append).\n\n**Step 6: Submit Premium Content Document for Approval.**\n\n**Step 7: Poll Premium Content Document Approval Status:** poll `status` (no more than once per hour) until `APPROVED` or `REJECTED`.\n\n> 🚧 A content document is entirely Standard (`STANDARD_\\\\\\\\\\\\\\*`), entirely Premium (`PREMIUM_\\\\\\\\\\\\\\*`) or a Brand Story (`BRAND_STORY_\\\\\\\\\\\\\\*`). Mixing Standard and Premium modules is rejected with `400 InvalidInput`, and a document with Premium modules holds at most 7 modules. \n  \n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)"
+				},
+				{
+					"name": "Create and Publish A+ Premium Video Content via Media API",
+					"item": [
+						{
+							"name": "Step 0: Authorization to generate Access Token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"access_token\", pm.response.json().access_token);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"id": "6822fb8f-e94b-451e-8e8f-41eade9cffd6"
+									}
+								}
+							],
+							"id": "020f2276-31d2-4910-99ef-d7b457c5ceab",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "https://api.amazon.com/auth/o2/token",
+								"description": "Exchanges the LWA refresh token for an access token and stores it in the `access_token` environment variable used by every other request. Run it first, and again when a call returns 401 (tokens last one hour)."
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1a: Create Upload Destination (Video File)",
+							"id": "ba4454fb-cbf5-4406-b49f-dfb2800b5d3f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=video/mp4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "video/mp4",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1b: Create Upload Destination (Video Thumbnail)",
+							"id": "8f715e8f-d6cc-4689-af68-021c82e6b63c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/uploads/2020-11-01/uploadDestinations/aplus/2020-11-01/contentDocuments?marketplaceIds={{marketplace}}&contentMD5=<base64-md5-of-file>&contentType=image/jpeg",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"uploads",
+										"2020-11-01",
+										"uploadDestinations",
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceIds",
+											"value": "{{marketplace}}",
+											"description": "(Required) A list of marketplace identifiers."
+										},
+										{
+											"key": "contentMD5",
+											"value": "<base64-md5-of-file>",
+											"description": "(Required) An MD5 hash of the content to be submitted to the upload destination. Base64 encoded."
+										},
+										{
+											"key": "contentType",
+											"value": "image/jpeg",
+											"description": "The content type of the file to be uploaded."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2: Create Video Media paired with the Thumbnail Image",
+							"id": "d1a0ab29-c415-431d-ba11-6f2ee379ad14",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"mediaType\": \"VIDEO\",\n  \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1a>\",\n  \"descriptions\": [\n    {\n      \"locale\": \"en-US\",\n      \"value\": \"A demonstration of the product features and benefits.\"\n    }\n  ],\n  \"relatedMedia\": [\n    {\n      \"associationType\": \"VIDEO_PAIRING\",\n      \"title\": \"Product Demo Video\",\n      \"media\": {\n        \"mediaType\": \"IMAGE\",\n        \"uploadDestinationId\": \"<provide uploadDestinationId returned in Step 1b>\"\n      }\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/aplus/2020-11-01/media"
+							},
+							"response": []
+						},
+						{
+							"name": "Step 3: Poll Media Processing Status",
+							"id": "bb0d9259-064a-4cc5-9e77-61fb2bd584c8",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/media/:mediaId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"media",
+										":mediaId"
+									],
+									"query": [
+										{
+											"key": "associatedMediaId",
+											"value": "<provide relatedMedia[0].media.mediaId (the thumbnail) returned in Step 2>",
+											"description": "When provided, returns only the specific video-image pairing. Omit to return all associated media.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "ba5d419a-c8bb-4b2b-bf74-0f581dd912c8",
+											"key": "mediaId",
+											"value": "<provide mediaId (the video) returned in Step 2>",
+											"description": "(Required) The unique identifier for the media asset, returned by createMedia in Step 2 as `mediaId` (the video) or `relatedMedia[].media.mediaId` (the paired image)."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 4: Create Premium Content Document with Video Modules",
+							"id": "b0198768-b7ab-444a-b14a-f76ff97d2796",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"contentDocument\": {\n    \"name\": \"Wireless Headphones - Premium Video - EN-US\",\n    \"contentType\": \"EBC\",\n    \"locale\": \"en-US\",\n    \"contentModuleList\": [\n      {\n        \"contentModuleType\": \"PREMIUM_HERO_VIDEO\",\n        \"premiumHeroVideo\": {\n          \"headline\": {\n            \"value\": \"Built for the Way You Listen\",\n            \"decoratorSet\": []\n          },\n          \"footer\": {\n            \"textList\": [\n              {\n                \"value\": \"A 45-second tour of the materials, controls and companion app.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"heroVideo\": {\n            \"videoMediaId\": \"<provide mediaId (the video) returned in Step 2>\",\n            \"imageMediaId\": \"<provide relatedMedia[0].media.mediaId (the thumbnail) returned in Step 2>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            }\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_VIDEO_TEXT\",\n        \"premiumVideoText\": {\n          \"positionType\": \"LEFT\",\n          \"title\": {\n            \"value\": \"See it in action\",\n            \"decoratorSet\": []\n          },\n          \"headline\": {\n            \"value\": \"Adaptive Noise Cancelling That Learns Your Environment\",\n            \"decoratorSet\": []\n          },\n          \"description\": {\n            \"textList\": [\n              {\n                \"value\": \"Watch how the headphones switch between transparency and ANC modes automatically.\",\n                \"decoratorSet\": []\n              }\n            ]\n          },\n          \"video\": {\n            \"videoMediaId\": \"<provide mediaId (the video) returned in Step 2>\",\n            \"imageMediaId\": \"<provide relatedMedia[0].media.mediaId (the thumbnail) returned in Step 2>\",\n            \"imageCropSpecification\": {\n              \"size\": {\n                \"width\": {\n                  \"value\": 1440,\n                  \"units\": \"pixels\"\n                },\n                \"height\": {\n                  \"value\": 1080,\n                  \"units\": \"pixels\"\n                }\n              },\n              \"offset\": {\n                \"x\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                },\n                \"y\": {\n                  \"value\": 0,\n                  \"units\": \"pixels\"\n                }\n              }\n            }\n          }\n        }\n      },\n      {\n        \"contentModuleType\": \"PREMIUM_FAQ\",\n        \"premiumFaq\": {\n          \"colorType\": \"LIGHT\",\n          \"faqs\": [\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Can I connect to two devices at once?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Yes. Multipoint Bluetooth keeps a laptop and a phone connected at the same time.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            },\n            {\n              \"faq\": {\n                \"question\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"Does the case fit in a backpack pocket?\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                },\n                \"answer\": {\n                  \"textList\": [\n                    {\n                      \"value\": \"The hard case folds flat and measures 18 x 20 x 6 cm.\",\n                      \"decoratorSet\": []\n                    }\n                  ]\n                }\n              }\n            }\n          ]\n        }\n      }\n    ]\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 5: Post Premium Content Document ASIN Relations",
+							"id": "05825f4f-03cb-4501-921d-8c9e1e734138",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"asinSet\": [\n    \"<provide an ASIN you own>\",\n    \"<provide a second ASIN>\"\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/asins?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"asins"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "c0f3b843-b43f-448b-a083-d4b3fbce7f9b",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 6: Submit Premium Content Document for Approval",
+							"id": "2e988473-89df-420f-86ae-45353d8b4880",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey/approvalSubmissions?marketplaceId={{marketplace}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey",
+										"approvalSubmissions"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										}
+									],
+									"variable": [
+										{
+											"id": "b670c8d6-2c69-47f3-b930-447f228d949f",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 7: Poll Premium Content Document Approval Status",
+							"id": "d9d50336-4dba-4d3f-8eef-ca24def79043",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/contentDocuments/:contentReferenceKey?marketplaceId={{marketplace}}&includedDataSet=METADATA",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"contentDocuments",
+										":contentReferenceKey"
+									],
+									"query": [
+										{
+											"key": "marketplaceId",
+											"value": "{{marketplace}}",
+											"description": "(Required) The identifier for the marketplace where the A+ Content is published."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "METADATA",
+											"description": "(Required) The set of A+ Content data types to include in the response. `METADATA` returns status, name, badges and updateTime; `CONTENTS` returns the full content document. Pass both to get the complete record."
+										},
+										{
+											"key": "includedDataSet",
+											"value": "CONTENTS",
+											"description": "Include the full contentDocument with all modules.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"id": "4151ba7f-e1af-47cf-8b3b-91751ea4c48a",
+											"key": "contentReferenceKey",
+											"value": "<provide contentReferenceKey returned in Step 4>",
+											"description": "(Required) The unique reference key for the A+ Content document, returned by createContentDocument in Step 4."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 8a: (Optional) Update Media Pairing Title",
+							"id": "4e76e8c3-b31b-4658-ada5-abd6b18e8921",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Updated Product Demo Video\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/media/:mediaId?associatedMediaId=<provide relatedMedia[0].media.mediaId (the thumbnail) returned in Step 2>",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"media",
+										":mediaId"
+									],
+									"query": [
+										{
+											"key": "associatedMediaId",
+											"value": "<provide relatedMedia[0].media.mediaId (the thumbnail) returned in Step 2>",
+											"description": "(Required for video title updates) Identifies which video-image pairing to update, because one video can be paired with several thumbnails."
+										}
+									],
+									"variable": [
+										{
+											"id": "e4152601-cdbe-4941-94f6-0cde34be2164",
+											"key": "mediaId",
+											"value": "<provide mediaId (the video) returned in Step 2>",
+											"description": "(Required) The unique identifier for the media asset, returned by createMedia in Step 2 as `mediaId` (the video) or `relatedMedia[].media.mediaId` (the paired image)."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 8b: (Optional) Update Media Video Descriptions",
+							"id": "35858fe8-29e0-4b9d-aeb8-a9b0f3e3fa69",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "x-amz-access-token",
+										"value": "{{access_token}}"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Postman/selling-partner-api-workspace/aplus/premium-video"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"descriptions\": [\n    {\n      \"locale\": \"en-US\",\n      \"value\": \"Updated video description for accessibility.\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/aplus/2020-11-01/media/:mediaId",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"aplus",
+										"2020-11-01",
+										"media",
+										":mediaId"
+									],
+									"variable": [
+										{
+											"id": "07a1953a-75d8-4a9d-8c71-b943101720c7",
+											"key": "mediaId",
+											"value": "<provide mediaId (the video) returned in Step 2>",
+											"description": "(Required) The unique identifier for the media asset, returned by createMedia in Step 2 as `mediaId` (the video) or `relatedMedia[].media.mediaId` (the paired image)."
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "cc820669-6288-4f46-8e43-f2c474691f2b",
+					"description": "Video modules (`PREMIUM_HERO_VIDEO`, `PREMIUM_VIDEO_TEXT`, `PREMIUM_VIDEO_IMAGE_CAROUSEL`) reference media created with the **Media API** instead of raw upload ids.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations:** one for the video (`video/mp4`, max 200 MB / 180 s) and one for the thumbnail (`image/jpeg`), both through the `aplus/2020-11-01/contentDocuments` resource. Upload the binaries and paste the two `uploadDestinationId` values into Step 2.\n\n**Step 2: Create Video Media paired with the Thumbnail Image:** `mediaType: VIDEO` with one `relatedMedia` entry (`associationType: VIDEO_PAIRING`) carrying the thumbnail and the video title (at least three words). The response is the `Media` object: `mediaId` is the video, `relatedMedia[0].media.mediaId` the thumbnail. Paste them into the `videoMediaId` / `imageMediaId` placeholders of Step 4 and the `:mediaId` path variable of Steps 3 and 8.\n\n**Step 3: Poll Media Processing Status:** processing status. You do not have to wait for `AVAILABLE` to create the document, but it is not published until the video is processed and approved.\n\n**Step 4: Create Premium Content Document with Video Modules:** each `VideoComponent` = `videoMediaId` + `imageMediaId` + a crop of the thumbnail. Paste the returned `contentReferenceKey` into Steps 5 to 7.\n\n**Step 5-7:** apply ASINs, submit, poll, exactly as for image-only Premium content.\n\n**Step 8: (Optional) Update Media:** change a pairing title (`associatedMediaId` required) or the accessibility descriptions with `PATCH`, without re-uploading.\n\n> 📘 Video processing can take up to 48 hours. A document whose video fails processing is not published; Amazon does not publish it with the video modules removed. \n  \n\n📘 Learn more:\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)\n\n[Create, Edit and Retrieve A+ Media Assets](https://developer-docs.amazon/sp-api/docs/create-edit-retrieve-aplus-media)"
+				}
+			],
+			"id": "3586cac9-12f8-4cbe-94ef-be3902c8b281",
+			"description": "<img src=\"https://content.pstmn.io/ac835b38-207c-4d24-b96b-dcd1b2036de4/YXBsdXMtcG9zdG1hbi1iYW5uZXIuanBn\">\n\n---\n\nCreate, publish and manage **Premium A+ Content**, **Brand Story** content and the **video assets** behind them with the [A+ Content Management API v2020-11-01](https://developer-docs.amazon.com/sp-api/docs/a-plus-content-api-use-case-guide), which now supports `PREMIUM_**` and `BRAND_STORY_**` modules through the same operations used for Standard A+ Content, plus the **Media API** (`/aplus/2020-11-01/media`) for video and thumbnail assets, and the Uploads API for files.\n\n| Content | contentType | Detail page placement | Modules |\n| --- | --- | --- | --- |\n| Standard A+ | `EBC` (seller) / `EMC` (vendor) | From the manufacturer (vendor) and Product Description (seller) | 15 `STANDARD_**` |\n| Premium A+ | `EBC` (seller) / `EMC` (vendor) | From the manufacturer (vendor) and Product Description (seller) | 19 `PREMIUM_**`, max 7 per document |\n| Brand Story | `BrandStory` | From the brand | 5 `BRAND_STORY_**` |\n\n| Use case | What it does |\n| --- | --- |\n| Discover Listings with Active A+ Content | Map every content document to its ASINs, confirm what is live where, then pull the listing details for those ASINs |\n| Create and Publish Brand Story Content | Upload the hero and logo, create the `BrandStory` document, apply ASINs, publish |\n| Create and Publish A+ Premium Content | Upload images, validate, create a five-module Premium document, apply ASINs, publish |\n| Create and Publish A+ Premium Video Content (Media API) | Upload video + thumbnail, createMedia, poll, create video modules, publish, update media |\n\n- Environment variables (from the workspace environment): `base_url`, `marketplace`, `access_token`, `seller_id`, `client_id`, `client_secret`, `refresh_token`. Step 0 of each use case stores `access_token`.\n    \n- Values returned by one step and needed by a later one (`contentReferenceKey`, `uploadDestinationId`, media ids, your ASINs) are placeholders that you paste in.\n    \n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content) · [Manage A+ content](https://developer-docs.amazon.com/sp-api/docs/manage-aplus-content)\n\n[A+ Premium Modules ](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules) · [A+ Brand Story Modules](https://developer-docs.amazon/sp-api/docs/a-plus-brand-story-modules)"
 		}
 	]
 }
