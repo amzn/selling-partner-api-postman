@@ -4015,7 +4015,33 @@
 						}
 					],
 					"id": "6e525e5e-fb21-45fe-92e3-530203d77858",
-					"description": "Build the picture of which content document is applied to which ASIN, and where it is live, before you decide what to create, extend or upgrade.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Documents:** Every A+ document in the account, including content created in Seller Central or Vendor Central, with `status` and `badgeSet` (`[\"PREMIUM\"]`, `[\"STANDARD\"]`, `[]` for Brand Story). Page with `pageToken` until `nextPageToken` is empty.\n\n**Step 2: List Content Document ASIN Relations:** For each document from Step 1, the ASINs it is applied to. With `includedDataSet=METADATA` every ASIN carries a `badgeSet`: `CONTENT_PUBLISHED` means this document is live on that ASIN, `CONTENT_NOT_PUBLISHED` means it is attached but not live (a draft, or a document replaced by a newer one). The union of these results is the ASIN → document map for the whole account.\n\n**Step 3: (Optional) Search Content Publish Records:** For one ASIN, exactly what is live on it right now: one record per content family (`EBC`/`EMC` for Standard or Premium, `BrandStory`) and locale, with the `contentReferenceKey` of the live document. Use it to confirm a `CONTENT_PUBLISHED` badge or to tell a published document from a draft that is merely attached to the ASIN.\n\n**Step 4: Search Listings Items by ASIN:** Pass the ASINs collected in Step 2 as `identifiers` (comma-delimited, up to 20 per call) with `identifiersType=ASIN`. `includedData=summaries` returns SKU, item name, status and product type per listing, so you can join the A+ picture with your catalog (one ASIN can come back as several SKUs). Add `withStatus`, `withoutStatus` or `withIssueSeverity` to narrow the set.\n\n**Step 5: Get Content Document:** Open a document from Step 2 with `includedDataSet=CONTENTS` to see its modules; `badgeSet` tells the tier.\n\n> 📘 Listings **without** A+ content are the complement: page `searchListingsItems` without `identifiers` (or with `keywords`) and subtract the ASINs seen in Step 2. `identifiers` cannot be combined with `keywords` (`400 Invalid combination of parameters provided.`). \n  \n\n📘 Learn more: [Manage A+ content](https://developer-docs.amazon.com/sp-api/docs/manage-aplus-content) · [Listings Items API](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide)"
+					"description": "Build the picture of which content document is applied to which ASIN, and where it is live, before you decide what to create, extend or upgrade.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Documents:** Every A+ document in the account, including content created in Seller Central or Vendor Central, with `status` and `badgeSet` (`[\"PREMIUM\"]`, `[\"STANDARD\"]`, `[]` for Brand Story). Page with `pageToken` until `nextPageToken` is empty.\n\n**Step 2: List Content Document ASIN Relations:** For each document from Step 1, the ASINs it is applied to. With `includedDataSet=METADATA` every ASIN carries a `badgeSet`: `CONTENT_PUBLISHED` means this document is live on that ASIN, `CONTENT_NOT_PUBLISHED` means it is attached but not live (a draft, or a document replaced by a newer one). The union of these results is the ASIN → document map for the whole account.\n\n**Step 3: (Optional) Search Content Publish Records:** For one ASIN, exactly what is live on it right now: one record per content family (`EBC`/`EMC` for Standard or Premium, `BrandStory`) and locale, with the `contentReferenceKey` of the live document. Use it to confirm a `CONTENT_PUBLISHED` badge or to tell a published document from a draft that is merely attached to the ASIN.\n\n**Step 4: Search Listings Items by ASIN:** Pass the ASINs collected in Step 2 as `identifiers` (comma-delimited, up to 20 per call) with `identifiersType=ASIN`. `includedData=summaries` returns SKU, item name, status and product type per listing, so you can join the A+ picture with your catalog (one ASIN can come back as several SKUs). Add `withStatus`, `withoutStatus` or `withIssueSeverity` to narrow the set.\n\n**Step 5: Get Content Document:** Open a document from Step 2 with `includedDataSet=CONTENTS` to see its modules; `badgeSet` tells the tier.\n\n> 📘 Listings **without** A+ content are the complement: page `searchListingsItems` without `identifiers` (or with `keywords`) and subtract the ASINs seen in Step 2. `identifiers` cannot be combined with `keywords` (`400 Invalid combination of parameters provided.`). \n  \n\n📘 Learn more: [Manage A+ content](https://developer-docs.amazon.com/sp-api/docs/manage-aplus-content) · [Listings Items API](https://developer-docs.amazon.com/sp-api/docs/listings-items-api-v2021-08-01-use-case-guide)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74e44eb9-b75a-4251-8ef7-10f673cf56e5",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.request.headers.add({key: 'User-Agent', value: 'Postman/selling-partner-api-workspace/aplus/discover-listings'});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c0a3f9eb-66b9-46d4-a8bb-8748cd9c5e00",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Create and Publish Brand Story Content",
