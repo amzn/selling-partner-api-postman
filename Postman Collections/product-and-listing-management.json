@@ -4588,7 +4588,33 @@
 						}
 					],
 					"id": "25268644-8867-4de0-a4ed-71dfc28bd6fa",
-					"description": "Brand Story renders under **From the brand** for sellers and vendors and is meant to sit next to Premium (or Standard) A+ Content, as its own `BrandStory` document.\n\nNote: Requires Brand Registry enrollment: without it `createContentDocument` returns `400` (`User [...] shouldn't be using project type: [BrandStory]`).\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations and Upload Images:** hero background (1464x625 desktop, 463x625 mobile), logo (362x453) and one product image per ASIN card. Paste each `uploadDestinationId` into the matching placeholder of Steps 2 and 3.\n\n**Step 2: (Optional) Validate Content Document and ASIN Relations:** dry-run the document and the ASINs.\n\n**Step 3: Create Content Document with Brand Story modules:** `contentType: BrandStory`. Exactly one `BRAND_STORY_IMAGE_WITH_LOGO` (the background hero card); About, Four ASIN, Media Asset and Questions cards render inside its carousel. Paste the returned `contentReferenceKey` into Steps 4 to 6.\n\n**Step 4: Post the Brand Story Content Document to ASINs:** the brand's ASINs.\n\n**Step 5: Submit Brand Story Content for Approval.**\n\n**Step 6: Poll Brand Story Content Approval Status:** poll `status`. `badgeSet` is `[]` for Brand Story.\n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Brand Story Modules](https://developer-docs.amazon/sp-api/docs/a-plus-brand-story-modules)"
+					"description": "Brand Story renders under **From the brand** for sellers and vendors and is meant to sit next to Premium (or Standard) A+ Content, as its own `BrandStory` document.\n\nNote: Requires Brand Registry enrollment: without it `createContentDocument` returns `400` (`User [...] shouldn't be using project type: [BrandStory]`).\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations and Upload Images:** hero background (1464x625 desktop, 463x625 mobile), logo (362x453) and one product image per ASIN card. Paste each `uploadDestinationId` into the matching placeholder of Steps 2 and 3.\n\n**Step 2: (Optional) Validate Content Document and ASIN Relations:** dry-run the document and the ASINs.\n\n**Step 3: Create Content Document with Brand Story modules:** `contentType: BrandStory`. Exactly one `BRAND_STORY_IMAGE_WITH_LOGO` (the background hero card); About, Four ASIN, Media Asset and Questions cards render inside its carousel. Paste the returned `contentReferenceKey` into Steps 4 to 6.\n\n**Step 4: Post the Brand Story Content Document to ASINs:** the brand's ASINs.\n\n**Step 5: Submit Brand Story Content for Approval.**\n\n**Step 6: Poll Brand Story Content Approval Status:** poll `status`. `badgeSet` is `[]` for Brand Story.\n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Brand Story Modules](https://developer-docs.amazon/sp-api/docs/a-plus-brand-story-modules)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6593015e-f2ef-4348-b335-c3e2b41117a9",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.request.headers.add({key: 'User-Agent', value: 'Postman/selling-partner-api-workspace/aplus/brand-story'});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "abfa04bd-93e4-4ede-9cf4-61c9633a4908",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Create and Publish A+ Premium Content",
