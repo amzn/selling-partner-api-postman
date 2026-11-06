@@ -5155,7 +5155,33 @@
 						}
 					],
 					"id": "b076729c-1b69-4741-99a8-1199b1a2dbcf",
-					"description": "Premium A+ uses the same operations as Standard A+. Only the `contentModuleType` values (`PREMIUM_\\\\\\\\\\\\\\*`) and module schemas differ. This flow demoes the publishing of a five-module document: image + text, full-background image, text, tech specs and FAQ.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Publish Records:** what is live on the ASIN today, so you do not overwrite by accident (publishing a new document to an ASIN replaces the previous one of the same family).\n\n**Step 2: Create Upload Destinations and upload images:** one `createUploadDestinationForResource` per image, then POST the binary to the returned URL. Paste each `uploadDestinationId` into the matching placeholder of Steps 3 and 4.\n\n**Step 3: (Optional) Validate Premium Content Document with ASINs:** dry-run the structure and the ASINs. Fix every entry in `errors` before continuing.\n\n**Step 4: Create Content Document with PREMIUM modules:** `contentType` is `EBC` (seller) or `EMC` (vendor). Paste the returned `contentReferenceKey` into the path variable of Steps 5 to 7.\n\n**Step 5: Post Premium Content Document ASIN Relations:** the full ASIN set (replacement, not append).\n\n**Step 6: Submit Premium Content Document for Approval.**\n\n**Step 7: Poll Premium Content Document Approval Status:** poll `status` (no more than once per hour) until `APPROVED` or `REJECTED`.\n\n> 🚧 A content document is entirely Standard (`STANDARD_\\\\\\\\\\\\\\*`), entirely Premium (`PREMIUM_\\\\\\\\\\\\\\*`) or a Brand Story (`BRAND_STORY_\\\\\\\\\\\\\\*`). Mixing Standard and Premium modules is rejected with `400 InvalidInput`, and a document with Premium modules holds at most 7 modules. \n  \n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)"
+					"description": "Premium A+ uses the same operations as Standard A+. Only the `contentModuleType` values (`PREMIUM_\\\\\\\\\\\\\\*`) and module schemas differ. This flow demoes the publishing of a five-module document: image + text, full-background image, text, tech specs and FAQ.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Search Content Publish Records:** what is live on the ASIN today, so you do not overwrite by accident (publishing a new document to an ASIN replaces the previous one of the same family).\n\n**Step 2: Create Upload Destinations and upload images:** one `createUploadDestinationForResource` per image, then POST the binary to the returned URL. Paste each `uploadDestinationId` into the matching placeholder of Steps 3 and 4.\n\n**Step 3: (Optional) Validate Premium Content Document with ASINs:** dry-run the structure and the ASINs. Fix every entry in `errors` before continuing.\n\n**Step 4: Create Content Document with PREMIUM modules:** `contentType` is `EBC` (seller) or `EMC` (vendor). Paste the returned `contentReferenceKey` into the path variable of Steps 5 to 7.\n\n**Step 5: Post Premium Content Document ASIN Relations:** the full ASIN set (replacement, not append).\n\n**Step 6: Submit Premium Content Document for Approval.**\n\n**Step 7: Poll Premium Content Document Approval Status:** poll `status` (no more than once per hour) until `APPROVED` or `REJECTED`.\n\n> 🚧 A content document is entirely Standard (`STANDARD_\\\\\\\\\\\\\\*`), entirely Premium (`PREMIUM_\\\\\\\\\\\\\\*`) or a Brand Story (`BRAND_STORY_\\\\\\\\\\\\\\*`). Mixing Standard and Premium modules is rejected with `400 InvalidInput`, and a document with Premium modules holds at most 7 modules. \n  \n\n📘 Learn more:\n\n[Create, edit, and publish A+ content](https://developer-docs.amazon.com/sp-api/docs/create-edit-publish-aplus-content)\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ed8e1c4f-7c91-4044-9b4b-65b632366b5f",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.request.headers.add({key: 'User-Agent', value: 'Postman/selling-partner-api-workspace/aplus/premium'});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c576b51-c900-4dec-b32c-37f8fd5e81dd",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Create and Publish A+ Premium Video Content via Media API",
@@ -5796,7 +5822,33 @@
 						}
 					],
 					"id": "cc820669-6288-4f46-8e43-f2c474691f2b",
-					"description": "Video modules (`PREMIUM_HERO_VIDEO`, `PREMIUM_VIDEO_TEXT`, `PREMIUM_VIDEO_IMAGE_CAROUSEL`) reference media created with the **Media API** instead of raw upload ids.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations:** one for the video (`video/mp4`, max 200 MB / 180 s) and one for the thumbnail (`image/jpeg`), both through the `aplus/2020-11-01/contentDocuments` resource. Upload the binaries and paste the two `uploadDestinationId` values into Step 2.\n\n**Step 2: Create Video Media paired with the Thumbnail Image:** `mediaType: VIDEO` with one `relatedMedia` entry (`associationType: VIDEO_PAIRING`) carrying the thumbnail and the video title (at least three words). The response is the `Media` object: `mediaId` is the video, `relatedMedia[0].media.mediaId` the thumbnail. Paste them into the `videoMediaId` / `imageMediaId` placeholders of Step 4 and the `:mediaId` path variable of Steps 3 and 8.\n\n**Step 3: Poll Media Processing Status:** processing status. You do not have to wait for `AVAILABLE` to create the document, but it is not published until the video is processed and approved.\n\n**Step 4: Create Premium Content Document with Video Modules:** each `VideoComponent` = `videoMediaId` + `imageMediaId` + a crop of the thumbnail. Paste the returned `contentReferenceKey` into Steps 5 to 7.\n\n**Step 5-7:** apply ASINs, submit, poll, exactly as for image-only Premium content.\n\n**Step 8: (Optional) Update Media:** change a pairing title (`associatedMediaId` required) or the accessibility descriptions with `PATCH`, without re-uploading.\n\n> 📘 Video processing can take up to 48 hours. A document whose video fails processing is not published; Amazon does not publish it with the video modules removed. \n  \n\n📘 Learn more:\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)\n\n[Create, Edit and Retrieve A+ Media Assets](https://developer-docs.amazon/sp-api/docs/create-edit-retrieve-aplus-media)"
+					"description": "Video modules (`PREMIUM_HERO_VIDEO`, `PREMIUM_VIDEO_TEXT`, `PREMIUM_VIDEO_IMAGE_CAROUSEL`) reference media created with the **Media API** instead of raw upload ids.\n\n## Steps to Follow\n\n**Step 0: Authorization to generate Access Token:** Call this API to get the **access token** in exchange for the refresh token for authorizing SP-API.\n\n**Step 1: Create Upload Destinations:** one for the video (`video/mp4`, max 200 MB / 180 s) and one for the thumbnail (`image/jpeg`), both through the `aplus/2020-11-01/contentDocuments` resource. Upload the binaries and paste the two `uploadDestinationId` values into Step 2.\n\n**Step 2: Create Video Media paired with the Thumbnail Image:** `mediaType: VIDEO` with one `relatedMedia` entry (`associationType: VIDEO_PAIRING`) carrying the thumbnail and the video title (at least three words). The response is the `Media` object: `mediaId` is the video, `relatedMedia[0].media.mediaId` the thumbnail. Paste them into the `videoMediaId` / `imageMediaId` placeholders of Step 4 and the `:mediaId` path variable of Steps 3 and 8.\n\n**Step 3: Poll Media Processing Status:** processing status. You do not have to wait for `AVAILABLE` to create the document, but it is not published until the video is processed and approved.\n\n**Step 4: Create Premium Content Document with Video Modules:** each `VideoComponent` = `videoMediaId` + `imageMediaId` + a crop of the thumbnail. Paste the returned `contentReferenceKey` into Steps 5 to 7.\n\n**Step 5-7:** apply ASINs, submit, poll, exactly as for image-only Premium content.\n\n**Step 8: (Optional) Update Media:** change a pairing title (`associatedMediaId` required) or the accessibility descriptions with `PATCH`, without re-uploading.\n\n> 📘 Video processing can take up to 48 hours. A document whose video fails processing is not published; Amazon does not publish it with the video modules removed. \n  \n\n📘 Learn more:\n\n[A+ Premium Modules](https://developer-docs.amazon/sp-api/docs/a-plus-premium-modules)\n\n[Create, Edit and Retrieve A+ Media Assets](https://developer-docs.amazon/sp-api/docs/create-edit-retrieve-aplus-media)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e3bdfa2a-2f09-4d84-977e-d634a955a837",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									"pm.request.headers.add({key: 'User-Agent', value: 'Postman/selling-partner-api-workspace/aplus/premium-video'});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "abc8ceb9-79c9-45e6-8b41-255498408d61",
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				}
 			],
 			"id": "3586cac9-12f8-4cbe-94ef-be3902c8b281",
