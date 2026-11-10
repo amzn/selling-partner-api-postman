@@ -2198,13 +2198,11 @@
 									],
 									"variable": [
 										{
-											"id": "2faf91bb-ccfb-481c-94ba-985538c92241",
 											"key": "sellerId",
 											"value": "{{seller_id}}",
 											"description": "(Required) A selling partner identifier, such as a merchant account or vendor code."
 										},
 										{
-											"id": "c971d07a-e005-4fbc-8174-6c2d6618ee42",
 											"key": "sku",
 											"value": "THE-SKU",
 											"description": "(Required) A selling partner provided identifier for an Amazon listing."
